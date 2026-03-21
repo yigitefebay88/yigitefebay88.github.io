@@ -12,7 +12,6 @@
     <style>
         :root {
             --bg: #f0f2f5; --glass: rgba(255, 255, 255, 0.9); --primary: #1e293b;
-            /* GÜNDÜZ MODU: SARI/ALTIN IŞIK */
             --accent: #f59e0b; 
             --accent-neon: 0 0 15px rgba(245, 158, 11, 0.5), 0 0 25px rgba(245, 158, 11, 0.3);
             --gold: #f59e0b; --gold-neon: 0 0 10px rgba(245, 158, 11, 0.3);
@@ -22,7 +21,6 @@
 
         [data-theme="dark"] {
             --bg: #0a0e17; --glass: rgba(18, 25, 41, 0.95); --primary: #f8fafc;
-            /* GECE MODU: NEON YEŞİL IŞIK */
             --accent: #10b981; 
             --accent-neon: 0 0 15px #10b981, 0 0 25px #34d399;
             --gold: #f1c40f; --gold-neon: 0 0 15px #f1c40f, 0 0 30px #f39c12;
@@ -34,7 +32,7 @@
             display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
             transition: 0.4s; user-select: none; overflow: hidden;
             touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent; /* Katre Engelleme */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .app-container { 
@@ -43,6 +41,17 @@
             border-radius: 40px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); 
             text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: 0.5s ease-in-out;
             margin: 10px;
+        }
+
+        /* --- YUKARIDAN AŞAĞI DÖNÜŞ ANİMASYONU --- */
+        @keyframes flipDown {
+            0% { transform: scale(1) rotateX(0deg); }
+            50% { transform: scale(0.9) rotateX(180deg); }
+            100% { transform: scale(1) rotateX(360deg); }
+        }
+
+        .spin-active {
+            animation: flipDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .streak-badge {
@@ -64,13 +73,17 @@
             margin: 10px auto; border-radius: 50%; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             background: var(--glass); cursor: pointer; border: 8px solid var(--accent); 
-            transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transition: border 0.3s, box-shadow 0.3s; 
             box-shadow: var(--accent-neon);
             outline: none;
             -webkit-tap-highlight-color: transparent;
+            /* 3D Etkisi İçin Gerekli Ayarlar */
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
         }
-        .main-circle:active { transform: scale(0.92); }
-        .count-num { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 800; margin: 0; line-height: 1; }
+        
+        .count-num { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 800; margin: 0; line-height: 1; pointer-events: none; }
 
         .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,125,125,0.2); }
@@ -176,7 +189,6 @@
     const neySound = document.getElementById('neySound');
     const bellSound = document.getElementById('bellSound');
     const toast = document.getElementById('toast');
-    const TDV_DATA_URL = "https://raw.githubusercontent.com/atilsamancioglu/K21-JSONDataSet/master/countries.json"; 
 
     const langData = {
         tr: { days: "GÜN", target: "Hedef", list: "📚 Liste", reset: "🔄 Sıfırla", settings: "⚙️ Ayarlar", language: "Dil", reminder: "Hatırlatıcı", save: "Kaydet", close: "Kapat", virdDone: "MaşAllah! Hedef Tamamlandı.", zikirTime: "📿 Zikir Vakti!", resetConfirm: "Sıfırlansın mı?", delConfirm: "Bu zikri silmek istediğine emin misin?", libTitle: "📚 Zikirlerin", elhamd: "Elhamdülillah 100 yaptın!" },
@@ -201,27 +213,31 @@
         const icon = document.getElementById('themeIcon');
         icon.innerText = theme === 'dark' ? '🌙' : '☀️';
         icon.style.color = theme === 'dark' ? 'var(--gold)' : '#555';
-        updateView(); // Tema değişince renkleri hemen güncelle
+        updateView();
     }
 
     async function updateView() {
         if (db.length === 0) return;
-        
         const curr = db[currentIndex];
         document.getElementById('display').innerText = curr.count;
         document.getElementById('targetLabel').innerText = `${langData[currentLang].target}: ${curr.target}`;
         document.getElementById('streakCount').innerText = streak.count;
 
         const circle = document.getElementById('clickBtn');
-        // HEDEF TAMAMLANINCA HER İKİ MODDA DA ALTIN/SARI, DEĞİLSE TEMAYA GÖRE (Gündüz Sarı / Gece Yeşil)
         circle.style.borderColor = curr.count >= curr.target ? "var(--gold)" : "var(--accent)";
         circle.style.boxShadow = curr.count >= curr.target ? "var(--gold-neon)" : "var(--accent-neon)";
     }
 
+    /* --- TIKLAMA VE YUKARIDAN AŞAĞI DÖNÜŞ TETİKLEYİCİ --- */
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
         e.preventDefault(); 
         if (db.length === 0) return;
         
+        // Animasyonu her tıklamada sıfırla ve yeniden başlat (X ekseni dönüşü)
+        this.classList.remove('spin-active');
+        void this.offsetWidth; // DOM Reflow tetikleyici
+        this.classList.add('spin-active');
+
         if (navigator.vibrate) navigator.vibrate(50);
         
         clickSound.currentTime = 0; clickSound.play().catch(()=>{});
