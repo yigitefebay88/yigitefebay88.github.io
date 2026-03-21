@@ -224,22 +224,28 @@
     let reminderTime = localStorage.getItem('reminderTime') || "";
 
     // URL'DEN VERİ ÇEKME FONKSİYONU
+ // Hata veren kısmı bu fonksiyonla değiştir:
     async function fetchZikirData() {
         try {
             const response = await fetch(TDV_DATA_URL);
+            
+            // Eğer URL hatalıysa veya JSON değilse burası yakalar
+            if (!response.ok) throw new Error('Ağ hatası');
+            
             const data = await response.json();
             
-            // Eğer URL'den gelen veri formatı uygunsa (Örn: {name, description} gibi) 
-            // Burada örnek olarak veriyi db'ye entegre ediyoruz.
-            // Not: TDV_DATA_URL şu an countries.json olduğu için simülasyon yapılmıştır.
-            // Gerçek bir zikir API'si geldiğinde 'data' üzerinden mapleme yapılır.
-            
+            // Veri başarıyla gelirse işle
             if(data && Array.isArray(data)) {
-                 // Sadece yeni olanları ekle (Zaten varsa ekleme)
                  data.slice(0, 10).forEach(item => {
                      const zikirName = item.name.common || item.name;
+                     // Eğer zikir listede yoksa ekle
                      if(!db.some(z => z.name === zikirName)) {
-                         db.push({ name: zikirName, count: 0, target: 99, desc: "Bu zikir huzur ve bereket getirir." });
+                         db.push({ 
+                            name: zikirName, 
+                            count: 0, 
+                            target: 99, 
+                            desc: "Bu zikir huzur ve bereket niyetiyle çekilir." 
+                         });
                      }
                  });
                  save();
@@ -247,8 +253,26 @@
                  updateView();
             }
         } catch (error) {
-            console.log("Veri çekilemedi:", error);
-            mainDesc.innerText = "Zikir kütüphanesi hazır.";
+            console.log("Dış veri çekilemedi, yerel liste yükleniyor:", error);
+            
+            // HATA ALIRSA BURASI ÇALIŞIR: En iyi zikirleri manuel ekleyelim
+            const yerelZikirler = [
+                { name: "Ya Fettâh", count: 0, target: 489, desc: "Tüm hayır kapılarını açmak ve işlerin kolaylığı için." },
+                { name: "Ya Rezzâk", count: 0, target: 308, desc: "Maddi ve manevi rızkın bollaşması, bereket için." },
+                { name: "Ya Şâfi", count: 0, target: 391, desc: "Hastalıklar için şifa ve ruhen iyileşme niyetine." },
+                { name: "Hasbünallâh", count: 0, target: 450, desc: "Her türlü zorluk ve düşmana karşı Allah'a sığınmak için." }
+            ];
+
+            yerelZikirler.forEach(z => {
+                if(!db.some(existing => existing.name === z.name)) {
+                    db.push(z);
+                }
+            });
+
+            save();
+            renderDropdown();
+            updateView();
+            mainDesc.innerText = "Zikir listesi güncellendi.";
         }
     }
 
