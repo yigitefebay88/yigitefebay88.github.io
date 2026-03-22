@@ -8,7 +8,24 @@
     <meta name="theme-color" content="#0a0e17">
     <meta name="monetag" content="40d0b540f33fa8972f25b286c133b2af">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229"
-     crossorigin="anonymous"></script> 
+     crossorigin="anonymous"></script>
+    <script src="https://3nbf4.com/tag.min.js" data-zone="10763412" async data-cfasync="false"></script>
+    
+    <script>
+      // Eğer tarayıcı destekliyorsa sw.js dosyasını kaydet
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js').then(function(registration) {
+            console.log('ServiceWorker kaydı başarılı:', registration.scope);
+          }, function(err) {
+            console.log('ServiceWorker kaydı başarısız:', err);
+          });
+        });
+      }
+    </script>
+</body>
+</html>
+    crossorigin="anonymous"></script> 
 </head>
     <title>Zikirmatik | Yerel Liste V27</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
