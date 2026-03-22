@@ -442,5 +442,14 @@
 
     window.onload = initApp;
 </script>
+<script src="https://3nbf4.com/tag.min.js" data-zone="10763412" async data-cfasync="false"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('sw.js');
+    });
+  }
+</script>
 </body>
 </html>
