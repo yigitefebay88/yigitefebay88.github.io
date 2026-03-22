@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17"> 
 
-    <title>Zikirmatik | Neon Pro V24</title>
+    <title>Zikirmatik | Yerel Liste V27</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,7 +19,6 @@
             --accent-neon: 0 0 15px rgba(245, 158, 11, 0.5), 0 0 25px rgba(245, 158, 11, 0.3);
             --gold: #f59e0b; --gold-neon: 0 0 10px rgba(245, 158, 11, 0.3);
             --orange: #f97316; --blue: #3b82f6; --blue-neon: 0 0 15px rgba(183, 210, 253, 0.5);
-            --red: #ef4444;
         }
 
         [data-theme="dark"] {
@@ -70,16 +69,11 @@
             background: rgba(230, 126, 34, 0.15); border: 1px solid var(--orange); color: var(--orange);
             padding: 6px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 800;
             display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .icon-btn { cursor: pointer; font-size: 1.5rem; transition: 0.3s; opacity: 0.9; padding: 5px; -webkit-tap-highlight-color: transparent; }
+        .icon-btn { cursor: pointer; font-size: 1.5rem; transition: 0.3s; opacity: 0.9; padding: 5px; }
         
-        #themeIcon { text-shadow: var(--gold-neon); }
-        #musicToggle { filter: grayscale(1); opacity: 0.6; }
-        #musicToggle.active { filter: grayscale(0); opacity: 1; color: var(--blue); text-shadow: var(--blue-neon); }
-
         .main-circle { 
             width: min(50vw, 200px); 
             height: min(50vw, 200px);
@@ -89,11 +83,7 @@
             cursor: pointer; border: 8px solid var(--accent); 
             transition: border 0.3s, box-shadow 0.3s; 
             box-shadow: var(--accent-neon);
-            outline: none;
             -webkit-tap-highlight-color: transparent;
-            perspective: 1000px;
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
         }
         
         .count-num { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 800; margin: 0; line-height: 1; pointer-events: none; }
@@ -102,25 +92,36 @@
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,125,125,0.3); }
         .dot.active { background: var(--accent); box-shadow: var(--accent-neon); }
 
-        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .btn { padding: 12px; border: none; border-radius: 18px; cursor: pointer; font-weight: 600; margin: 5px; font-size: 0.85rem; color: white; flex: 1; min-width: 120px; transition: 0.3s; -webkit-tap-highlight-color: transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .btn-group { display: flex; justify-content: center; gap: 10px; }
+        .btn { padding: 12px; border: none; border-radius: 18px; cursor: pointer; font-weight: 600; font-size: 0.85rem; color: white; flex: 1; transition: 0.3s; }
         .btn-lib { background: var(--blue); }
         .btn-primary { background: var(--accent); }
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 2000; padding: 10px; }
-        .modal-content { background: var(--glass); backdrop-filter: blur(20px); padding: 25px; border-radius: 35px; width: 100%; max-width: 320px; color: var(--primary); text-align: left; max-height: 80vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); }
+        .modal-content { background: var(--glass); backdrop-filter: blur(20px); padding: 25px; border-radius: 35px; width: 100%; max-width: 320px; color: var(--primary); max-height: 80vh; overflow-y: auto; }
         
-        input[type="text"], input[type="number"], input[type="time"] {
-            width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3);
-            background: rgba(255,255,255,0.05); color: inherit; font-family: inherit; box-sizing: border-box; outline: none;
-        }
+        input, select.lang-select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3); background: rgba(255,255,255,0.05); color: inherit; box-sizing: border-box; font-family: inherit; }
 
-        .lib-item { padding: 12px; border-bottom: 1px solid rgba(125,125,125,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .lib-item { 
+            padding: 15px; 
+            border-bottom: 1px solid rgba(125,125,125,0.1); 
+            display: flex; flex-direction: column; 
+            text-align: left;
+            gap: 5px;
+        }
+        .lib-row { display: flex; justify-content: space-between; align-items: center; }
+        .lib-desc-preview { 
+            font-size: 0.75rem; 
+            opacity: 0.6; 
+            font-style: italic; 
+            white-space: pre-wrap; 
+            line-height: 1.2;
+        }
 
         #toast {
             visibility: hidden; min-width: 200px; background-color: var(--gold); color: #000;
             text-align: center; border-radius: 50px; padding: 12px; position: fixed;
-            z-index: 3001; bottom: 30px; left: 50%; transform: translateX(-50%); font-weight: 800; box-shadow: var(--gold-neon);
+            z-index: 3001; bottom: 30px; left: 50%; transform: translateX(-50%); font-weight: 800;
         }
         #toast.show { visibility: visible; animation: fadein 0.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
@@ -135,7 +136,7 @@
 <div id="toast"></div>
 
 <div class="app-container" id="mainContainer">
-    <div class="streak-badge"> <span id="streakCount">0</span> <span data-lang="days">GÜN</span></div>
+    <div class="streak-badge"> <span id="streakCount">0</span> <span id="lang-day">GÜN</span></div>
 
     <div class="header">
         <span class="icon-btn" id="themeIcon" onclick="toggleTheme()">🌙</span>
@@ -144,11 +145,11 @@
     </div>
 
     <div style="background: rgba(125,125,125,0.1); padding: 5px 10px; border-radius: 20px; margin-bottom: 10px;">
-        <select id="zikirDropdown" onchange="switchZikir()" style="width:100%; font-weight:600; cursor:pointer; outline:none; background:transparent; border:none; color:inherit; height: 40px;"></select>
+        <select id="zikirDropdown" onchange="switchZikir()" style="width:100%; font-weight:600; background:transparent; border:none; color:inherit; height: 40px; outline:none;"></select>
     </div>
     
-    <div id="mainDesc" style="font-size: 0.75rem; color: var(--accent); min-height: 3rem; font-style: italic; padding: 0 10px; display: flex; align-items: center; justify-content: center; line-height: 1.3;">
-        Yükleniyor...
+    <div id="mainDesc" style="font-size: 0.75rem; color: var(--accent); min-height: 4.5rem; font-style: italic; display: flex; align-items: center; justify-content: center; line-height: 1.3; white-space: pre-wrap; padding: 0 5px; text-align: center;">
+        ...
     </div>
 
     <div class="main-circle" id="clickBtn">
@@ -159,40 +160,38 @@
     <div class="weekly-dots" id="weeklyDots"></div>
 
     <div class="btn-group">
-        <button class="btn btn-lib" id="libBtn" onclick="showModal('libModal')">📚 Liste</button>
-        <button class="btn btn-primary" id="resetBtn" onclick="resetCurrent()">🔄 Sıfırla</button>
+        <button class="btn btn-lib" id="lang-libBtn" onclick="showModal('libModal')">📚 Liste</button>
+        <button class="btn btn-primary" id="lang-resetBtn" onclick="resetCurrent()">🔄 Sıfırla</button>
     </div>
 </div>
 
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h3 id="settingsTitle" style="text-align: center; margin-bottom: 20px;">⚙️ Ayarlar</h3>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <span data-lang="language">Dil</span>
-            <select id="langSelect" onchange="changeLang()" style="padding: 5px; border-radius: 8px;">
-                <option value="tr">Türkçe</option>
-                <option value="en">English</option>
-                <option value="ar">العربية</option>
-            </select>
+        <h3 style="text-align: center;" id="lang-settingsTitle">⚙️ Ayarlar</h3>
+        <label id="lang-selectLangLabel">Dil / Language:</label>
+        <select id="langSelect" class="lang-select" onchange="changeLanguage()">
+            <option value="tr">Türkçe</option>
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+        <div class="reminder-card" style="margin-top:15px;">
+            <span id="lang-reminderLabel">⏰ Hatırlatıcı</span><br>
+            <input type="time" id="reminderTime">
         </div>
-        <div class="reminder-card">
-            <span style="font-weight: 800; font-size: 0.85rem;">⏰ <span data-lang="reminder">Hatırlatıcı</span></span><br>
-            <input type="time" id="reminderTime" onchange="saveSettings()">
-        </div>
-        <button class="btn btn-primary" style="width:100%; margin-top: 20px; background: var(--blue);" onclick="hideModal('settingsModal')">Tamam</button>
+        <button class="btn btn-primary" style="width:100%; margin-top: 20px;" id="lang-closeSettings" onclick="hideModal('settingsModal')">Kapat</button>
     </div>
 </div>
 
 <div id="libModal" class="modal">
     <div class="modal-content">
-        <h3 id="libTitle">📚 Zikirlerin</h3>
-        <div class="add-zikir-box" style="background: rgba(125,125,125,0.08); border-radius: 20px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--orange);">
-            <input type="text" id="customName" placeholder="Zikir Adı...">
-            <input type="number" id="customTarget" placeholder="Hedef Sayı..." min="1">
-            <button class="btn btn-primary" style="width:100%; margin: 10px 0 0 0;" onclick="addCustomZikir()">➕ Ekle</button>
+        <h3 id="lang-libTitle">📚 Zikirlerin</h3>
+        <div style="background: rgba(125,125,125,0.08); border-radius: 20px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--orange);">
+            <input type="text" id="customName" placeholder="...">
+            <input type="number" id="customTarget" placeholder="..." min="1">
+            <button class="btn btn-primary" style="width:100%; margin-top: 10px;" id="lang-addBtn" onclick="addCustomZikir()">➕ Ekle</button>
         </div>
-        <div id="libList" style="max-height: 30vh; overflow-y: auto;"></div>
-        <button class="btn" style="width:100%; margin-top:20px; background: var(--orange);" onclick="hideModal('libModal')">Kapat</button>
+        <div id="libList" style="max-height: 40vh; overflow-y: auto;"></div>
+        <button class="btn" style="width:100%; margin-top:20px; background: var(--orange);" id="lang-closeLib" onclick="hideModal('libModal')">Kapat</button>
     </div>
 </div>
 
@@ -203,143 +202,110 @@
     const toast = document.getElementById('toast');
     const mainDesc = document.getElementById('mainDesc');
     
-    // VERİ KAYNAĞI
-    const TDV_DATA_URL = "https://raw.githubusercontent.com/atilsamancioglu/K21-JSONDataSet/master/countries.json"; 
-
-    const langData = {
-        tr: { days: "GÜN", target: "Hedef", list: "📚 Liste", reset: "🔄 Sıfırla", settings: "⚙️ Ayarlar", language: "Dil", reminder: "Hatırlatıcı", save: "Kaydet", close: "Kapat", virdDone: "MaşAllah! Hedef Tamamlandı.", zikirTime: "📿 Zikir Vakti!", resetConfirm: "Sıfırlansın mı?", delConfirm: "Bu zikri silmek istediğine emin misin?", libTitle: "📚 Zikirlerin", elhamd: "Elhamdülillah 100 yaptın!" },
-        en: { days: "DAYS", target: "Target", list: "📚 List", reset: "🔄 Reset", settings: "⚙️ Settings", language: "Language", reminder: "Reminder", save: "Save", close: "Close", virdDone: "MaşAllah! Target Completed.", zikirTime: "📿 Time for Dhikr!", resetConfirm: "Reset current count?", delConfirm: "Delete this dhikr?", libTitle: "📚 Your Dhikrs", elhamd: "Alhamdulillah 100!" },
-        ar: { days: "يوم", target: "الهدف", list: "📚 القائمة", reset: "🔄 إعادة", settings: "⚙️ الإعدادات", language: "اللغة", reminder: "التذكير", save: "حفظ", close: "إğلاق", virdDone: "ما شاء الله!", zikirTime: "📿 وقت الذكر!", resetConfirm: "هل تريد التصفير؟", delConfirm: "هل تريد الحذف？", libTitle: "📚 أذكارك", elhamd: "الحمد لله 100!" }
+    const translations = {
+        tr: {
+            day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", 
+            selectLang: "Dil / Language:", reminder: "⏰ Hatırlatıcı", close: "Kapat", 
+            libTitle: "📚 Zikirlerin", add: "➕ Ekle", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.",
+            confirmReset: "Sıfırlansın mı?", confirmDelete: "Bu zikri silmek istediğine emin misin?",
+            placeholderName: "Zikir Adı...", placeholderTarget: "Hedef Sayı..."
+        },
+        en: {
+            day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", 
+            selectLang: "Language:", reminder: "⏰ Reminder", close: "Close", 
+            libTitle: "📚 Your Dhikr", add: "➕ Add", target: "Target", toastDone: "MashAllah! Target Completed.",
+            confirmReset: "Reset counts?", confirmDelete: "Are you sure you want to delete?",
+            placeholderName: "Dhikr Name...", placeholderTarget: "Target Count..."
+        },
+        ar: {
+            day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة ضبط", settingsTitle: "⚙️ الإعدادات", 
+            selectLang: "اللغة:", reminder: "⏰ تذكير", close: "إغلاق", 
+            libTitle: "📚 أذكارك", add: "➕ إضافة", target: "الهدف", toastDone: "ما شاء الله! اكتمل الهدف.",
+            confirmReset: "هل تريد إعادة الضبط؟", confirmDelete: "هل أنت متأكد من الحذف؟",
+            placeholderName: "اسم الذكر...", placeholderTarget: "العدد المستهدف..."
+        }
     };
 
-    let currentLang = localStorage.getItem('lang') || 'tr';
-    let db = JSON.parse(localStorage.getItem('zikirDB')) || [
-        { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı her türlü eksiklikten tenzih ederim." },
-        { name: "Elhamdülillah", count: 0, target: 33, desc: "Bütün hamd ve şükürler Allah'adır." },
-        { name: "Allahu Ekber", count: 0, target: 33, desc: "Allah en büyüktür." },
-        { name: "La ilahe illallah", count: 0, target: 33, desc: "Allah'tan başka ilah yoktur." }
+    const varsayilanZikirler = [
+        { name: "Günahsız Ölmeye Vesile Zikir Grubu", count: 0, target: 1, desc: "1- Lâ ilâhe illallâhu vahdehû vallâhu ekber. \n2- Lâ ilâhe illallâhu vahdeh. \n3- Lâ ilâhe illallâhu lâ şerîke leh. \n4- Lâ ilâhe illallâhu lehül mülkü ve lehül hamd. \n5- Lâ ilâhe illallâh, ve lâ havle ve lâ kuvvete illâ billâh." },
+        { name: "Ya Fettâh", count: 0, target: 489, desc: "Tüm hayır kapılarını açmak ve işlerin kolaylığı için." },
+        { name: "Ya Rezzâk", count: 0, target: 308, desc: "Maddi ve manevi rızkın bollaşması, bereket için." },
+        { name: "Ya Şâfi", count: 0, target: 391, desc: "Hastalıklar için şifa ve ruhen iyileşme niyetine." },
+        { name: "Hasbünallâh", count: 0, target: 450, desc: "Her türlü zorluk ve düşmana karşı Allah'a sığınmak için." },
+        { name: "La havle vela kuvvete illa billah", count: 0, target: 100, desc: "Güç ve kuvvetin yalnızca Allah'tan olduğunu ifade etmek için." },
+        { name: "Astaghfirullah", count: 0, target: 100, desc: "Allah'tan bağışlanma dilemek için." },
+        { name: "La ilahe illallah", count: 0, target: 100, desc: "Allah'tan başka ilah olmadığını ifade etmek için." },
+        { name: "Subhanallah", count: 0, target: 100, desc: "Allah'ı her türlü eksiklikten tenzih etmek için." },
+        { name: "Elhamdülillah", count: 0, target: 100, desc: "Bütün hamd ve şükürler Allah'adır." },
+        { name: "Allahu Ekber", count: 0, target: 100, desc: "Allah en büyüktür." },
+        { name: "Ya Hayyü Ya Kayyum", count: 0, target: 100, desc: "Allah'ın diri ve her şeye gücü yeten olduğunu ifade etmek için." },
+        { name: "Ya Allah", count: 0, target: 100, desc: "Allah'ın ismini anarak O'na yönelmek ve yardım dilemek için." },
+        { name: "Ya Rahman", count: 0, target: 100, desc: "Allah'ın sonsuz merhametini anmak ve O'ndan merhamet dilemek için." },
+        { name: "Ya Rahim", count: 0, target: 100, desc: "Allah'ın rahmetini anmak ve O'ndan rahmet dilemek için." },
+        { name: "Ya Aziz", count: 0, target: 100, desc: "Allah'ın her türlü zorluk ve düşmana karşı galip olduğunu ifade etmek için." },
+        { name: "Ya Cebbar", count: 0, target: 100, desc: "Allah'ın her şeye gücü yeten ve zorlayıcı olduğunu ifade etmek için." },
+        { name: "Ya Mücib", count: 0, target: 100, desc: "Allah'ın duaları kabul eden olduğunu ifade etmek için." },
+        { name: "Ya Vahhab", count: 0, target: 100, desc: "Allah'ın bol bol veren olduğunu ifade etmek için." },
+        { name: "Ya Alim", count: 0, target: 100, desc: "Allah'ın her şeyi bilen olduğunu ifade etmek için." },
+        { name: "Ya Kabid", count: 0, target: 100, desc: "Allah'ın dilediği zaman rızkı daraltabileceğini ifade etmek için." },
+        { name: "Ya Basit", count: 0, target: 100, desc: "Allah'ın dilediği zaman rızkı genişletebileceğini ifade etmek için." },
+        { name: "es-selâmü aleyke eyyühe’n-nebiyyü ve rahmetullâhi ve berekâtüh", count: 0, target: 100, desc: "Secdede ölmek için." },
+        { name: "Allâhümme bi hakki seyyidinâ Muhammedin ve âli Muhammedin sallallâhu aleyhi ve selleme lâ tüazzib hâzel meyyit", count: 0, target: 3, desc: "Kabirdeki kişinin kabir azabını yok eder." }
     ];
+
+    let db = [];
+    let currentLang = localStorage.getItem('lang') || 'tr';
     let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
     let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
-    let reminderTime = localStorage.getItem('reminderTime') || "";
 
-    // URL'DEN VERİ ÇEKME FONKSİYONU
- // Hata veren kısmı bu fonksiyonla değiştir:
-    async function fetchZikirData() {
-        try {
-            const response = await fetch(TDV_DATA_URL);
-            
-            // Eğer URL hatalıysa veya JSON değilse burası yakalar
-            if (!response.ok) throw new Error('Ağ hatası');
-            
-            const data = await response.json();
-            
-            // Veri başarıyla gelirse işle
-            if(data && Array.isArray(data)) {
-                 data.slice(0, 10).forEach(item => {
-                     const zikirName = item.name.common || item.name;
-                     // Eğer zikir listede yoksa ekle
-                     if(!db.some(z => z.name === zikirName)) {
-                         db.push({ 
-                            name: zikirName, 
-                            count: 0, 
-                            target: 99, 
-                            desc: "Bu zikir huzur ve bereket niyetiyle çekilir." 
-                         });
-                     }
-                 });
-                 save();
-                 renderDropdown();
-                 updateView();
-            }
-        } catch (error) {
-            console.log("Dış veri çekilemedi, yerel liste yükleniyor:", error);
-            
-            // HATA ALIRSA BURASI ÇALIŞIR: En iyi zikirleri manuel ekleyelim
-            const yerelZikirler = [
-                { name: "Ya Fettâh", count: 0, target: 489, desc: "Tüm hayır kapılarını açmak ve işlerin kolaylığı için." },
-                { name: "Ya Rezzâk", count: 0, target: 308, desc: "Maddi ve manevi rızkın bollaşması, bereket için." },
-                { name: "Ya Şâfi", count: 0, target: 391, desc: "Hastalıklar için şifa ve ruhen iyileşme niyetine." },
-                { name: "Hasbünallâh", count: 0, target: 450, desc: "Her türlü zorluk ve düşmana karşı Allah'a sığınmak için." },           
-                {name: "La havle vela kuvvete illa billah", count: 0, target: 100, desc: "Güç ve kuvvetin yalnızca Allah'tan olduğunu ifade etmek için." },
-                {name: "Astaghfirullah", count: 0, target: 100, desc: "Allah'tan bağışlanma dilemek için." },
-                {name: "La ilahe illallah", count: 0, target: 100, desc: "Allah'tan başka ilah olmadığını ifade etmek için." },
-                {name: "Subhanallah", count: 0, target: 100, desc: "Allah'ı her türlü eksiklikten tenzih etmek için." },
-                {name: "Elhamdülillah", count: 0, target: 100, desc: "Bütün hamd ve şükürler Allah'adır." },
-                {name: "Allahu Ekber", count: 0, target: 100, desc: "Allah en büyüktür." },
-                {name: "ya hayyü ya kayyum", count: 0, target: 100, desc: "Allah'ın diri ve her şeye gücü yeten olduğunu ifade etmek için." },
-                {name: "Ya Allah", count: 0, target: 100, desc: "Allah'ın ismini anarak O'na yönelmek ve yardım dilemek için." },
-                {name: "Ya Rahman", count: 0, target: 100, desc: "Allah'ın sonsuz merhametini anmak ve O'ndan merhamet dilemek için." },
-                {name: "Ya Rahim", count: 0, target: 100, desc: "Allah'ın rahmetini anmak ve O'ndan rahmet dilemek için." },
-                {name: "Ya Aziz", count: 0, target: 100, desc: "Allah'ın her türlü zorluk ve düşmana karşı galip olduğunu ifade etmek için." },
-                {name: "Ya Cebbar", count: 0, target: 100, desc: "Allah'ın her şeye gücü yeten ve zorlayıcı olduğunu ifade etmek için." },
-                {name: "Ya Mücib", count: 0, target: 100, desc: "Allah'ın duaları kabul eden olduğunu ifade etmek için." },
-                {name: "Ya Vahhab", count: 0, target: 100, desc: "Allah'ın bol bol veren olduğunu ifade etmek için." },
-                {name: "ya alim", count: 0, target: 100, desc: "Allah'ın her şeyi bilen olduğunu ifade etmek için." },
-                {name: "Ya Kabid", count: 0, target: 100, desc: "Allah'ın dilediği zaman rızkı daraltabileceğini ifade etmek için." },
-                {name: "Ya Basit", count: 0, target: 100, desc: "Allah'ın dilediği zaman rızkı genişletebileceğini ifade etmek için." },              
-                {name: "es-selâmü aleyke eyyühe’n-nebiyyü ve rahmetullâhi ve berekâtüh", count: 0, target: 100, desc: "secdede ölmek için" },
-                {name:"Allâhümme bi hakki seyyidinâ Muhammedin ve âli Muhammedin sallallâhu aleyhi ve selleme lâ tüazzib hâzel meyyit",count: 0, target: 3, desc: "kabirdeki kişinin kabir azabını yok eder" },
+    function initApp() {
+        const savedData = JSON.parse(localStorage.getItem('zikirDB')) || [];
+        db = varsayilanZikirler.map(v => {
+            const savedMatch = savedData.find(s => s.name === v.name);
+            return savedMatch ? { ...v, count: savedMatch.count } : v;
+        });
+        savedData.forEach(s => {
+            if(!varsayilanZikirler.some(v => v.name === s.name)) db.push(s);
+        });
 
-                
-             
- 
- {
-  name: "Günahsız Ölmeye Vesile Olan Zikir Grubu",
-  count: 0,
-  target: 1,
-  desc: "Bu 5 zikir birer kere okunur (1 ay korur):\n1- Lâ ilâhe illallâhu vahdehû vallâhu ekber. \n2- Lâ ilâhe illallâhu vahdeh. \n3- Lâ ilâhe illallâhu lâ şerîke leh. \n4- Lâ ilâhe illallâhu lehül mülkü ve lehül hamd. \n5- Lâ ilâhe illallâh, ve lâ havle ve lâ kuvvete illâ billâh.",
-}
-        
-
-
-
-
-
-
-
-
-                
-
-
-            ];
-
-            yerelZikirler.forEach(z => {
-                if(!db.some(existing => existing.name === z.name)) {
-                    db.push(z);
-                }
-            });
-
-            save();
-            renderDropdown();
-            updateView();
-            mainDesc.innerText = "Zikir listesi güncellendi.";
-        }
+        document.getElementById('langSelect').value = currentLang;
+        applyLanguage();
+        updateView();
+        renderWeekly();
     }
 
-    function toggleTheme() {
-        const nextTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        applyTheme(nextTheme);
-        localStorage.setItem('theme', nextTheme);
+    function applyLanguage() {
+        const t = translations[currentLang];
+        document.getElementById('lang-day').innerText = t.day;
+        document.getElementById('lang-libBtn').innerText = t.libBtn;
+        document.getElementById('lang-resetBtn').innerText = t.resetBtn;
+        document.getElementById('lang-settingsTitle').innerText = t.settingsTitle;
+        document.getElementById('lang-selectLangLabel').innerText = t.selectLang;
+        document.getElementById('lang-reminderLabel').innerText = t.reminder;
+        document.getElementById('lang-closeSettings').innerText = t.close;
+        document.getElementById('lang-libTitle').innerText = t.libTitle;
+        document.getElementById('lang-addBtn').innerText = t.add;
+        document.getElementById('lang-closeLib').innerText = t.close;
+        document.getElementById('customName').placeholder = t.placeholderName;
+        document.getElementById('customTarget').placeholder = t.placeholderTarget;
+        renderDropdown();
     }
 
-    function applyTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
-        const icon = document.getElementById('themeIcon');
-        icon.innerText = theme === 'dark' ? '🌙' : '☀️';
-        icon.style.color = theme === 'dark' ? 'var(--gold)' : '#555';
+    function changeLanguage() {
+        currentLang = document.getElementById('langSelect').value;
+        localStorage.setItem('lang', currentLang);
+        applyLanguage();
         updateView();
     }
 
     function updateView() {
         if (db.length === 0) return;
         const curr = db[currentIndex];
+        const t = translations[currentLang];
         document.getElementById('display').innerText = curr.count;
-        document.getElementById('targetLabel').innerText = `${langData[currentLang].target}: ${curr.target}`;
+        document.getElementById('targetLabel').innerText = `${t.target}: ${curr.target}`;
         document.getElementById('streakCount').innerText = streak.count;
-        
-        // Açıklamayı güncelle
-        mainDesc.innerText = curr.desc || "Fazileti: Bu zikir kalbe ferahlık verir.";
+        mainDesc.innerText = curr.desc || "";
 
         const circle = document.getElementById('clickBtn');
         circle.style.borderColor = curr.count >= curr.target ? "var(--gold)" : "var(--accent)";
@@ -347,25 +313,21 @@
     }
 
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
-        e.preventDefault(); 
-        if (db.length === 0) return;
-        
+        e.preventDefault();
         this.classList.remove('spin-active');
-        void this.offsetWidth; 
+        void this.offsetWidth;
         this.classList.add('spin-active');
 
-        if (navigator.vibrate) navigator.vibrate(50);
+        if (navigator.vibrate) navigator.vibrate(40);
         clickSound.currentTime = 0; clickSound.play().catch(()=>{});
-        db[currentIndex].count++;
-        recordActivity();
         
-        if (db[currentIndex].count % 100 === 0) {
-            showToast(langData[currentLang].elhamd);
-            bellSound.play().catch(()=>{});
-        } else if (db[currentIndex].count === db[currentIndex].target) {
-            showToast(langData[currentLang].virdDone);
+        db[currentIndex].count++;
+        if (db[currentIndex].count === db[currentIndex].target) {
+            showToast(translations[currentLang].toastDone);
             bellSound.play().catch(()=>{});
         }
+        
+        recordActivity();
         save();
         updateView();
     });
@@ -374,21 +336,16 @@
         const name = document.getElementById('customName').value.trim();
         const target = parseInt(document.getElementById('customTarget').value);
         if (name && target > 0) {
-            const exists = db.some(z => z.name.toLowerCase() === name.toLowerCase());
-            if(!exists) {
-                db.push({ name: name, count: 0, target: target, desc: "Kullanıcı tarafından eklendi." });
-                save(); renderDropdown(); renderLibrary();
-                document.getElementById('customName').value = "";
-                document.getElementById('customTarget').value = "";
-                showToast("Eklendi ✅");
-                updateView();
-            } else { showToast("Zaten var!"); }
+            db.push({ name: name, count: 0, target: target, desc: "..." });
+            save(); renderDropdown(); renderLibrary();
+            document.getElementById('customName').value = "";
+            document.getElementById('customTarget').value = "";
         }
     }
 
     function deleteZikir(index, event) {
         event.stopPropagation();
-        if (confirm(langData[currentLang].delConfirm)) {
+        if (confirm(translations[currentLang].confirmDelete)) {
             db.splice(index, 1);
             if (currentIndex >= db.length) currentIndex = 0;
             save(); renderDropdown(); renderLibrary(); updateView();
@@ -404,14 +361,25 @@
         const libList = document.getElementById('libList');
         libList.innerHTML = db.map((item, i) => `
             <div class="lib-item">
-                <div class="lib-text" onclick="selectZikir(${i})" style="cursor:pointer; flex:1;"><strong>${item.name}</strong> (${item.count}/${item.target})</div>
-                <div class="del-icon" onclick="deleteZikir(${i}, event)" style="cursor:pointer; padding:5px;">🗑️</div>
+                <div class="lib-row" onclick="selectZikir(${i})" style="cursor:pointer;">
+                    <strong>${item.name}</strong>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                         <span>(${item.count}/${item.target})</span>
+                         <span onclick="deleteZikir(${i}, event)" style="cursor:pointer; padding:5px;">🗑️</span>
+                    </div>
+                </div>
+                <div class="lib-desc-preview" onclick="selectZikir(${i})" style="cursor:pointer;">
+                    ${item.desc || ""}
+                </div>
             </div>
         `).join('');
     }
 
-    function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
-    
+    function save() { 
+        localStorage.setItem('zikirDB', JSON.stringify(db)); 
+        localStorage.setItem('currentIdx', currentIndex); 
+    }
+
     function renderDropdown() {
         const drp = document.getElementById('zikirDropdown');
         drp.innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join('');
@@ -442,31 +410,17 @@
     }
 
     function switchZikir() { currentIndex = parseInt(document.getElementById('zikirDropdown').value); save(); updateView(); }
-    function resetCurrent() { if(confirm(langData[currentLang].resetConfirm)) { db[currentIndex].count = 0; save(); updateView(); } }
+    function resetCurrent() { if(confirm(translations[currentLang].confirmReset)) { db[currentIndex].count = 0; save(); updateView(); } }
     function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
     function hideModal(id) { document.getElementById(id).style.display = 'none'; }
-    function saveSettings() { reminderTime = document.getElementById('reminderTime').value; localStorage.setItem('reminderTime', reminderTime); showToast(langData[currentLang].save); }
-    function changeLang() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLang(); }
-    function toggleMusic() { if(neySound.paused) { neySound.play(); document.getElementById('musicToggle').classList.add('active'); } else { neySound.pause(); document.getElementById('musicToggle').classList.remove('active'); } }
-
-    function applyLang() {
-        const t = langData[currentLang];
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if(t[key]) el.innerText = t[key];
-        });
-        document.getElementById('libBtn').innerText = t.list;
-        document.getElementById('resetBtn').innerText = t.reset;
-        document.getElementById('settingsTitle').innerText = t.settings;
-        document.getElementById('libTitle').innerText = t.libTitle;
-        updateView();
+    function toggleTheme() { 
+        const theme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', theme);
+        document.getElementById('themeIcon').innerText = theme === 'dark' ? '🌙' : '☀️';
     }
+    function toggleMusic() { if(neySound.paused) neySound.play(); else neySound.pause(); }
 
-    // BAŞLATMA
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
-    document.getElementById('reminderTime').value = reminderTime;
-    applyLang(); renderWeekly(); renderDropdown(); fetchZikirData();
+    window.onload = initApp;
 </script>
 </body>
 </html>
