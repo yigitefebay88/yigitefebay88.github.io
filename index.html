@@ -8,34 +8,33 @@
     <meta name="theme-color" content="#0a0e17">
     
     <script src="https://quge5.com/88/tag.min.js" data-zone="10797884" async data-cfasync="false"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
 
-    <title>Zikirmatik Pro | V35</title>
+    <title>Zikirmatik Pro | V37 Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg-image: url('arkaplan.png'); --bg: #f0f2f5; --glass: rgba(255, 255, 255, 0.85);
-            --primary: #1e293b; --accent: #f59e0b; --accent-neon: 0 0 15px rgba(245, 158, 11, 0.5);
+            --primary: #1e293b; --accent: #10b981; --accent-neon: 0 0 15px #10b981;
             --gold: #f59e0b; --orange: #f97316; --blue: #3b82f6;
         }
 
         [data-theme="dark"] {
-            --glass: rgba(18, 25, 41, 0.92); --primary: #f8fafc; --accent: #10b981; 
-            --accent-neon: 0 0 15px #10b981; --gold: #f1c40f;
+            --glass: rgba(18, 25, 41, 0.94); --primary: #f8fafc; --accent: #10b981; 
+            --accent-neon: 0 0 20px #10b981; --gold: #f1c40f;
         }
 
         body { 
             font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); 
             display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
-            user-select: none; overflow: hidden; touch-action: manipulation;
+            user-select: none; overflow: hidden; touch-action: none;
             background-image: var(--bg-image); background-size: cover; background-position: center;
         }
 
         .app-container { 
             width: 90%; max-width: 400px; background: var(--glass); backdrop-filter: blur(25px);
-            border-radius: 40px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            text-align: center; border: 1px solid rgba(255,255,255,0.08); z-index: 10;
+            -webkit-backdrop-filter: blur(25px); border-radius: 40px; padding: 20px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; z-index: 10;
         }
 
         .streak-badge {
@@ -45,41 +44,41 @@
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .icon-btn { cursor: pointer; font-size: 1.5rem; padding: 5px; }
+        .icon-btn { cursor: pointer; font-size: 1.5rem; padding: 8px; transition: 0.2s; }
         
         .main-circle { 
-            width: min(50vw, 200px); height: min(50vw, 200px); margin: 10px auto; border-radius: 50%; 
+            width: min(60vw, 220px); height: min(60vw, 220px); margin: 15px auto; border-radius: 50%; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            background: rgba(255,255,255,0.03); cursor: pointer; border: 8px solid var(--accent); 
-            box-shadow: var(--accent-neon); transition: 0.3s;
+            background: rgba(255,255,255,0.05); cursor: pointer; border: 10px solid var(--accent); 
+            box-shadow: var(--accent-neon); transition: transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        .count-num { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 800; margin: 0; pointer-events: none; }
+        .count-num { font-size: clamp(3rem, 12vw, 4.5rem); font-weight: 800; margin: 0; pointer-events: none; }
         .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,125,125,0.3); }
-        .dot.active { background: var(--accent); }
+        .dot.active { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
         .btn-group { display: flex; justify-content: center; gap: 10px; }
-        .btn { padding: 12px; border: none; border-radius: 18px; cursor: pointer; font-weight: 600; flex: 1; color: white; transition: 0.3s; }
+        .btn { padding: 14px; border: none; border-radius: 20px; cursor: pointer; font-weight: 700; flex: 1; color: white; -webkit-tap-highlight-color: transparent; }
         .btn-lib { background: var(--blue); } .btn-primary { background: var(--accent); }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: var(--glass); padding: 25px; border-radius: 35px; width: 85%; max-width: 320px; max-height: 80vh; overflow-y: auto; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: var(--glass); padding: 25px; border-radius: 35px; width: 85%; max-width: 340px; max-height: 80vh; overflow-y: auto; color: var(--primary); }
         
-        input, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3); background: rgba(255,255,255,0.05); color: inherit; box-sizing: border-box; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3); background: rgba(255,255,255,0.1); color: inherit; font-family: inherit; }
         
-        #toast { visibility: hidden; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 25px; border-radius: 50px; font-weight: 800; z-index: 3001; }
+        #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; }
         
-        @keyframes clickAnim { 0% { transform: scale(1); } 50% { transform: scale(0.92); } 100% { transform: scale(1); } }
-        .click-active { animation: clickAnim 0.1s ease; }
+        .click-effect { transform: scale(0.92); }
     </style>
 </head>
 <body data-theme="dark">
 
-<audio id="clickSound"><source src="click.mp3" type="audio/mpeg"></audio>
-<audio id="neySound" loop><source src="ney.mp3" type="audio/mpeg"></audio>
-<audio id="bellSound"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
+<audio id="clickSound" preload="auto"><source src="./click.mp3" type="audio/mpeg"></audio>
+<audio id="neySound" loop preload="auto"><source src="./ney.mp3" type="audio/mpeg"></audio>
+<audio id="bellSound" preload="auto"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
 
 <div id="toast"></div>
 
@@ -92,11 +91,11 @@
     </div>
 
     <select id="zikirDropdown" onchange="switchZikir()"></select>
-    <div id="mainDesc" style="font-size: 0.75rem; color: var(--accent); min-height: 3.5rem; margin: 10px 0; font-style: italic; display: flex; align-items: center; justify-content: center; text-align: center;"></div>
+    <div id="mainDesc" style="font-size: 0.8rem; color: var(--accent); min-height: 4rem; margin: 5px 0; font-style: italic; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.4;"></div>
 
     <div class="main-circle" id="clickBtn">
         <p class="count-num" id="display">0</p>
-        <span id="targetLabel" style="font-size: 0.8rem; opacity: 0.7; font-weight: 600;">Hedef: 33</span>
+        <span id="targetLabel" style="font-size: 0.9rem; opacity: 0.8; font-weight: 600;">Hedef: 33</span>
     </div>
 
     <div class="weekly-dots" id="weeklyDots"></div>
@@ -109,8 +108,8 @@
 
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h3 id="lang-settingsTitle">⚙️ Ayarlar</h3>
-        <label id="lang-selectLangLabel">Dil:</label>
+        <h3 id="lang-settingsTitle" style="text-align:center">Ayarlar</h3>
+        <label id="lang-selectLangLabel">Dil Seçimi:</label>
         <select id="langSelect" onchange="changeLanguage()">
             <option value="tr">Türkçe</option>
             <option value="en">English</option>
@@ -122,37 +121,45 @@
 
 <div id="libModal" class="modal">
     <div class="modal-content">
-        <h3 id="lang-libTitle">📚 Zikirlerin</h3>
+        <h3 id="lang-libTitle" style="text-align:center">Zikir Listesi</h3>
         <input type="text" id="customName" placeholder="Zikir Adı...">
-        <input type="number" id="customTarget" placeholder="Hedef Sayı..." min="1">
+        <input type="number" id="customTarget" placeholder="Hedef..." min="1">
         <button class="btn btn-primary" style="width:100%; margin-bottom: 15px;" onclick="addCustomZikir()">➕ Ekle</button>
-        <div id="libList" style="max-height: 30vh; overflow-y: auto;"></div>
-        <button class="btn" style="width:100%; background: var(--orange); margin-top:10px;" onclick="hideModal('libModal')">Kapat</button>
+        <div id="libList" style="max-height: 35vh; overflow-y: auto; border-top: 1px solid rgba(125,125,125,0.2)"></div>
+        <button class="btn" style="width:100%; background: var(--orange); margin-top:15px;" onclick="hideModal('libModal')">Kapat</button>
     </div>
 </div>
 
 <script>
-    // --- AKILLI REKLAM SİSTEMİ (V35) ---
-    // window.open'i ana buton dışında kısıtla
-    let lastPopTime = 0;
+    // --- V37 MOBILE & AD LOGIC ---
+    let lastPop = 0;
     const originalOpen = window.open;
     window.open = function() {
-        let now = Date.now();
-        if (now - lastPopTime < 45000) return null; // 45 saniyede en fazla 1 reklam
-        lastPopTime = now;
+        if (Date.now() - lastPop < 45000) return null;
+        lastPop = Date.now();
         return originalOpen.apply(window, arguments);
     };
 
-    // --- DEĞİŞKENLER VE DB ---
+    // Mobil Ses Kilidini Açma
+    function unlockAudio() {
+        const audioIds = ['clickSound', 'neySound', 'bellSound'];
+        audioIds.forEach(id => {
+            const a = document.getElementById(id);
+            a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{});
+        });
+        document.removeEventListener('pointerdown', unlockAudio);
+    }
+    document.addEventListener('pointerdown', unlockAudio);
+
     const translations = {
-        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
-        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "Target Completed.", confirmReset: "Reset counts?", confirmDelete: "Delete?" },
-        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "اكتمل الهدف.", confirmReset: "إعادة الضبط؟", confirmDelete: "حذف؟" }
+        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
+        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "Target Completed.", confirmReset: "Reset?", confirmDelete: "Delete?" },
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "اكتمل الهدف.", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
     };
 
     const varsayilanZikirler = [
-        { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı noksan sıfatlardan tenzih ederim." },
-        { name: "Elhamdülillah", count: 0, target: 33, desc: "Hamd ve şükür Allah'adır." },
+        { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı her türlü eksiklikten tenzih ederim." },
+        { name: "Elhamdülillah", count: 0, target: 33, desc: "Bütün övgüler Allah'adır." },
         { name: "Allahu Ekber", count: 0, target: 33, desc: "Allah en büyüktür." }
     ];
 
@@ -161,7 +168,6 @@
     let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
     let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
 
-    // --- FONKSİYONLAR ---
     function init() { applyLanguage(); updateView(); renderWeekly(); renderDropdown(); }
 
     function applyLanguage() {
@@ -183,14 +189,12 @@
         document.getElementById('streakCount').innerText = streak.count;
     }
 
-    // ANA TIKLAMA (REKLAMI BYPASS EDER)
+    // ANA BUTON - TELEFONDA EN HIZLI TEPKİ (PointerDown)
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
-        e.stopPropagation(); // Reklam scriptine "tıklandı" bilgisini gönderme
-        e.preventDefault();
-
-        this.classList.remove('click-active');
-        void this.offsetWidth;
-        this.classList.add('click-active');
+        e.stopPropagation(); e.preventDefault();
+        
+        this.classList.add('click-effect');
+        setTimeout(() => this.classList.remove('click-effect'), 100);
 
         db[currentIndex].count++;
         if (db[currentIndex].count === db[currentIndex].target) {
@@ -198,9 +202,9 @@
             showToast(translations[currentLang].toastDone);
         }
 
-        document.getElementById('clickSound').currentTime = 0;
-        document.getElementById('clickSound').play().catch(()=>{});
-        if (navigator.vibrate) navigator.vibrate(40);
+        const snd = document.getElementById('clickSound');
+        snd.currentTime = 0; snd.play().catch(()=>{});
+        if (navigator.vibrate) navigator.vibrate(50);
 
         recordActivity(); save(); updateView();
     });
@@ -209,10 +213,21 @@
         const name = document.getElementById('customName').value.trim();
         const target = parseInt(document.getElementById('customTarget').value);
         if (name && target > 0) {
-            db.push({ name: name, count: 0, target: target, desc: "..." });
+            db.push({ name: name, count: 0, target: target, desc: "Özel Zikir" });
             save(); renderDropdown(); renderLibrary();
             document.getElementById('customName').value = ""; document.getElementById('customTarget').value = "";
         }
+    }
+
+    function renderLibrary() {
+        const list = document.getElementById('libList');
+        list.innerHTML = db.map((item, i) => `
+            <div style="display:flex; justify-content:space-between; padding:12px 5px; border-bottom:1px solid rgba(125,125,125,0.1); align-items:center;">
+                <div onclick="selectZikir(${i})" style="flex:1; cursor:pointer;">
+                    <strong>${item.name}</strong> <br> <small>${item.count} / ${item.target}</small>
+                </div>
+                <span onclick="deleteZikir(${i}, event)" style="padding:10px; cursor:pointer;">🗑️</span>
+            </div>`).join('');
     }
 
     function deleteZikir(i, e) {
@@ -224,17 +239,6 @@
         }
     }
 
-    function renderLibrary() {
-        const list = document.getElementById('libList');
-        list.innerHTML = db.map((item, i) => `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid rgba(125,125,125,0.1); align-items:center;">
-                <div onclick="selectZikir(${i})" style="flex:1; cursor:pointer;">
-                    <strong>${item.name}</strong> <br> <small>${item.count}/${item.target}</small>
-                </div>
-                <span onclick="deleteZikir(${i}, event)" style="cursor:pointer;">🗑️</span>
-            </div>`).join('');
-    }
-
     function selectZikir(i) { currentIndex = i; save(); updateView(); renderDropdown(); hideModal('libModal'); }
     function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
     function renderDropdown() { document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); }
@@ -243,7 +247,7 @@
     function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
     function hideModal(id) { document.getElementById(id).style.display = 'none'; }
     function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
-    function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='dark'?'light':'dark'); }
+    function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='dark'?'light':'dark'); document.getElementById('themeIcon').innerText = document.body.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️'; }
     function toggleMusic() { const n = document.getElementById('neySound'); if(n.paused) n.play(); else n.pause(); }
     function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
     
