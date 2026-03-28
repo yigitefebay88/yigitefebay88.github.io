@@ -2,15 +2,14 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="monetag" content="">
-    <script src="https://quge5.com/88/tag.min.js" data-zone="10763412" async data-cfasync="false"></script>
+    <script src="https://quge5.com/88/tag.min.js" data-zone="10798711" async data-cfasync="false"></script>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     
-    <title>Zikirmatik Pro | V40 Verified</title>
+    <title>Zikirmatik Pro | V45 Verified</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -71,7 +70,6 @@
         
         #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; }
-        
         .click-effect { transform: scale(0.92); }
     </style>
 </head>
@@ -132,30 +130,25 @@
 </div>
 
 <script>
-    // --- BALANCED REVENUE & VERIFICATION FIX ---
-    let lastPop = 0;
-    const originalOpen = window.open;
-
-    window.open = function() {
-        if (Date.now() - lastPop < 20000) return null;
-        lastPop = Date.now();
-        return originalOpen.apply(window, arguments);
-    };
+    // --- HATA KORUMA SİSTEMİ ---
+    function safePlay(audioId) {
+        const a = document.getElementById(audioId);
+        if (a) a.play().catch(() => console.log(audioId + " dosyası yok, sessiz devam."));
+    }
 
     function unlockAudio() {
-        const audioIds = ['clickSound', 'neySound', 'bellSound'];
-        audioIds.forEach(id => {
+        ['clickSound', 'neySound', 'bellSound'].forEach(id => {
             const a = document.getElementById(id);
-            a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{});
+            if(a) a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{});
         });
         document.removeEventListener('pointerdown', unlockAudio);
     }
     document.addEventListener('pointerdown', unlockAudio);
 
     const translations = {
-        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
-        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "Target Completed.", confirmReset: "Reset?", confirmDelete: "Delete?" },
-        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "اكتمل الهدف.", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
+        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
+        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
     };
 
     const varsayilanZikirler = [
@@ -190,19 +183,20 @@
         document.getElementById('streakCount').innerText = streak.count;
     }
 
-    // ANA BUTON
-    document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
+    // ANA TIKLAMA
+    document.getElementById('clickBtn').addEventListener('pointerdown', function() {
         this.classList.add('click-effect');
         setTimeout(() => this.classList.remove('click-effect'), 100);
 
         db[currentIndex].count++;
-        if (db[currentIndex].count === db[currentIndex].target) {
-            document.getElementById('bellSound').play().catch(()=>{});
+        
+        if (db[currentIndex].count % db[currentIndex].target === 0) {
+            safePlay('bellSound');
             showToast(translations[currentLang].toastDone);
         }
 
         const snd = document.getElementById('clickSound');
-        snd.currentTime = 0; snd.play().catch(()=>{});
+        if(snd) { snd.currentTime = 0; safePlay('clickSound'); }
         if (navigator.vibrate) navigator.vibrate(50);
 
         recordActivity(); save(); updateView();
@@ -247,7 +241,7 @@
     function hideModal(id) { document.getElementById(id).style.display = 'none'; }
     function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
     function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='dark'?'light':'dark'); document.getElementById('themeIcon').innerText = document.body.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️'; }
-    function toggleMusic() { const n = document.getElementById('neySound'); if(n.paused) n.play(); else n.pause(); }
+    function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
     function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
     
     function recordActivity() {
