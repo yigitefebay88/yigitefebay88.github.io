@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     
-    <title>Zikirmatik Pro | V52 Silent Start</title>
+    <title>Zikirmatik Pro | V54 Official</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -130,31 +130,32 @@
 </div>
 
 <script>
-    // --- GECİKMELİ REKLAM OTOMASYONU ---
-    const START_DELAY = 10; // Site açıldıktan sonra ilk 10 saniye reklam ÇIKMAZ
-    const AD_INTERVAL = 30; // Sonrasında her 30 saniyede bir tetiklenir
+    // --- GELİŞMİŞ REKLAM KONTROL SİSTEMİ ---
+    const START_DELAY = 10; // İlk 10 saniye reklam ÇIKMAZ
+    const AD_INTERVAL = 30; // Sonrasında her 30 saniyede bir kontrol edilir
     let canShowAd = false;
 
-    // Başlangıç kilidini aç
-    setTimeout(() => {
-        canShowAd = true;
-        console.log("Reklam kilidi açıldı.");
-    }, START_DELAY * 1000);
+    // Reklam kilidini aç
+    setTimeout(() => { canShowAd = true; }, START_DELAY * 1000);
 
     function triggerAd() {
-        if (!canShowAd) return; // Kilit açılmadıysa hiçbir şey yapma
+        if (!canShowAd) return;
         
-        const event = new MouseEvent('click', {
-            view: window, bubbles: true, cancelable: true
-        });
+        // Yeni sekmeye atılmayı zorlaştırmak için window.open geçici olarak devredışı bırakılır
+        const originalOpen = window.open;
+        window.open = function() { return null; }; 
+        
+        const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
         document.body.dispatchEvent(event);
-        console.log("Reklam tetiklendi.");
+        
+        // Yarım saniye sonra yetkiyi geri ver
+        setTimeout(() => { window.open = originalOpen; }, 500);
+        console.log("Reklam motoru sessizce tetiklendi.");
     }
     
-    // Zamanlayıcıyı başlat
     setInterval(triggerAd, AD_INTERVAL * 1000);
 
-    // SES VE ETKİLEŞİM MANTIĞI
+    // --- SES VE ETKİLEŞİM ---
     function safePlay(audioId) {
         const a = document.getElementById(audioId);
         if (a) a.play().catch(() => {});
@@ -169,7 +170,7 @@
     }
     document.addEventListener('pointerdown', unlockAudio);
 
-    // DİL VE VERİ YÖNETİMİ
+    // --- DİL VE VERİ ---
     const translations = {
         tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
         en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
@@ -208,14 +209,14 @@
         document.getElementById('streakCount').innerText = streak.count;
     }
 
-    // TIKLAMA OLAYI
+    // --- TIKLAMA OLAYI ---
     document.getElementById('clickBtn').addEventListener('pointerdown', function() {
         this.classList.add('click-effect');
         setTimeout(() => this.classList.remove('click-effect'), 100);
 
         db[currentIndex].count++;
         
-        // Tıklama ile reklam tetikleme (sadece başlangıç gecikmesi bittiyse)
+        // Her 25 tıklamada bir reklam kontrolü yap (Gecikme bittiyse)
         if (db[currentIndex].count % 25 === 0) triggerAd();
 
         if (db[currentIndex].count % db[currentIndex].target === 0) {
