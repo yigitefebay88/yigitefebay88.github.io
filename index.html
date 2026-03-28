@@ -7,14 +7,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     <meta name="monetag" content="40d0b540f33fa8972f25b286c133b2af">
-    
+    <script src="https://quge5.com/88/tag.min.js" data-zone="224163" async data-cfasync="false"></script>
     <base target="_self">
     
-    <title>Zikirmatik | Yerel Liste V28</title>
+    <title>Zikirmatik Pro | V30 Stable</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
-    
-    <script src="https://quge5.com/88/tag.min.js" data-zone="222296" async data-cfasync="false"></script>
+    <script src="https://quge5.com/88/tag.min.js" data-zone="10797884" async data-cfasync="false"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -41,29 +40,18 @@
         }
 
         body { 
-            font-family: 'Poppins', sans-serif; 
-            background: var(--bg);
-            color: var(--primary); 
+            font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); 
             display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
-            transition: 0.4s; user-select: none; overflow: hidden;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            background-image: var(--bg-image);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            transition: 0.4s; user-select: none; overflow: hidden; touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent; background-image: var(--bg-image);
+            background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
         }
 
         .app-container { 
-            width: 90%; max-width: 400px;
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 40px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
-            text-align: center; border: 1px solid rgba(255,255,255,0.08); transition: 0.5s ease-in-out;
-            margin: 10px;
-            z-index: 10;
+            width: 90%; max-width: 400px; background: var(--glass); backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px); border-radius: 40px; padding: 20px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; 
+            border: 1px solid rgba(255,255,255,0.08); transition: 0.5s ease-in-out; margin: 10px; z-index: 10;
         }
 
         @keyframes flipDown {
@@ -71,7 +59,6 @@
             50% { transform: scale(0.9) rotateX(180deg); }
             100% { transform: scale(1) rotateX(360deg); }
         }
-
         .spin-active { animation: flipDown 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .streak-badge {
@@ -84,23 +71,17 @@
         .icon-btn { cursor: pointer; font-size: 1.5rem; transition: 0.3s; opacity: 0.9; padding: 5px; }
         
         .main-circle { 
-            width: min(50vw, 200px); 
-            height: min(50vw, 200px);
-            margin: 10px auto; border-radius: 50%; 
+            width: min(50vw, 200px); height: min(50vw, 200px); margin: 10px auto; border-radius: 50%; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            background: rgba(255,255,255,0.03);
-            cursor: pointer; border: 8px solid var(--accent); 
-            transition: border 0.3s, box-shadow 0.3s; 
-            box-shadow: var(--accent-neon);
+            background: rgba(255,255,255,0.03); cursor: pointer; border: 8px solid var(--accent); 
+            transition: border 0.3s, box-shadow 0.3s; box-shadow: var(--accent-neon);
             -webkit-tap-highlight-color: transparent;
         }
         
         .count-num { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 800; margin: 0; line-height: 1; pointer-events: none; }
-
         .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,125,125,0.3); }
         .dot.active { background: var(--accent); box-shadow: var(--accent-neon); }
-
         .btn-group { display: flex; justify-content: center; gap: 10px; }
         .btn { padding: 12px; border: none; border-radius: 18px; cursor: pointer; font-weight: 600; font-size: 0.85rem; color: white; flex: 1; transition: 0.3s; }
         .btn-lib { background: var(--blue); }
@@ -108,9 +89,7 @@
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 2000; padding: 10px; }
         .modal-content { background: var(--glass); backdrop-filter: blur(20px); padding: 25px; border-radius: 35px; width: 100%; max-width: 320px; color: var(--primary); max-height: 80vh; overflow-y: auto; }
-        
         input, select.lang-select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3); background: rgba(255,255,255,0.05); color: inherit; box-sizing: border-box; font-family: inherit; }
-
         .lib-item { padding: 15px; border-bottom: 1px solid rgba(125,125,125,0.1); display: flex; flex-direction: column; text-align: left; gap: 5px; }
         .lib-row { display: flex; justify-content: space-between; align-items: center; }
         .lib-desc-preview { font-size: 0.75rem; opacity: 0.6; font-style: italic; white-space: pre-wrap; line-height: 1.2; }
@@ -134,7 +113,6 @@
 
 <div class="app-container" id="mainContainer">
     <div class="streak-badge"> <span id="streakCount">0</span> <span id="lang-day">GÜN</span></div>
-
     <div class="header">
         <span class="icon-btn" id="themeIcon" onclick="toggleTheme()">🌙</span>
         <span class="icon-btn" onclick="showModal('settingsModal')">⚙️</span>
@@ -145,9 +123,7 @@
         <select id="zikirDropdown" onchange="switchZikir()" style="width:100%; font-weight:600; background:transparent; border:none; color:inherit; height: 40px; outline:none;"></select>
     </div>
     
-    <div id="mainDesc" style="font-size: 0.75rem; color: var(--accent); min-height: 4.5rem; font-style: italic; display: flex; align-items: center; justify-content: center; line-height: 1.3; white-space: pre-wrap; padding: 0 5px; text-align: center;">
-        ...
-    </div>
+    <div id="mainDesc" style="font-size: 0.75rem; color: var(--accent); min-height: 4.5rem; font-style: italic; display: flex; align-items: center; justify-content: center; line-height: 1.3; white-space: pre-wrap; padding: 0 5px; text-align: center;">...</div>
 
     <div class="main-circle" id="clickBtn">
         <p class="count-num" id="display">0</p>
@@ -193,14 +169,33 @@
 </div>
 
 <script>
-    // --- REKLAM VE ÇÖKME KORUMASI ---
-    let lastAdTime = 0;
-    const AD_INTERVAL = 20000; // 20 Saniye Sınırı
+    // --- GLOBAL HATA KALKANI (V30) ---
+    // Monetag kaynaklı Promise ve Script hatalarının uygulamayı dondurmasını engeller
+    window.onerror = function(msg, url, line, col, error) {
+        if (url && (url.includes('quge5.com') || url.includes('094kk.com') || url.includes('monetag'))) {
+            console.warn("Reklam Hatası Yakalandı ve Engellendi.");
+            return true; 
+        }
+        return false;
+    };
 
-    // Reklamların uygulamadan atmasını engelle
-    window.open = function(url) {
-        console.log("Dış pencere açma denemesi engellendi.");
-        return null;
+    window.onunhandledrejection = function(event) {
+        if (event.reason && event.reason.stack && (event.reason.stack.includes('tag.min.js') || event.reason.stack.includes('094kk'))) {
+            event.preventDefault(); 
+        }
+    };
+
+    // --- REKLAM KONTROL ---
+    let lastAdTime = 0;
+    const AD_INTERVAL = 45000; // 45 Saniyede bir reklam izni
+
+    window.open = function(url, target, features) {
+        try {
+            let now = new Date().getTime();
+            if (now - lastAdTime < AD_INTERVAL) return null; 
+            lastAdTime = now;
+            return window.parent.open(url, target, features);
+        } catch (e) { return null; }
     };
 
     const clickSound = document.getElementById('clickSound');
@@ -254,7 +249,6 @@
             return savedMatch ? { ...v, count: savedMatch.count } : v;
         });
         savedData.forEach(s => { if(!varsayilanZikirler.some(v => v.name === s.name)) db.push(s); });
-        document.getElementById('langSelect').value = currentLang;
         applyLanguage(); updateView(); renderWeekly();
     }
 
@@ -280,9 +274,8 @@
     function updateView() {
         if (db.length === 0) return;
         const curr = db[currentIndex];
-        const t = translations[currentLang];
         document.getElementById('display').innerText = curr.count;
-        document.getElementById('targetLabel').innerText = `${t.target}: ${curr.target}`;
+        document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`;
         document.getElementById('streakCount').innerText = streak.count;
         mainDesc.innerText = curr.desc || "";
         const circle = document.getElementById('clickBtn');
@@ -290,19 +283,12 @@
         circle.style.boxShadow = curr.count >= curr.target ? "var(--gold-neon)" : "var(--accent-neon)";
     }
 
+    // ANA BUTON
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
-        e.preventDefault();
-        
-        // REKLAM KONTROLÜ
         let now = new Date().getTime();
-        if (now - lastAdTime < AD_INTERVAL) {
-            // Eğer 20 saniye dolmadıysa reklamın açılmasını engelle (propagasyonu durdur)
-            e.stopPropagation();
-        } else {
-            console.log("Reklam aralığı uygun.");
-            lastAdTime = now;
-        }
+        if (now - lastAdTime < AD_INTERVAL) e.stopImmediatePropagation();
 
+        e.preventDefault();
         this.classList.remove('spin-active');
         void this.offsetWidth;
         this.classList.add('spin-active');
@@ -315,7 +301,6 @@
             showToast(translations[currentLang].toastDone);
             bellSound.play().catch(()=>{});
         }
-        
         recordActivity(); save(); updateView();
     });
 
@@ -356,14 +341,8 @@
     }
 
     function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
-
-    function renderDropdown() {
-        const drp = document.getElementById('zikirDropdown');
-        drp.innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join('');
-    }
-
+    function renderDropdown() { document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); }
     function showToast(text) { toast.innerText = text; toast.className = "show"; setTimeout(() => { toast.className = ""; }, 3000); }
-
     function recordActivity() {
         const today = new Date().toLocaleDateString();
         if (streak.lastDate !== today) {
@@ -373,7 +352,6 @@
             renderWeekly();
         }
     }
-
     function renderWeekly() {
         const dotsCont = document.getElementById('weeklyDots');
         dotsCont.innerHTML = "";
@@ -382,7 +360,6 @@
             dotsCont.innerHTML += `<div class="dot ${streak.history.includes(d.toLocaleDateString()) ? 'active' : ''}"></div>`;
         }
     }
-
     function switchZikir() { currentIndex = parseInt(document.getElementById('zikirDropdown').value); save(); updateView(); }
     function resetCurrent() { if(confirm(translations[currentLang].confirmReset)) { db[currentIndex].count = 0; save(); updateView(); } }
     function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
