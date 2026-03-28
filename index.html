@@ -10,7 +10,7 @@
     
     <base target="_self">
     
-    <title>Zikirmatik | Yerel Liste V27</title>
+    <title>Zikirmatik | Yerel Liste V28</title>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
     
@@ -111,21 +111,9 @@
         
         input, select.lang-select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3); background: rgba(255,255,255,0.05); color: inherit; box-sizing: border-box; font-family: inherit; }
 
-        .lib-item { 
-            padding: 15px; 
-            border-bottom: 1px solid rgba(125,125,125,0.1); 
-            display: flex; flex-direction: column; 
-            text-align: left;
-            gap: 5px;
-        }
+        .lib-item { padding: 15px; border-bottom: 1px solid rgba(125,125,125,0.1); display: flex; flex-direction: column; text-align: left; gap: 5px; }
         .lib-row { display: flex; justify-content: space-between; align-items: center; }
-        .lib-desc-preview { 
-            font-size: 0.75rem; 
-            opacity: 0.6; 
-            font-style: italic; 
-            white-space: pre-wrap; 
-            line-height: 1.2;
-        }
+        .lib-desc-preview { font-size: 0.75rem; opacity: 0.6; font-style: italic; white-space: pre-wrap; line-height: 1.2; }
 
         #toast {
             visibility: hidden; min-width: 200px; background-color: var(--gold); color: #000;
@@ -205,9 +193,13 @@
 </div>
 
 <script>
-    // --- POP-UP ENGELLEYİCİ MANTIĞI ---
+    // --- REKLAM VE ÇÖKME KORUMASI ---
+    let lastAdTime = 0;
+    const AD_INTERVAL = 20000; // 20 Saniye Sınırı
+
+    // Reklamların uygulamadan atmasını engelle
     window.open = function(url) {
-        console.log("Yeni sekme engellendi.");
+        console.log("Dış pencere açma denemesi engellendi.");
         return null;
     };
 
@@ -218,27 +210,9 @@
     const mainDesc = document.getElementById('mainDesc');
 
     const translations = {
-        tr: {
-            day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", 
-            selectLang: "Dil / Language:", reminder: "⏰ Hatırlatıcı", close: "Kapat", 
-            libTitle: "📚 Zikirlerin", add: "➕ Ekle", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.",
-            confirmReset: "Sıfırlansın mı?", confirmDelete: "Bu zikri silmek istediğine emin misin?",
-            placeholderName: "Zikir Adı...", placeholderTarget: "Hedef Sayı..."
-        },
-        en: {
-            day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", 
-            selectLang: "Language:", reminder: "⏰ Reminder", close: "Close", 
-            libTitle: "📚 Your Dhikr", add: "➕ Add", target: "Target", toastDone: "MashAllah! Target Completed.",
-            confirmReset: "Reset counts?", confirmDelete: "Are you sure you want to delete?",
-            placeholderName: "Dhikr Name...", placeholderTarget: "Target Count..."
-        },
-        ar: {
-            day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة ضبط", settingsTitle: "⚙️ الإعدادات", 
-            selectLang: "اللغة:", reminder: "⏰ تذكير", close: "إğلاق", 
-            libTitle: "📚 أذكارك", add: "➕ إضافة", target: "الهدف", toastDone: "ما شاء الله! اكتمل الهدف.",
-            confirmReset: "هل تريد إعادة الضبط؟", confirmDelete: "هل أنت متأكد من الحذف؟",
-            placeholderName: "اسم الذكر...", placeholderTarget: "العدد المستهدف..."
-        }
+        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil / Language:", reminder: "⏰ Hatırlatıcı", close: "Kapat", libTitle: "📚 Zikirlerin", add: "➕ Ekle", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.", confirmReset: "Sıfırlansın mı?", confirmDelete: "Bu zikri silmek istediğine emin misin?", placeholderName: "Zikir Adı...", placeholderTarget: "Hedef Sayı..." },
+        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", reminder: "⏰ Reminder", close: "Close", libTitle: "📚 Your Dhikr", add: "➕ Add", target: "Target", toastDone: "MashAllah! Target Completed.", confirmReset: "Reset counts?", confirmDelete: "Are you sure you want to delete?", placeholderName: "Dhikr Name...", placeholderTarget: "Target Count..." },
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة ضبط", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", reminder: "⏰ تذكير", close: "إغلاق", libTitle: "📚 أذكارك", add: "➕ إضافة", target: "الهدف", toastDone: "ما شاء الله! اكتمل الهدف.", confirmReset: "هل تريد إعادة الضبط؟", confirmDelete: "هل أنت متأكد من الحذف؟", placeholderName: "اسم الذكر...", placeholderTarget: "العدد المستهدف..." }
     };
 
     const varsayilanZikirler = [
@@ -279,13 +253,9 @@
             const savedMatch = savedData.find(s => s.name === v.name);
             return savedMatch ? { ...v, count: savedMatch.count } : v;
         });
-        savedData.forEach(s => {
-            if(!varsayilanZikirler.some(v => v.name === s.name)) db.push(s);
-        });
+        savedData.forEach(s => { if(!varsayilanZikirler.some(v => v.name === s.name)) db.push(s); });
         document.getElementById('langSelect').value = currentLang;
-        applyLanguage();
-        updateView();
-        renderWeekly();
+        applyLanguage(); updateView(); renderWeekly();
     }
 
     function applyLanguage() {
@@ -305,12 +275,7 @@
         renderDropdown();
     }
 
-    function changeLanguage() {
-        currentLang = document.getElementById('langSelect').value;
-        localStorage.setItem('lang', currentLang);
-        applyLanguage();
-        updateView();
-    }
+    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
 
     function updateView() {
         if (db.length === 0) return;
@@ -320,7 +285,6 @@
         document.getElementById('targetLabel').innerText = `${t.target}: ${curr.target}`;
         document.getElementById('streakCount').innerText = streak.count;
         mainDesc.innerText = curr.desc || "";
-
         const circle = document.getElementById('clickBtn');
         circle.style.borderColor = curr.count >= curr.target ? "var(--gold)" : "var(--accent)";
         circle.style.boxShadow = curr.count >= curr.target ? "var(--gold-neon)" : "var(--accent-neon)";
@@ -328,6 +292,17 @@
 
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
         e.preventDefault();
+        
+        // REKLAM KONTROLÜ
+        let now = new Date().getTime();
+        if (now - lastAdTime < AD_INTERVAL) {
+            // Eğer 20 saniye dolmadıysa reklamın açılmasını engelle (propagasyonu durdur)
+            e.stopPropagation();
+        } else {
+            console.log("Reklam aralığı uygun.");
+            lastAdTime = now;
+        }
+
         this.classList.remove('spin-active');
         void this.offsetWidth;
         this.classList.add('spin-active');
@@ -341,9 +316,7 @@
             bellSound.play().catch(()=>{});
         }
         
-        recordActivity();
-        save();
-        updateView();
+        recordActivity(); save(); updateView();
     });
 
     function addCustomZikir() {
@@ -352,8 +325,7 @@
         if (name && target > 0) {
             db.push({ name: name, count: 0, target: target, desc: "..." });
             save(); renderDropdown(); renderLibrary();
-            document.getElementById('customName').value = "";
-            document.getElementById('customTarget').value = "";
+            document.getElementById('customName').value = ""; document.getElementById('customTarget').value = "";
         }
     }
 
@@ -366,10 +338,7 @@
         }
     }
 
-    function selectZikir(index) {
-        currentIndex = index;
-        save(); updateView(); renderDropdown(); hideModal('libModal');
-    }
+    function selectZikir(index) { currentIndex = index; save(); updateView(); renderDropdown(); hideModal('libModal'); }
 
     function renderLibrary() {
         const libList = document.getElementById('libList');
@@ -382,27 +351,18 @@
                          <span onclick="deleteZikir(${i}, event)" style="cursor:pointer; padding:5px;">🗑️</span>
                     </div>
                 </div>
-                <div class="lib-desc-preview" onclick="selectZikir(${i})" style="cursor:pointer;">
-                    ${item.desc || ""}
-                </div>
-            </div>
-        `).join('');
+                <div class="lib-desc-preview" onclick="selectZikir(${i})" style="cursor:pointer;">${item.desc || ""}</div>
+            </div>`).join('');
     }
 
-    function save() { 
-        localStorage.setItem('zikirDB', JSON.stringify(db)); 
-        localStorage.setItem('currentIdx', currentIndex); 
-    }
+    function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
 
     function renderDropdown() {
         const drp = document.getElementById('zikirDropdown');
         drp.innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join('');
     }
 
-    function showToast(text) {
-        toast.innerText = text; toast.className = "show";
-        setTimeout(() => { toast.className = ""; }, 3000);
-    }
+    function showToast(text) { toast.innerText = text; toast.className = "show"; setTimeout(() => { toast.className = ""; }, 3000); }
 
     function recordActivity() {
         const today = new Date().toLocaleDateString();
