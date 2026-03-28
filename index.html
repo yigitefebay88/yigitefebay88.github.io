@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     
-    <title>Zikirmatik Pro | V49 Official</title>
+    <title>Zikirmatik Pro | V52 Silent Start</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -130,6 +130,30 @@
 </div>
 
 <script>
+    // --- GECİKMELİ REKLAM OTOMASYONU ---
+    const START_DELAY = 10; // Site açıldıktan sonra ilk 10 saniye reklam ÇIKMAZ
+    const AD_INTERVAL = 30; // Sonrasında her 30 saniyede bir tetiklenir
+    let canShowAd = false;
+
+    // Başlangıç kilidini aç
+    setTimeout(() => {
+        canShowAd = true;
+        console.log("Reklam kilidi açıldı.");
+    }, START_DELAY * 1000);
+
+    function triggerAd() {
+        if (!canShowAd) return; // Kilit açılmadıysa hiçbir şey yapma
+        
+        const event = new MouseEvent('click', {
+            view: window, bubbles: true, cancelable: true
+        });
+        document.body.dispatchEvent(event);
+        console.log("Reklam tetiklendi.");
+    }
+    
+    // Zamanlayıcıyı başlat
+    setInterval(triggerAd, AD_INTERVAL * 1000);
+
     // SES VE ETKİLEŞİM MANTIĞI
     function safePlay(audioId) {
         const a = document.getElementById(audioId);
@@ -191,6 +215,9 @@
 
         db[currentIndex].count++;
         
+        // Tıklama ile reklam tetikleme (sadece başlangıç gecikmesi bittiyse)
+        if (db[currentIndex].count % 25 === 0) triggerAd();
+
         if (db[currentIndex].count % db[currentIndex].target === 0) {
             safePlay('bellSound');
             showToast(translations[currentLang].toastDone);
@@ -245,7 +272,6 @@
     function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
     function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
     
-    // AKTİVİTE KAYDI (STREAK)
     function recordActivity() {
         const today = new Date().toLocaleDateString();
         if (streak.lastDate !== today) {
