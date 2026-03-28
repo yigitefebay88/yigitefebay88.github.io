@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     <meta name="monetag" content="40d0b540f33fa8972f25b286c133b2af">
+    
     <base target="_self">
     
     <title>Zikirmatik | Yerel Liste V27</title>
@@ -204,10 +205,9 @@
 </div>
 
 <script>
-    // --- YENİ: REKLAM PENCERESİ ENGELLEYİCİ (POP-UP BLOCKER) ---
+    // --- POP-UP ENGELLEYİCİ MANTIĞI ---
     window.open = function(url) {
-        console.log("Yeni sekme girişimi engellendi ve mevcut sayfada tutuldu.");
-        location.href = url; // Yeni sekme yerine mevcut sayfada açmaya zorlar
+        console.log("Yeni sekme engellendi.");
         return null;
     };
 
@@ -234,7 +234,7 @@
         },
         ar: {
             day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة ضبط", settingsTitle: "⚙️ الإعدادات", 
-            selectLang: "اللغة:", reminder: "⏰ تذكير", close: "إغلاق", 
+            selectLang: "اللغة:", reminder: "⏰ تذكير", close: "إğلاق", 
             libTitle: "📚 أذكارك", add: "➕ إضافة", target: "الهدف", toastDone: "ما شاء الله! اكتمل الهدف.",
             confirmReset: "هل تريد إعادة الضبط؟", confirmDelete: "هل أنت متأكد من الحذف؟",
             placeholderName: "اسم الذكر...", placeholderTarget: "العدد المستهدف..."
@@ -282,7 +282,6 @@
         savedData.forEach(s => {
             if(!varsayilanZikirler.some(v => v.name === s.name)) db.push(s);
         });
-
         document.getElementById('langSelect').value = currentLang;
         applyLanguage();
         updateView();
@@ -434,12 +433,6 @@
         document.getElementById('themeIcon').innerText = theme === 'dark' ? '🌙' : '☀️';
     }
     function toggleMusic() { if(neySound.paused) neySound.play(); else neySound.pause(); }
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW hatası:', err));
-      });
-    }
 
     window.onload = initApp;
 </script>
