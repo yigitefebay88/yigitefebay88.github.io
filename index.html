@@ -6,13 +6,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
-    <meta name="monetag" content="40d0b540f33fa8972f25b286c133b2af">
-    <script src="https://quge5.com/88/tag.min.js" data-zone="224163" async data-cfasync="false"></script>
+    
+    <script src="https://quge5.com/88/tag.min.js" data-zone="10797884" async data-cfasync="false"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
+
     <base target="_self">
+    <title>Zikirmatik Pro | Ultra Lockdown</title>
     
-    <title>Zikirmatik Pro | V30 Stable</title>
-    
-   
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -167,34 +167,28 @@
 </div>
 
 <script>
-    // --- GLOBAL HATA KALKANI (V30) ---
-    // Monetag kaynaklı Promise ve Script hatalarının uygulamayı dondurmasını engeller
-    window.onerror = function(msg, url, line, col, error) {
-        if (url && (url.includes('quge5.com') || url.includes('094kk.com') || url.includes('monetag'))) {
-            console.warn("Reklam Hatası Yakalandı ve Engellendi.");
-            return true; 
-        }
-        return false;
-    };
-
-    window.onunhandledrejection = function(event) {
-        if (event.reason && event.reason.stack && (event.reason.stack.includes('tag.min.js') || event.reason.stack.includes('094kk'))) {
-            event.preventDefault(); 
-        }
-    };
-
-    // --- REKLAM KONTROL ---
+    // --- V32 ULTRA LOCKDOWN SHIELD ---
     let lastAdTime = 0;
-    const AD_INTERVAL = 45000; // 45 Saniyede bir reklam izni
+    const AD_INTERVAL = 60000; 
 
-    window.open = function(url, target, features) {
-        try {
-            let now = new Date().getTime();
-            if (now - lastAdTime < AD_INTERVAL) return null; 
-            lastAdTime = now;
-            return window.parent.open(url, target, features);
-        } catch (e) { return null; }
+    // 1. Yeni sekme açma yetkisini tamamen yok et
+    window.open = function() { 
+        console.log("Yeni sekme açma engellendi.");
+        return null; 
     };
+
+    // 2. HTML'deki target="_blank" linklerini pasifleştir
+    document.addEventListener('click', function(e) {
+        let target = e.target.closest('a');
+        if (target && target.getAttribute('target') === '_blank') {
+            e.preventDefault();
+            console.log("Blank link engellendi.");
+        }
+    }, true);
+
+    // 3. Hata Kalkanı
+    window.onerror = function() { return true; };
+    window.onunhandledrejection = function(e) { e.preventDefault(); };
 
     const clickSound = document.getElementById('clickSound');
     const neySound = document.getElementById('neySound');
@@ -215,24 +209,7 @@
         { name: "Ya Şâfi", count: 0, target: 391, desc: "Hastalıklar için şifa ve ruhen iyileşme niyetine." },
         { name: "Hasbünallâh", count: 0, target: 450, desc: "Her türlü zorluk ve düşmana karşı Allah'a sığınmak için." },
         { name: "La havle vela kuvvete illa billah", count: 0, target: 100, desc: "Güç ve kuvvetin yalnızca Allah'tan olduğunu ifade etmek için." },
-        { name: "Astaghfirullah", count: 0, target: 100, desc: "Allah'tan bağışlanma dilemek için." },
-        { name: "La ilahe illallah", count: 0, target: 100, desc: "Allah'tan başka ilah olmadığını ifade etmek için." },
-        { name: "Subhanallah", count: 0, target: 100, desc: "Allah'ı her türlü eksiklikten tenzih etmek için." },
-        { name: "Elhamdülillah", count: 0, target: 100, desc: "Bütün hamd ve şükürler Allah'adır." },
-        { name: "Allahu Ekber", count: 0, target: 100, desc: "Allah en büyüktür." },
-        { name: "Ya Hayyü Ya Kayyum", count: 0, target: 100, desc: "Allah'ın diri ve her şeye gücü yeten olduğunu ifade etmek için." },
-        { name: "Ya Allah", count: 0, target: 100, desc: "Allah'ın ismini anarak O'na yönelmek ve yardım dilemek için." },
-        { name: "Ya Rahman", count: 0, target: 100, desc: "Allah'ın sonsuz merhametini anmak ve O'ndan merhamet dilemek için." },
-        { name: "Ya Rahim", count: 0, target: 100, desc: "Allah'ın rahmetini anmak ve O'ndan rahmet dilemek için." },
-        { name: "Ya Aziz", count: 0, target: 100, desc: "Allah'ın her türlü zorluk ve düşmana karşı galip olduğunu ifade etmek için." },
-        { name: "Ya Cebbar", count: 0, target: 100, desc: "Allah'ın her şeye gücü yeten ve zorlayıcı olduğunu ifade etmek için." },
-        { name: "Ya Mücib", count: 0, target: 100, desc: "Allah'ın duaları kabul eden olduğunu ifade etmek için." },
-        { name: "Ya Vahhab", count: 0, target: 100, desc: "Allah'ın bol bol veren olduğunu ifade etmek için." },
-        { name: "Ya Alim", count: 0, target: 100, desc: "Allah'ın her şeyi bilen olduğunu ifade etmek için." },
-        { name: "Ya Kabid", count: 0, target: 100, desc: "Allah'ın dilediği zaman rızkı daraltabileceğini ifade etmek için." },
-        { name: "Ya Basit", count: 0, target: 100, desc: "Allah'ın dilediği zaman rızkı genişletebileceğini ifade etmek için." },
-        { name: "es-selâmü aleyke eyyühe’n-nebiyyü ve rahmetullâhi ve berekâtüh", count: 0, target: 100, desc: "Secdede ölmek için." },
-        { name: "Allâhümme bi hakki seyyidinâ Muhammedin ve âli Muhammedin sallallâhu aleyhi ve selleme lâ tüazzib hâzel meyyit", count: 0, target: 3, desc: "Kabirdeki kişinin kabir azabını yok eder." }
+        { name: "es-selâmü aleyke eyyühe’n-nebiyyü ve rahmetullâhi ve berekâtüh", count: 0, target: 100, desc: "Secdede ölmek için." }
     ];
 
     let db = [];
@@ -281,12 +258,10 @@
         circle.style.boxShadow = curr.count >= curr.target ? "var(--gold-neon)" : "var(--accent-neon)";
     }
 
-    // ANA BUTON
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
-        let now = new Date().getTime();
-        if (now - lastAdTime < AD_INTERVAL) e.stopImmediatePropagation();
-
         e.preventDefault();
+        e.stopImmediatePropagation(); // Monetag'ın tıklamayı duymasını engelle
+
         this.classList.remove('spin-active');
         void this.offsetWidth;
         this.classList.add('spin-active');
@@ -341,6 +316,7 @@
     function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
     function renderDropdown() { document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); }
     function showToast(text) { toast.innerText = text; toast.className = "show"; setTimeout(() => { toast.className = ""; }, 3000); }
+    
     function recordActivity() {
         const today = new Date().toLocaleDateString();
         if (streak.lastDate !== today) {
@@ -350,6 +326,7 @@
             renderWeekly();
         }
     }
+    
     function renderWeekly() {
         const dotsCont = document.getElementById('weeklyDots');
         dotsCont.innerHTML = "";
@@ -358,15 +335,18 @@
             dotsCont.innerHTML += `<div class="dot ${streak.history.includes(d.toLocaleDateString()) ? 'active' : ''}"></div>`;
         }
     }
+    
     function switchZikir() { currentIndex = parseInt(document.getElementById('zikirDropdown').value); save(); updateView(); }
     function resetCurrent() { if(confirm(translations[currentLang].confirmReset)) { db[currentIndex].count = 0; save(); updateView(); } }
     function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
     function hideModal(id) { document.getElementById(id).style.display = 'none'; }
+    
     function toggleTheme() { 
         const theme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.body.setAttribute('data-theme', theme);
         document.getElementById('themeIcon').innerText = theme === 'dark' ? '🌙' : '☀️';
     }
+    
     function toggleMusic() { if(neySound.paused) neySound.play(); else neySound.pause(); }
 
     window.onload = initApp;
