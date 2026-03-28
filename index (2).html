@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0e17">
+    
+    <script src="https://quge5.com/88/tag.min.js" data-zone="10797884" async data-cfasync="false"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
+
+    <title>Zikirmatik Pro | V35</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-image: url('arkaplan.png'); --bg: #f0f2f5; --glass: rgba(255, 255, 255, 0.85);
+            --primary: #1e293b; --accent: #f59e0b; --accent-neon: 0 0 15px rgba(245, 158, 11, 0.5);
+            --gold: #f59e0b; --orange: #f97316; --blue: #3b82f6;
+        }
+
+        [data-theme="dark"] {
+            --glass: rgba(18, 25, 41, 0.92); --primary: #f8fafc; --accent: #10b981; 
+            --accent-neon: 0 0 15px #10b981; --gold: #f1c40f;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); 
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
+            user-select: none; overflow: hidden; touch-action: manipulation;
+            background-image: var(--bg-image); background-size: cover; background-position: center;
+        }
+
+        .app-container { 
+            width: 90%; max-width: 400px; background: var(--glass); backdrop-filter: blur(25px);
+            border-radius: 40px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            text-align: center; border: 1px solid rgba(255,255,255,0.08); z-index: 10;
+        }
+
+        .streak-badge {
+            background: rgba(230, 126, 34, 0.15); border: 1px solid var(--orange); color: var(--orange);
+            padding: 6px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 800;
+            display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px;
+        }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .icon-btn { cursor: pointer; font-size: 1.5rem; padding: 5px; }
+        
+        .main-circle { 
+            width: min(50vw, 200px); height: min(50vw, 200px); margin: 10px auto; border-radius: 50%; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            background: rgba(255,255,255,0.03); cursor: pointer; border: 8px solid var(--accent); 
+            box-shadow: var(--accent-neon); transition: 0.3s;
+        }
+        
+        .count-num { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 800; margin: 0; pointer-events: none; }
+        .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,125,125,0.3); }
+        .dot.active { background: var(--accent); }
+
+        .btn-group { display: flex; justify-content: center; gap: 10px; }
+        .btn { padding: 12px; border: none; border-radius: 18px; cursor: pointer; font-weight: 600; flex: 1; color: white; transition: 0.3s; }
+        .btn-lib { background: var(--blue); } .btn-primary { background: var(--accent); }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: var(--glass); padding: 25px; border-radius: 35px; width: 85%; max-width: 320px; max-height: 80vh; overflow-y: auto; }
+        
+        input, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 12px; border: 1px solid rgba(125,125,125,0.3); background: rgba(255,255,255,0.05); color: inherit; box-sizing: border-box; }
+        
+        #toast { visibility: hidden; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 25px; border-radius: 50px; font-weight: 800; z-index: 3001; }
+        #toast.show { visibility: visible; }
+        
+        @keyframes clickAnim { 0% { transform: scale(1); } 50% { transform: scale(0.92); } 100% { transform: scale(1); } }
+        .click-active { animation: clickAnim 0.1s ease; }
+    </style>
+</head>
+<body data-theme="dark">
+
+<audio id="clickSound"><source src="click.mp3" type="audio/mpeg"></audio>
+<audio id="neySound" loop><source src="ney.mp3" type="audio/mpeg"></audio>
+<audio id="bellSound"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
+
+<div id="toast"></div>
+
+<div class="app-container">
+    <div class="streak-badge"> <span id="streakCount">0</span> <span id="lang-day">GÜN</span></div>
+    <div class="header">
+        <span class="icon-btn" id="themeIcon" onclick="toggleTheme()">🌙</span>
+        <span class="icon-btn" onclick="showModal('settingsModal')">⚙️</span>
+        <span id="musicToggle" class="icon-btn" onclick="toggleMusic()">🎶</span>
+    </div>
+
+    <select id="zikirDropdown" onchange="switchZikir()"></select>
+    <div id="mainDesc" style="font-size: 0.75rem; color: var(--accent); min-height: 3.5rem; margin: 10px 0; font-style: italic; display: flex; align-items: center; justify-content: center; text-align: center;"></div>
+
+    <div class="main-circle" id="clickBtn">
+        <p class="count-num" id="display">0</p>
+        <span id="targetLabel" style="font-size: 0.8rem; opacity: 0.7; font-weight: 600;">Hedef: 33</span>
+    </div>
+
+    <div class="weekly-dots" id="weeklyDots"></div>
+
+    <div class="btn-group">
+        <button class="btn btn-lib" id="lang-libBtn" onclick="showModal('libModal')">📚 Liste</button>
+        <button class="btn btn-primary" id="lang-resetBtn" onclick="resetCurrent()">🔄 Sıfırla</button>
+    </div>
+</div>
+
+<div id="settingsModal" class="modal">
+    <div class="modal-content">
+        <h3 id="lang-settingsTitle">⚙️ Ayarlar</h3>
+        <label id="lang-selectLangLabel">Dil:</label>
+        <select id="langSelect" onchange="changeLanguage()">
+            <option value="tr">Türkçe</option>
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+        <button class="btn btn-primary" style="width:100%; margin-top: 20px;" onclick="hideModal('settingsModal')">Kapat</button>
+    </div>
+</div>
+
+<div id="libModal" class="modal">
+    <div class="modal-content">
+        <h3 id="lang-libTitle">📚 Zikirlerin</h3>
+        <input type="text" id="customName" placeholder="Zikir Adı...">
+        <input type="number" id="customTarget" placeholder="Hedef Sayı..." min="1">
+        <button class="btn btn-primary" style="width:100%; margin-bottom: 15px;" onclick="addCustomZikir()">➕ Ekle</button>
+        <div id="libList" style="max-height: 30vh; overflow-y: auto;"></div>
+        <button class="btn" style="width:100%; background: var(--orange); margin-top:10px;" onclick="hideModal('libModal')">Kapat</button>
+    </div>
+</div>
+
+<script>
+    // --- AKILLI REKLAM SİSTEMİ (V35) ---
+    // window.open'i ana buton dışında kısıtla
+    let lastPopTime = 0;
+    const originalOpen = window.open;
+    window.open = function() {
+        let now = Date.now();
+        if (now - lastPopTime < 45000) return null; // 45 saniyede en fazla 1 reklam
+        lastPopTime = now;
+        return originalOpen.apply(window, arguments);
+    };
+
+    // --- DEĞİŞKENLER VE DB ---
+    const translations = {
+        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah! Hedef Tamamlandı.", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
+        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "Target Completed.", confirmReset: "Reset counts?", confirmDelete: "Delete?" },
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "اكتمل الهدف.", confirmReset: "إعادة الضبط؟", confirmDelete: "حذف؟" }
+    };
+
+    const varsayilanZikirler = [
+        { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı noksan sıfatlardan tenzih ederim." },
+        { name: "Elhamdülillah", count: 0, target: 33, desc: "Hamd ve şükür Allah'adır." },
+        { name: "Allahu Ekber", count: 0, target: 33, desc: "Allah en büyüktür." }
+    ];
+
+    let db = JSON.parse(localStorage.getItem('zikirDB')) || varsayilanZikirler;
+    let currentLang = localStorage.getItem('lang') || 'tr';
+    let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
+    let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
+
+    // --- FONKSİYONLAR ---
+    function init() { applyLanguage(); updateView(); renderWeekly(); renderDropdown(); }
+
+    function applyLanguage() {
+        const t = translations[currentLang];
+        document.getElementById('lang-day').innerText = t.day;
+        document.getElementById('lang-libBtn').innerText = t.libBtn;
+        document.getElementById('lang-resetBtn').innerText = t.resetBtn;
+        document.getElementById('lang-settingsTitle').innerText = t.settingsTitle;
+        document.getElementById('lang-selectLangLabel').innerText = t.selectLang;
+        document.getElementById('lang-libTitle').innerText = t.libTitle;
+        renderDropdown();
+    }
+
+    function updateView() {
+        const curr = db[currentIndex];
+        document.getElementById('display').innerText = curr.count;
+        document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`;
+        document.getElementById('mainDesc').innerText = curr.desc || "...";
+        document.getElementById('streakCount').innerText = streak.count;
+    }
+
+    // ANA TIKLAMA (REKLAMI BYPASS EDER)
+    document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
+        e.stopPropagation(); // Reklam scriptine "tıklandı" bilgisini gönderme
+        e.preventDefault();
+
+        this.classList.remove('click-active');
+        void this.offsetWidth;
+        this.classList.add('click-active');
+
+        db[currentIndex].count++;
+        if (db[currentIndex].count === db[currentIndex].target) {
+            document.getElementById('bellSound').play().catch(()=>{});
+            showToast(translations[currentLang].toastDone);
+        }
+
+        document.getElementById('clickSound').currentTime = 0;
+        document.getElementById('clickSound').play().catch(()=>{});
+        if (navigator.vibrate) navigator.vibrate(40);
+
+        recordActivity(); save(); updateView();
+    });
+
+    function addCustomZikir() {
+        const name = document.getElementById('customName').value.trim();
+        const target = parseInt(document.getElementById('customTarget').value);
+        if (name && target > 0) {
+            db.push({ name: name, count: 0, target: target, desc: "..." });
+            save(); renderDropdown(); renderLibrary();
+            document.getElementById('customName').value = ""; document.getElementById('customTarget').value = "";
+        }
+    }
+
+    function deleteZikir(i, e) {
+        e.stopPropagation();
+        if (confirm(translations[currentLang].confirmDelete)) {
+            db.splice(i, 1);
+            if (currentIndex >= db.length) currentIndex = 0;
+            save(); renderDropdown(); renderLibrary(); updateView();
+        }
+    }
+
+    function renderLibrary() {
+        const list = document.getElementById('libList');
+        list.innerHTML = db.map((item, i) => `
+            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid rgba(125,125,125,0.1); align-items:center;">
+                <div onclick="selectZikir(${i})" style="flex:1; cursor:pointer;">
+                    <strong>${item.name}</strong> <br> <small>${item.count}/${item.target}</small>
+                </div>
+                <span onclick="deleteZikir(${i}, event)" style="cursor:pointer;">🗑️</span>
+            </div>`).join('');
+    }
+
+    function selectZikir(i) { currentIndex = i; save(); updateView(); renderDropdown(); hideModal('libModal'); }
+    function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
+    function renderDropdown() { document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); }
+    function switchZikir() { currentIndex = parseInt(document.getElementById('zikirDropdown').value); save(); updateView(); }
+    function resetCurrent() { if(confirm(translations[currentLang].confirmReset)) { db[currentIndex].count = 0; save(); updateView(); } }
+    function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
+    function hideModal(id) { document.getElementById(id).style.display = 'none'; }
+    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
+    function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='dark'?'light':'dark'); }
+    function toggleMusic() { const n = document.getElementById('neySound'); if(n.paused) n.play(); else n.pause(); }
+    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
+    
+    function recordActivity() {
+        const today = new Date().toLocaleDateString();
+        if (streak.lastDate !== today) {
+            streak.count++; streak.lastDate = today;
+            if(!streak.history.includes(today)) streak.history.push(today);
+            localStorage.setItem('streakData', JSON.stringify(streak));
+            renderWeekly();
+        }
+    }
+
+    function renderWeekly() {
+        const dots = document.getElementById('weeklyDots'); dots.innerHTML = "";
+        for(let i=6; i>=0; i--) {
+            const d = new Date(); d.setDate(d.getDate() - i);
+            dots.innerHTML += `<div class="dot ${streak.history.includes(d.toLocaleDateString()) ? 'active' : ''}"></div>`;
+        }
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
