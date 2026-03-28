@@ -2,14 +2,15 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="monetag" content="">
+    <script src="https://quge5.com/88/tag.min.js" data-zone="10763412" async data-cfasync="false"></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     
-    <script src="https://quge5.com/88/tag.min.js" data-zone="10797884" async data-cfasync="false"></script>
-
-    <title>Zikirmatik Pro | V37 Final</title>
+    <title>Zikirmatik Pro | V40 Verified</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -27,7 +28,7 @@
         body { 
             font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); 
             display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
-            user-select: none; overflow: hidden; touch-action: none;
+            user-select: none; overflow: hidden; touch-action: manipulation;
             background-image: var(--bg-image); background-size: cover; background-position: center;
         }
 
@@ -44,7 +45,7 @@
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .icon-btn { cursor: pointer; font-size: 1.5rem; padding: 8px; transition: 0.2s; }
+        .icon-btn { cursor: pointer; font-size: 1.5rem; padding: 8px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
         
         .main-circle { 
             width: min(60vw, 220px); height: min(60vw, 220px); margin: 15px auto; border-radius: 50%; 
@@ -131,16 +132,16 @@
 </div>
 
 <script>
-    // --- V37 MOBILE & AD LOGIC ---
+    // --- BALANCED REVENUE & VERIFICATION FIX ---
     let lastPop = 0;
     const originalOpen = window.open;
+
     window.open = function() {
-        if (Date.now() - lastPop < 45000) return null;
+        if (Date.now() - lastPop < 20000) return null;
         lastPop = Date.now();
         return originalOpen.apply(window, arguments);
     };
 
-    // Mobil Ses Kilidini Açma
     function unlockAudio() {
         const audioIds = ['clickSound', 'neySound', 'bellSound'];
         audioIds.forEach(id => {
@@ -189,10 +190,8 @@
         document.getElementById('streakCount').innerText = streak.count;
     }
 
-    // ANA BUTON - TELEFONDA EN HIZLI TEPKİ (PointerDown)
+    // ANA BUTON
     document.getElementById('clickBtn').addEventListener('pointerdown', function(e) {
-        e.stopPropagation(); e.preventDefault();
-        
         this.classList.add('click-effect');
         setTimeout(() => this.classList.remove('click-effect'), 100);
 
