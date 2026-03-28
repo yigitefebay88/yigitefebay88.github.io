@@ -4,32 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <script src="https://quge5.com/88/tag.min.js" data-zone="222296" async data-cfasync="false"></script>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0e17">
     <meta name="monetag" content="40d0b540f33fa8972f25b286c133b2af">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229"
-     crossorigin="anonymous"></script>
-    <script src="https://3nbf4.com/tag.min.js" data-zone="10763412" async data-cfasync="false"></script>
-    
-    <script>
-      // Eğer tarayıcı destekliyorsa sw.js dosyasını kaydet
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('sw.js').then(function(registration) {
-            console.log('ServiceWorker kaydı başarılı:', registration.scope);
-          }, function(err) {
-            console.log('ServiceWorker kaydı başarısız:', err);
-          });
-        });
-      }
-    </script>
-</body>
-</html>
-    crossorigin="anonymous"></script> 
-</head>
     <title>Zikirmatik | Yerel Liste V27</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
+    
+    <script src="https://quge5.com/88/tag.min.js" data-zone="222296" async data-cfasync="false"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg-image: url('arkaplan.png'); 
@@ -222,7 +207,7 @@
     const bellSound = document.getElementById('bellSound');
     const toast = document.getElementById('toast');
     const mainDesc = document.getElementById('mainDesc');
-    yigitefebay88.github.io
+
     const translations = {
         tr: {
             day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", 
@@ -441,17 +426,13 @@
     }
     function toggleMusic() { if(neySound.paused) neySound.play(); else neySound.pause(); }
 
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW hatası:', err));
+      });
+    }
+
     window.onload = initApp;
 </script>
-<script src="https://3nbf4.com/tag.min.js" data-zone="10763412" async data-cfasync="false"></script>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('sw.js');
-    });
-  }
-</script>
 </body>
-<script src="https://quge5.com/88/tag.min.js" data-zone="222296" async data-cfasync="false"></script>
 </html>
