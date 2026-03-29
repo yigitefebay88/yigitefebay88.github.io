@@ -2,7 +2,6 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <script src="https://quge5.com/88/tag.min.js" data-zone="224163" async data-cfasync="false"></script>
     
     <base target="_self">
     
@@ -132,19 +131,29 @@
 </div>
 
 <script>
-    // --- REKLAM KONTROLÜ (YENİ SEKME AÇMAYAN MODEL) ---
-    const START_DELAY = 10; // İlk 10 saniye reklam engeli
+    // --- GELİŞMİŞ REKLAM KONTROLÜ (GECİKMELİ YÜKLEME) ---
+    const START_DELAY = 15; // İlk 15 saniye asla reklam yüklenmez
     let canShowAd = false;
+    let adScriptLoaded = false;
 
-    // İlk 10 saniye boyunca hiçbir reklam tetiklenmez
+    // Sayfa açıldıktan 15 saniye sonra reklam yükleme izni ver
     setTimeout(() => { canShowAd = true; }, START_DELAY * 1000);
 
     function triggerAd() {
-        if (!canShowAd) return;
+        // Eğer süre dolmadıysa veya zaten reklam scripti yüklendiyse tekrar yükleme
+        if (!canShowAd || adScriptLoaded) return;
         
-        console.log("Reklam havuzu kontrol ediliyor...");
-        // Vignette (Epic Tag) kodu sitende ekliyse, kullanıcı 25 tıklamada bir 
-        // ekrana dokunduğunda Monetag sayfa içi pencereyi otomatik tetikleyecektir.
+        console.log("Kullanıcı aktif, reklam kodu şimdi yükleniyor...");
+        
+        // Reklam kodunu sadece kullanıcı uygulamayı kullanırken dinamik olarak ekliyoruz
+        const script = document.createElement('script');
+        script.src = "https://quge5.com/88/tag.min.js";
+        script.setAttribute('data-zone', '224163');
+        script.async = true;
+        script.setAttribute('data-cfasync', 'false');
+        
+        document.head.appendChild(script);
+        adScriptLoaded = true; // Tekrar tekrar yüklenmesini engellemek için
     }
 
     // --- SES VE ETKİLEŞİM ---
@@ -180,7 +189,13 @@
     let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
     let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
 
-    function init() { applyLanguage(); updateView(); renderWeekly(); renderDropdown(); }
+    function init() { 
+        document.getElementById('langSelect').value = currentLang; 
+        applyLanguage(); 
+        updateView(); 
+        renderWeekly(); 
+        renderDropdown(); 
+    }
 
     function applyLanguage() {
         const t = translations[currentLang];
@@ -208,7 +223,7 @@
 
         db[currentIndex].count++;
         
-        // Her 25 tıklamada bir reklam tetikleme izni verilir
+        // Her 25 tıklamada bir ve 15 saniye geçtiyse reklam tetiklenebilir
         if (db[currentIndex].count % 25 === 0) {
             triggerAd();
         }
@@ -267,11 +282,24 @@
     function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
     function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
     
+    // --- SERİ (STREAK) MANTIĞI ---
     function recordActivity() {
-        const today = new Date().toLocaleDateString();
-        if (streak.lastDate !== today) {
-            streak.count++; streak.lastDate = today;
-            if(!streak.history.includes(today)) streak.history.push(today);
+        const today = new Date();
+        const todayStr = today.toLocaleDateString();
+        
+        if (streak.lastDate !== todayStr) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toLocaleDateString();
+
+            if (streak.lastDate === yesterdayStr) {
+                streak.count++; 
+            } else if (streak.lastDate === null || streak.lastDate !== todayStr) {
+                streak.count = 1; 
+            }
+            
+            streak.lastDate = todayStr;
+            if(!streak.history.includes(todayStr)) streak.history.push(todayStr);
             localStorage.setItem('streakData', JSON.stringify(streak));
             renderWeekly();
         }
