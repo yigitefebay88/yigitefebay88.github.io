@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     
+    <meta http-equiv="Content-Security-Policy" content="sandbox allow-scripts allow-same-origin allow-forms;">
+    
     <base target="_self">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -76,6 +78,11 @@
 </head>
 <body data-theme="dark">
 
+<script>
+    window.open = function() { console.log("Zararlı yönlendirme engellendi!"); return null; };
+    window.alert = function() { return true; };
+</script>
+
 <audio id="clickSound" preload="auto"><source src="./click.mp3" type="audio/mpeg"></audio>
 <audio id="neySound" loop preload="auto"><source src="./ney.mp3" type="audio/mpeg"></audio>
 <audio id="bellSound" preload="auto"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
@@ -131,30 +138,38 @@
 </div>
 
 <script>
-    // --- GELİŞMİŞ REKLAM KONTROLÜ (GECİKMELİ YÜKLEME) ---
-    const START_DELAY = 15; // İlk 15 saniye asla reklam yüklenmez
-    let canShowAd = false;
+    // --- 20 SANİYEDE BİR ÇALIŞAN REKLAM SİSTEMİ ---
     let adScriptLoaded = false;
 
-    // Sayfa açıldıktan 15 saniye sonra reklam yükleme izni ver
-    setTimeout(() => { canShowAd = true; }, START_DELAY * 1000);
-
     function triggerAd() {
-        // Eğer süre dolmadıysa veya zaten reklam scripti yüklendiyse tekrar yükleme
-        if (!canShowAd || adScriptLoaded) return;
+        if (adScriptLoaded) {
+            console.log("Reklam kodu zaten yüklü, havuz yenileniyor...");
+            // Bazı reklam ağları script tekrar yüklenmeden çağrılabilir, 
+            // fakat bu scriptte her seferinde tetikleme isteği gönderilir.
+        }
         
-        console.log("Kullanıcı aktif, reklam kodu şimdi yükleniyor...");
+        console.log("Reklam çağrılıyor (20 sn döngüsü)...");
         
-        // Reklam kodunu sadece kullanıcı uygulamayı kullanırken dinamik olarak ekliyoruz
         const script = document.createElement('script');
         script.src = "https://quge5.com/88/tag.min.js";
         script.setAttribute('data-zone', '224163');
         script.async = true;
         script.setAttribute('data-cfasync', 'false');
         
+        // Önceki yüklenen scripti temizle ki sayfa şişmesin
+        const oldScript = document.querySelector('script[src="https://quge5.com/88/tag.min.js"]');
+        if (oldScript) oldScript.remove();
+        
         document.head.appendChild(script);
-        adScriptLoaded = true; // Tekrar tekrar yüklenmesini engellemek için
+        adScriptLoaded = true; 
     }
+
+    // İlk reklamı sayfa açıldıktan 20 saniye sonra getir
+    setTimeout(() => {
+        triggerAd();
+        // Ardından her 20 saniyede bir (20000 milisaniye) bu fonksiyonu çalıştır
+        setInterval(triggerAd, 20000);
+    }, 20000);
 
     // --- SES VE ETKİLEŞİM ---
     function safePlay(audioId) {
@@ -223,10 +238,7 @@
 
         db[currentIndex].count++;
         
-        // Her 25 tıklamada bir ve 15 saniye geçtiyse reklam tetiklenebilir
-        if (db[currentIndex].count % 25 === 0) {
-            triggerAd();
-        }
+        // Tıklamayla olan reklam tetiklemesini kaldırdım, çünkü artık 20 saniyede bir otomatik geliyor.
 
         if (db[currentIndex].count % db[currentIndex].target === 0) {
             safePlay('bellSound');
@@ -282,7 +294,6 @@
     function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
     function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
     
-    // --- SERİ (STREAK) MANTIĞI ---
     function recordActivity() {
         const today = new Date();
         const todayStr = today.toLocaleDateString();
