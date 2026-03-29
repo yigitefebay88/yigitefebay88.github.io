@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <script src="https://quge5.com/88/tag.min.js" data-zone="224163" async data-cfasync="false"></script>
     
+    <base target="_self">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -130,30 +132,20 @@
 </div>
 
 <script>
-    // --- GELİŞMİŞ REKLAM KONTROL SİSTEMİ ---
-    const START_DELAY = 10; // İlk 10 saniye reklam ÇIKMAZ
-    const AD_INTERVAL = 30; // Sonrasında her 30 saniyede bir kontrol edilir
+    // --- REKLAM KONTROLÜ (YENİ SEKME AÇMAYAN MODEL) ---
+    const START_DELAY = 10; // İlk 10 saniye reklam engeli
     let canShowAd = false;
 
-    // Reklam kilidini aç
+    // İlk 10 saniye boyunca hiçbir reklam tetiklenmez
     setTimeout(() => { canShowAd = true; }, START_DELAY * 1000);
 
     function triggerAd() {
         if (!canShowAd) return;
         
-        // Yeni sekmeye atılmayı zorlaştırmak için window.open geçici olarak devredışı bırakılır
-        const originalOpen = window.open;
-        window.open = function() { return null; }; 
-        
-        const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
-        document.body.dispatchEvent(event);
-        
-        // Yarım saniye sonra yetkiyi geri ver
-        setTimeout(() => { window.open = originalOpen; }, 500);
-        console.log("Reklam motoru sessizce tetiklendi.");
+        console.log("Reklam havuzu kontrol ediliyor...");
+        // Vignette (Epic Tag) kodu sitende ekliyse, kullanıcı 25 tıklamada bir 
+        // ekrana dokunduğunda Monetag sayfa içi pencereyi otomatik tetikleyecektir.
     }
-    
-    setInterval(triggerAd, AD_INTERVAL * 1000);
 
     // --- SES VE ETKİLEŞİM ---
     function safePlay(audioId) {
@@ -216,8 +208,10 @@
 
         db[currentIndex].count++;
         
-        // Her 25 tıklamada bir reklam kontrolü yap (Gecikme bittiyse)
-        if (db[currentIndex].count % 25 === 0) triggerAd();
+        // Her 25 tıklamada bir reklam tetikleme izni verilir
+        if (db[currentIndex].count % 25 === 0) {
+            triggerAd();
+        }
 
         if (db[currentIndex].count % db[currentIndex].target === 0) {
             safePlay('bellSound');
