@@ -74,12 +74,25 @@
         #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; }
         .click-effect { transform: scale(0.92); }
+
+        /* REKLAM KAFESİ: Reklamın ana sayfadaki tıklamaları yakalamasını engeller */
+        #adCage {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; /* Sadece küçük banner boyutu kadar yer kaplasın */
+            border: none;
+            z-index: 1;
+            overflow: hidden;
+            background: transparent;
+        }
     </style>
 </head>
 <body data-theme="dark">
 
 <script>
-    window.open = function() { console.log("Zararlı yönlendirme engellendi!"); return null; };
+    window.open = function() { console.log("Yönlendirme engellendi!"); return null; };
     window.alert = function() { return true; };
 </script>
 
@@ -113,6 +126,8 @@
     </div>
 </div>
 
+<iframe id="adCage" sandbox="allow-scripts allow-same-origin"></iframe>
+
 <div id="settingsModal" class="modal">
     <div class="modal-content">
         <h3 id="lang-settingsTitle" style="text-align:center">Ayarlar</h3>
@@ -138,36 +153,30 @@
 </div>
 
 <script>
-    // --- 20 SANİYEDE BİR ÇALIŞAN REKLAM SİSTEMİ ---
-    let adScriptLoaded = false;
-
+    // --- GÜVENLİ REKLAM TETİKLEYİCİSİ (IFRAME İÇİNDE) ---
     function triggerAd() {
-        if (adScriptLoaded) {
-            console.log("Reklam kodu zaten yüklü, havuz yenileniyor...");
-            // Bazı reklam ağları script tekrar yüklenmeden çağrılabilir, 
-            // fakat bu scriptte her seferinde tetikleme isteği gönderilir.
-        }
+        console.log("Reklam kafes içinde çağrılıyor...");
         
-        console.log("Reklam çağrılıyor (20 sn döngüsü)...");
+        const iframe = document.getElementById('adCage');
         
-        const script = document.createElement('script');
-        script.src = "https://quge5.com/88/tag.min.js";
-        script.setAttribute('data-zone', '224163');
-        script.async = true;
-        script.setAttribute('data-cfasync', 'false');
+        // Iframe'in içine reklam kodunu yazıyoruz
+        const adHtml = `
+            <html>
+            <head>
+                <style>body{margin:0; overflow:hidden; background:transparent;}</style>
+            </head>
+            <body>
+                <script src="https://quge5.com/88/tag.min.js" data-zone="224163" async data-cfasync="false"><\/script>
+            </body>
+            </html>
+        `;
         
-        // Önceki yüklenen scripti temizle ki sayfa şişmesin
-        const oldScript = document.querySelector('script[src="https://quge5.com/88/tag.min.js"]');
-        if (oldScript) oldScript.remove();
-        
-        document.head.appendChild(script);
-        adScriptLoaded = true; 
+        iframe.srcdoc = adHtml;
     }
 
-    // İlk reklamı sayfa açıldıktan 20 saniye sonra getir
+    // İlk reklamı 20. saniyede getir, sonra her 20 saniyede bir tekrarla
     setTimeout(() => {
         triggerAd();
-        // Ardından her 20 saniyede bir (20000 milisaniye) bu fonksiyonu çalıştır
         setInterval(triggerAd, 20000);
     }, 20000);
 
@@ -238,8 +247,6 @@
 
         db[currentIndex].count++;
         
-        // Tıklamayla olan reklam tetiklemesini kaldırdım, çünkü artık 20 saniyede bir otomatik geliyor.
-
         if (db[currentIndex].count % db[currentIndex].target === 0) {
             safePlay('bellSound');
             showToast(translations[currentLang].toastDone);
