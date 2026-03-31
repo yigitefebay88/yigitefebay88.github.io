@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     
-    <meta http-equiv="Content-Security-Policy" content="sandbox allow-scripts allow-same-origin allow-forms;">
-    
     <base target="_self">
     
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -74,27 +73,9 @@
         #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; }
         .click-effect { transform: scale(0.92); }
-
-        /* REKLAM KAFESİ: Reklamın ana sayfadaki tıklamaları yakalamasını engeller */
-        #adCage {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px; /* Sadece küçük banner boyutu kadar yer kaplasın */
-            border: none;
-            z-index: 1;
-            overflow: hidden;
-            background: transparent;
-        }
     </style>
 </head>
 <body data-theme="dark">
-
-<script>
-    window.open = function() { console.log("Yönlendirme engellendi!"); return null; };
-    window.alert = function() { return true; };
-</script>
 
 <audio id="clickSound" preload="auto"><source src="./click.mp3" type="audio/mpeg"></audio>
 <audio id="neySound" loop preload="auto"><source src="./ney.mp3" type="audio/mpeg"></audio>
@@ -126,8 +107,6 @@
     </div>
 </div>
 
-<iframe id="adCage" sandbox="allow-scripts allow-same-origin"></iframe>
-
 <div id="settingsModal" class="modal">
     <div class="modal-content">
         <h3 id="lang-settingsTitle" style="text-align:center">Ayarlar</h3>
@@ -153,33 +132,6 @@
 </div>
 
 <script>
-    // --- GÜVENLİ REKLAM TETİKLEYİCİSİ (IFRAME İÇİNDE) ---
-    function triggerAd() {
-        console.log("Reklam kafes içinde çağrılıyor...");
-        
-        const iframe = document.getElementById('adCage');
-        
-        // Iframe'in içine reklam kodunu yazıyoruz
-        const adHtml = `
-            <html>
-            <head>
-                <style>body{margin:0; overflow:hidden; background:transparent;}</style>
-            </head>
-            <body>
-                <script src="https://quge5.com/88/tag.min.js" data-zone="224163" async data-cfasync="false"><\/script>
-            </body>
-            </html>
-        `;
-        
-        iframe.srcdoc = adHtml;
-    }
-
-    // İlk reklamı 20. saniyede getir, sonra her 20 saniyede bir tekrarla
-    setTimeout(() => {
-        triggerAd();
-        setInterval(triggerAd, 20000);
-    }, 20000);
-
     // --- SES VE ETKİLEŞİM ---
     function safePlay(audioId) {
         const a = document.getElementById(audioId);
@@ -246,7 +198,7 @@
         setTimeout(() => this.classList.remove('click-effect'), 100);
 
         db[currentIndex].count++;
-        
+
         if (db[currentIndex].count % db[currentIndex].target === 0) {
             safePlay('bellSound');
             showToast(translations[currentLang].toastDone);
