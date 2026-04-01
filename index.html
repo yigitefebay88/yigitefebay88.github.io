@@ -6,6 +6,7 @@
     <base target="_self">
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,15 +29,18 @@
 
         body { 
             font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); 
-            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; 
-            user-select: none; overflow: hidden; touch-action: manipulation;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; 
+            user-select: none; overflow-x: hidden; touch-action: manipulation;
             background-image: var(--bg-image); background-size: cover; background-position: center;
+            background-attachment: fixed;
         }
 
+        /* Ana Uygulama Alanı */
         .app-container { 
             width: 90%; max-width: 400px; background: var(--glass); backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px); border-radius: 40px; padding: 20px; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; z-index: 10;
+            margin-top: 30px; margin-bottom: 30px;
         }
 
         .streak-badge {
@@ -73,6 +77,38 @@
         #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; }
         .click-effect { transform: scale(0.92); }
+
+        /* 📝 ADSENSE İÇİN YÜKSEK DEĞERLİ İÇERİK ALANI */
+        .content-section {
+            width: 90%;
+            max-width: 500px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            user-select: text; /* Botlar ve kullanıcılar yazıları seçebilsin */
+        }
+
+        .content-section h2 { font-size: 1.3rem; color: var(--accent); margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid rgba(125,125,125,0.2); padding-bottom: 5px;}
+        .content-section p { font-size: 0.9rem; line-height: 1.6; opacity: 0.9; margin-bottom: 15px; }
+        .content-section ul { padding-left: 20px; font-size: 0.9rem; line-height: 1.6; opacity: 0.9; }
+        .content-section li { margin-bottom: 10px; }
+
+        /* 🔗 FOOTER (ZORUNLU POLİTİKA LİNKLERİ) */
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0,0,0,0.2);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        .footer a { color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: 600; }
+        .footer a:hover { color: var(--accent); }
     </style>
 </head>
 <body data-theme="dark">
@@ -105,6 +141,37 @@
         <button class="btn btn-lib" id="lang-libBtn" onclick="showModal('libModal')">📚 Liste</button>
         <button class="btn btn-primary" id="lang-resetBtn" onclick="resetCurrent()">🔄 Sıfırla</button>
     </div>
+</div>
+
+<div class="content-section">
+    <h2>📿 Zikir Nedir ve Neden Çekilir?</h2>
+    <p>Zikir, kelime anlamıyla anmak, hatırlamak ve unutmamak demektir. İslamiyet'te zikir, kulu Yaratıcısına yaklaştıran, kalbi dünyevi stres ve sıkıntılardan arındıran en kıymetli ibadetlerden biridir. Günlük hayatın yoğun koşturmacası içerisinde zikir çekmek, ruha sükunet ve huzur verir.</p>
+
+    <h2>🎯 Zikirmatik Pro Uygulaması Nasıl Kullanılır?</h2>
+    <p>Geliştirdiğimiz bu dijital zikirmatik uygulaması, günlük tesbihatlarınızı ve virdlerinizi kolayca takip etmeniz için tasarlanmıştır. İşte bazı temel özellikler:</p>
+    <ul>
+        <li><strong>Dokunmatik Sayaç:</strong> Ekranda yer alan büyük daireye her dokunuşunuzda sayaç bir artar.</li>
+        <li><strong>Akıllı Hedefler:</strong> Belirlediğiniz hedefe (örneğin 33 veya 99) ulaştığınızda uygulama sizi sesli olarak uyarır.</li>
+        <li><strong>Günlük Devamlılık (Streak):</strong> Her gün düzenli zikir çekerek serinizi koruyabilir ve motivasyonunuzu artırabilirsiniz.</li>
+        <li><strong>Özel Zikir Ekleme:</strong> "Liste" bölümünden kendi istediğiniz özel zikirleri ve hedefleri sisteme kaydedebilirsiniz.</li>
+    </ul>
+
+    <h2>✨ Günlük Çekilen Temel Zikirlerin Faziletleri</h2>
+    <p>Peygamber Efendimiz (s.a.v.)'in hadislerinde sıkça tavsiye ettiği bazı temel tesbihatların anlamları ve faziletleri şunlardır:</p>
+    <ul>
+        <li><strong>Sübhanallah:</strong> Allah'ı her türlü eksiklikten ve noksan sıfattan tenzih ederim demektir. Kainattaki kusursuzluğu itiraf etmektir.</li>
+        <li><strong>Elhamdülillah:</strong> Bütün övgüler, hamdler ve şükürler yalnızca Allah'adır anlamına gelir. Şükretmek, hayatımızdaki nimetlerin bereketlenmesini sağlar.</li>
+        <li><strong>Allahu Ekber:</strong> Allah en büyüktür demektir. Karşılaştığımız her türlü zorluk ve problemin karşısında Allah'ın gücünün her şeyden üstün olduğunu hatırlatır.</li>
+    </ul>
+    <p>Unutmayın ki zikirde aslolan dille beraber kalbin de söylenen kelimeye odaklanmasıdır. Bu uygulama, sayma stresini üzerinizden alarak tamamen maneviyata odaklanmanızı amaçlar.</p>
+</div>
+
+<div class="footer">
+    <span>© 2026 Zikirmatik Pro - Tüm Hakları Saklıdır.</span><br><br>
+    <a href="#">Hakkımızda</a> | 
+    <a href="#">Gizlilik Politikası</a> | 
+    <a href="#">Kullanım Şartları</a> | 
+    <a href="#">İletişim</a>
 </div>
 
 <div id="settingsModal" class="modal">
