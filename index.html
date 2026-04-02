@@ -372,19 +372,25 @@
     let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
 
     // --- PROGRESS RING KODU ---
-    const circle = document.querySelector('.progress-ring__circle');
-    const radius = circle.r.baseVal.value;
-    const circumference = radius * 2 * Math.PI;
+    let circumference = 0;
+    
+    function initProgress() {
+        const circle = document.querySelector('.progress-ring__circle');
+        const radius = circle.r.baseVal.value;
+        circumference = radius * 2 * Math.PI;
 
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = circumference;
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = circumference;
+    }
 
     function setProgress(percent) {
+        const circle = document.querySelector('.progress-ring__circle');
         const offset = circumference - (percent / 100 * circumference);
         circle.style.strokeDashoffset = offset;
     }
 
     function init() { 
+        initProgress();
         document.getElementById('langSelect').value = currentLang; 
         applyLanguage(); 
         updateView(); 
@@ -443,10 +449,4 @@
         if (name && target > 0) {
             db.push({ name: name, count: 0, target: target, desc: "Özel Zikir" });
             save(); renderDropdown(); renderLibrary();
-            document.getElementById('customName').value = ""; document.getElementById('customTarget').value = "";
-        }
-    }
-
-    function renderLibrary() {
-        const list = document.getElementById('libList');
-        list.innerHTML = db
+            document.getElementById('customName').value = ""; docum
