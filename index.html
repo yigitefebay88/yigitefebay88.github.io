@@ -163,16 +163,9 @@
             margin: 0; 
             pointer-events: none; 
             height: 60px;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-        
-        .digit-container {
-            display: flex;
-            height: 60px;
-            line-height: 60px;
         }
 
         .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
@@ -271,9 +264,7 @@
             <circle class="progress-ring__circle" stroke-width="6" fill="transparent" r="95" cx="110" cy="110"/>
         </svg>
         <div class="main-circle" id="clickBtn">
-            <div class="count-num">
-                <div class="digit-container" id="displayDigits">0</div>
-            </div>
+            <div class="count-num" id="displayNum">0</div>
             <span id="targetLabel" style="font-size: 0.8rem; opacity: 0.6; font-weight: 600;">Hedef: 33</span>
         </div>
     </div>
@@ -416,7 +407,7 @@
         const curr = db[currentIndex];
         
         // Sayı Güncellemesi
-        document.getElementById('displayDigits').innerText = curr.count;
+        document.getElementById('displayNum').innerText = curr.count;
         
         document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`;
         document.getElementById('mainDesc').innerText = curr.desc || "...";
@@ -452,4 +443,10 @@
         if (name && target > 0) {
             db.push({ name: name, count: 0, target: target, desc: "Özel Zikir" });
             save(); renderDropdown(); renderLibrary();
-            doc
+            document.getElementById('customName').value = ""; document.getElementById('customTarget').value = "";
+        }
+    }
+
+    function renderLibrary() {
+        const list = document.getElementById('libList');
+        list.innerHTML = db
