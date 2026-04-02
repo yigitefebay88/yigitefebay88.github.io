@@ -156,7 +156,7 @@
             background: rgba(16, 185, 129, 0.05);
         }
         
-        /* 🎰 Slot Animasyonlu Sayaç */
+        /* 🎰 Sayaç */
         .count-num { 
             font-size: 4rem; 
             font-weight: 800; 
@@ -415,7 +415,7 @@
     function updateView() {
         const curr = db[currentIndex];
         
-        // Slot Rakam Güncellemesi
+        // Sayı Güncellemesi
         document.getElementById('displayDigits').innerText = curr.count;
         
         document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`;
@@ -451,4 +451,5 @@
         const target = parseInt(document.getElementById('customTarget').value);
         if (name && target > 0) {
             db.push({ name: name, count: 0, target: target, desc: "Özel Zikir" });
-            save(); renderDropdown(); renderLib
+            save(); renderDropdown(); renderLibrary();
+            doc
