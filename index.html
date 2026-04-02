@@ -7,19 +7,34 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#020914">
     
-    <title>Zikirmatik Pro | Stabil Sürüm</title>
+    <title>Zikirmatik Pro | V55 Lux</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg: #020914;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --primary: #f8fafc;
             --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.3);
+            --gold: #f59e0b;
             --orange: #f97316;
+            --blue: #3b82f6;
+        }
+
+        [data-theme="light"] {
+            --bg: #f4f6fa;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --primary: #1e293b;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --gold: #d97706;
         }
 
         body { 
@@ -32,223 +47,307 @@
             min-height: 100vh; 
             margin: 0; 
             user-select: none; 
+            overflow-x: hidden; 
             touch-action: manipulation;
             background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, var(--bg) 70%);
         }
 
+        /* 🕌 Üst Kısım: Günün Ayeti/Hadisi */
         .daily-quote {
             width: 85%;
             max-width: 400px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 15px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 12px 20px;
             margin-top: 20px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-style: italic;
             cursor: pointer;
+            color: var(--primary);
+            opacity: 0.9;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
+        /* Ana Uygulama Alanı */
         .app-container { 
             width: 85%; 
             max-width: 400px; 
-            background: var(--card-bg); 
-            border: 1px solid var(--border);
-            border-radius: 30px; 
+            background: var(--glass); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px); 
+            border: 1px solid var(--glass-border);
+            border-radius: 40px; 
             padding: 25px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
             text-align: center; 
+            z-index: 10;
             margin-top: 20px; 
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .streak-badge {
             background: rgba(249, 115, 22, 0.1); 
             border: 1px solid var(--orange); 
             color: var(--orange);
-            padding: 5px 15px; 
-            border-radius: 20px; 
+            padding: 6px 18px; 
+            border-radius: 25px; 
             font-size: 0.85rem; 
             font-weight: 800;
             display: inline-flex; 
-            gap: 5px; 
+            align-items: center; 
+            gap: 6px; 
             margin-bottom: 10px;
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.15);
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .icon-btn { cursor: pointer; font-size: 1.4rem; padding: 10px; }
+        .icon-btn { cursor: pointer; font-size: 1.4rem; padding: 10px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
+        .icon-btn:hover { transform: scale(1.1); }
         
+        /* ⭕ Tıklama Alanı & Progress Ring */
         .circle-wrapper {
             position: relative;
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             margin: 20px auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .progress-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            pointer-events: none;
+        }
+
+        .progress-ring__circle {
+            stroke: var(--accent);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.2s;
+            filter: drop-shadow(0px 0px 8px var(--accent-glow));
         }
 
         .main-circle { 
-            width: 170px; 
-            height: 170px; 
+            width: 180px; 
+            height: 180px; 
             border-radius: 50%; 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            background: rgba(255,255,255,0.03); 
-            cursor: pointer; 
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
-            -webkit-tap-highlight-color: transparent;
+            background: rgba(255,255,255,0.02); 
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
+            transition: transform 0.1s, background-color 0.2s;
+            pointer-events: none;
+            z-index: 2;
         }
         
-        .main-circle:active {
-            transform: scale(0.96);
-            background: rgba(16, 185, 129, 0.1);
-        }
-        
+        /* 🎰 Sayaç */
         .count-num { 
             font-size: 4rem; 
             font-weight: 800; 
             margin: 0; 
-            pointer-events: none; 
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.1); }
-        .dot.active { background: var(--accent); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(125,125,125,0.2); transition: 0.3s; }
+        .dot.active { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
         .btn-group { display: flex; justify-content: center; gap: 12px; }
         
+        /* 🪟 Cam Efektli Butonlar */
         .btn { 
-            padding: 12px; 
-            border: 1px solid var(--border); 
-            border-radius: 15px; 
+            padding: 14px; 
+            border: 1px solid var(--glass-border); 
+            border-radius: 20px; 
             cursor: pointer; 
             font-weight: 700; 
             flex: 1; 
             color: var(--primary); 
-            background: rgba(255,255,255,0.05);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.2s;
             -webkit-tap-highlight-color: transparent; 
         }
-        .btn:active { transform: scale(0.95); }
-        .btn-primary { border-color: var(--accent); color: var(--accent); }
+        .btn:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
+        .btn-primary { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
-        /* Modallar */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #0b1320; border: 1px solid var(--border); padding: 25px; border-radius: 20px; width: 80%; max-width: 320px; color: #fff; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: #0b1320; border: 1px solid var(--glass-border); padding: 25px; border-radius: 35px; width: 85%; max-width: 340px; max-height: 70vh; overflow-y: auto; color: #fff; }
         
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: inherit; box-sizing: border-box; }
+        [data-theme="light"] .modal-content { background: #fff; color: #1e293b; }
+
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: inherit; font-family: inherit; }
         
-        #toast { visibility: hidden; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 10px 20px; border-radius: 20px; font-weight: 600; z-index: 3000; }
+        #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; box-shadow: 0 10px 20px var(--accent-glow); }
         #toast.show { visibility: visible; }
+        .click-effect { transform: scale(0.92); }
 
-        /* 📝 ADSENSE İÇERİK ALANI */
+        /* 📝 ADSENSE İÇERİK ALANI (Cam Efekti) */
         .content-section {
             width: 85%;
             max-width: 400px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 30px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 40px;
             text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            user-select: text; 
         }
-        .content-section h2 { font-size: 1.1rem; color: var(--accent); margin-top: 15px; margin-bottom: 5px; }
-        .content-section p { font-size: 0.85rem; line-height: 1.5; opacity: 0.8; margin-bottom: 10px; }
-        .content-section ul { padding-left: 20px; font-size: 0.85rem; line-height: 1.5; opacity: 0.8; }
 
+        .content-section h2 { font-size: 1.2rem; color: var(--accent); margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px;}
+        .content-section p { font-size: 0.85rem; line-height: 1.6; opacity: 0.8; margin-bottom: 15px; }
+        .content-section ul { padding-left: 20px; font-size: 0.85rem; line-height: 1.6; opacity: 0.8; }
+        .content-section li { margin-bottom: 10px; }
+
+        /* 🔗 FOOTER (Politikalar) */
         .footer {
             width: 100%;
             text-align: center;
-            padding: 15px 0;
-            background: rgba(0,0,0,0.2);
-            font-size: 0.75rem;
+            padding: 20px 0;
+            background: rgba(0,0,0,0.1);
+            font-size: 0.8rem;
             opacity: 0.6;
         }
-        .footer a { color: var(--primary); text-decoration: none; margin: 0 10px; }
+        .footer a { color: var(--primary); text-decoration: none; margin: 0 10px; font-weight: 600; }
+        .footer a:hover { color: var(--accent); }
     </style>
 </head>
-<body>
+<body data-theme="dark">
+
+<audio id="clickSound" preload="auto"><source src="./click.mp3" type="audio/mpeg"></audio>
+<audio id="neySound" loop preload="auto"><source src="./ney.mp3" type="audio/mpeg"></audio>
+<audio id="bellSound" preload="auto"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
 
 <div id="toast"></div>
 
 <div class="daily-quote" id="quoteText" onclick="changeQuote()">"Kalpler ancak Allah'ı anmakla huzur bulur." (Rad Suresi, 28)</div>
 
 <div class="app-container">
-    <div class="streak-badge"> <span id="streakCount">0</span> <span>GÜN</span></div>
+    <div class="streak-badge"> <span id="streakCount">0</span> <span id="lang-day">GÜN</span></div>
     
     <div class="header">
+        <span class="icon-btn" id="themeIcon" onclick="toggleTheme()">🌙</span>
         <span class="icon-btn" onclick="showModal('settingsModal')">⚙️</span>
-        <span style="font-weight: 600; font-size: 1.1rem;">Zikirmatik Pro</span>
-        <span class="icon-btn" onclick="showModal('libModal')">📚</span>
+        <span id="musicToggle" class="icon-btn" onclick="toggleMusic()">🎶</span>
     </div>
 
     <select id="zikirDropdown" onchange="switchZikir()"></select>
-    <div id="mainDesc" style="font-size: 0.8rem; color: var(--accent); margin: 10px 0; min-height: 20px;"></div>
+    <div id="mainDesc" style="font-size: 0.8rem; color: var(--accent); min-height: 3rem; margin: 5px 0; text-align: center; line-height: 1.4; opacity: 0.8;"></div>
 
-    <div class="circle-wrapper">
-        <div class="main-circle" id="clickBtn">
+    <div class="circle-wrapper" id="clickBtn">
+        <svg class="progress-ring" width="220" height="220">
+            <circle class="progress-ring__circle" stroke-width="6" fill="transparent" r="95" cx="110" cy="110"/>
+        </svg>
+        <div class="main-circle">
             <div class="count-num" id="displayNum">0</div>
-            <span id="targetLabel" style="font-size: 0.8rem; opacity: 0.6;">Hedef: 33</span>
+            <span id="targetLabel" style="font-size: 0.8rem; opacity: 0.6; font-weight: 600;">Hedef: 33</span>
         </div>
     </div>
 
     <div class="weekly-dots" id="weeklyDots"></div>
 
     <div class="btn-group">
-        <button class="btn btn-primary" onclick="resetCurrent()">🔄 Sıfırla</button>
+        <button class="btn" id="lang-libBtn" onclick="showModal('libModal')">📚 Liste</button>
+        <button class="btn btn-primary" id="lang-resetBtn" onclick="resetCurrent()">🔄 Sıfırla</button>
     </div>
 </div>
 
 <div class="content-section">
-    <h2>📿 Zikir Nedir?</h2>
-    <p>Zikir, Yaratıcısını hatırlamak ve anmaktır. Kalbi stres ve sıkıntılardan arındıran en kıymetli ibadetlerdendir.</p>
-    <h2>🎯 Nasıl Kullanılır?</h2>
+    <h2>📿 Zikir Nedir ve Neden Çekilir?</h2>
+    <p>Zikir, kelime anlamıyla anmak, hatırlamak ve unutmamak demektir. İslamiyet'te zikir, kulu Yaratıcısına yaklaştıran, kalbi dünyevi stres ve sıkıntılardan arındıran en kıymetli ibadetlerden biridir.</p>
+
+    <h2>🎯 Zikirmatik Pro Uygulaması Nasıl Kullanılır?</h2>
+    <p>Geliştirdiğimiz bu lüks dijital zikirmatik uygulaması, günlük tesbihatlarınızı ve virdlerinizi şık ve odaklayıcı bir arayüzle takip etmeniz için tasarlanmıştır.</p>
     <ul>
-        <li>Daireye dokunarak tesbihatınızı yapabilirsiniz.</li>
-        <li>Ayarlar simgesinden uygulama dilini değiştirebilirsiniz.</li>
-        <li>Kitap simgesinden yeni zikir ekleyebilirsiniz.</li>
+        <li><strong>İlerleme Halkası:</strong> Ekranda yer alan halkanın dolma oranı, hedefinize ne kadar yaklaştığınızı görsel olarak gösterir.</li>
+        <li><strong>Günlük Devamlılık:</strong> Her gün düzenli zikir çekerek serinizi koruyabilir, zinciri kırmadan devam edebilirsiniz.</li>
+        <li><strong>Kişiselleştirilmiş Liste:</strong> Kendi istediğiniz özel zikirleri hedefleriyle birlikte sisteme kolayca kaydedebilirsiniz.</li>
     </ul>
 </div>
 
 <div class="footer">
     <span>© 2026 Zikirmatik Pro - Tüm Hakları Saklıdır.</span><br><br>
-    <a href="#">Hakkımızda</a> | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a>
+    <a href="#">Hakkımızda</a> | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a> | <a href="#">İletişim</a>
 </div>
 
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h3 style="text-align:center; margin-top:0;">Ayarlar</h3>
-        <label>Dil Seçimi:</label>
-        <select id="langSelect">
+        <h3 id="lang-settingsTitle" style="text-align:center">Ayarlar</h3>
+        <label id="lang-selectLangLabel">Dil Seçimi:</label>
+        <select id="langSelect" onchange="changeLanguage()">
             <option value="tr">Türkçe</option>
             <option value="en">English</option>
+            <option value="ar">العربية</option>
         </select>
-        <button class="btn" style="width:100%; margin-top: 15px;" onclick="hideModal('settingsModal')">Kapat</button>
+        <button class="btn" style="width:100%; margin-top: 20px;" onclick="hideModal('settingsModal')">Kapat</button>
     </div>
 </div>
 
 <div id="libModal" class="modal">
     <div class="modal-content">
-        <h3 style="text-align:center; margin-top:0;">Zikir Listesi</h3>
+        <h3 id="lang-libTitle" style="text-align:center">Zikir Listesi</h3>
         <input type="text" id="customName" placeholder="Zikir Adı...">
-        <input type="number" id="customTarget" placeholder="Hedef...">
-        <button class="btn btn-primary" style="width:100%; margin-bottom: 10px;" onclick="addCustomZikir()">➕ Ekle</button>
-        <div id="libList" style="max-height: 150px; overflow-y: auto;"></div>
-        <button class="btn" style="width:100%; margin-top:10px;" onclick="hideModal('libModal')">Kapat</button>
+        <input type="number" id="customTarget" placeholder="Hedef..." min="1">
+        <button class="btn btn-primary" style="width:100%; margin-bottom: 15px;" onclick="addCustomZikir()">➕ Ekle</button>
+        <div id="libList" style="max-height: 25vh; overflow-y: auto; border-top: 1px solid rgba(125,125,125,0.1)"></div>
+        <button class="btn" style="width:100%; margin-top:15px;" onclick="hideModal('libModal')">Kapat</button>
     </div>
 </div>
 
 <script>
+    // --- GÜNÜN SÖZLERİ ---
     const quotes = [
         "\"Kalpler ancak Allah'ı anmakla huzur bulur.\" (Rad Suresi, 28)",
         "\"Siz beni anın ki, ben de sizi anayım.\" (Bakara Suresi, 152)",
-        "\"Dile hafif, mizanda ağır gelen iki kelime: Sübhanallahi ve bihamdihi.\" (Hadis-i Şerif)"
+        "\"Dile hafif, mizanda ağır gelen iki kelime: Sübhanallahi ve bihamdihi.\" (Hadis-i Şerif)",
+        "\"En faziletli zikir 'Lâ ilâhe illallah' demektir.\" (Hadis-i Şerif)"
     ];
     let quoteIdx = 0;
     function changeQuote() { quoteIdx = (quoteIdx + 1) % quotes.length; document.getElementById('quoteText').innerText = quotes[quoteIdx]; }
+
+    // --- SES VE ETKİLEŞİM ---
+    function safePlay(audioId) {
+        const a = document.getElementById(audioId);
+        if (a) a.play().catch(() => {});
+    }
+
+    function unlockAudio() {
+        ['clickSound', 'neySound', 'bellSound'].forEach(id => {
+            const a = document.getElementById(id);
+            if(a) a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{});
+        });
+        document.removeEventListener('pointerdown', unlockAudio);
+    }
+    document.addEventListener('pointerdown', unlockAudio);
+
+    // --- DİL VE VERİ ---
+    const translations = {
+        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
+        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
+    };
 
     const varsayilanZikirler = [
         { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı her türlü eksiklikten tenzih ederim." },
@@ -257,27 +356,77 @@
     ];
 
     let db = JSON.parse(localStorage.getItem('zikirDB')) || varsayilanZikirler;
+    let currentLang = localStorage.getItem('lang') || 'tr';
     let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
+    let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
 
-    function updateView() {
-        const curr = db[currentIndex];
-        document.getElementById('displayNum').innerText = curr.count;
-        document.getElementById('targetLabel').innerText = `Hedef: ${curr.target}`;
-        document.getElementById('mainDesc').innerText = curr.desc || "";
+    // --- PROGRESS RING KODU ---
+    let circumference = 0;
+    
+    function initProgress() {
+        const circle = document.querySelector('.progress-ring__circle');
+        const radius = circle.r.baseVal.value;
+        circumference = radius * 2 * Math.PI;
+
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = circumference;
+    }
+
+    function setProgress(percent) {
+        const circle = document.querySelector('.progress-ring__circle');
+        const offset = circumference - (percent / 100 * circumference);
+        circle.style.strokeDashoffset = offset;
+    }
+
+    function init() { 
+        initProgress();
+        document.getElementById('langSelect').value = currentLang; 
+        applyLanguage(); 
+        updateView(); 
+        renderWeekly(); 
+        renderDropdown(); 
+    }
+
+    function applyLanguage() {
+        const t = translations[currentLang];
+        document.getElementById('lang-day').innerText = t.day;
+        document.getElementById('lang-libBtn').innerText = t.libBtn;
+        document.getElementById('lang-resetBtn').innerText = t.resetBtn;
+        document.getElementById('lang-settingsTitle').innerText = t.settingsTitle;
+        document.getElementById('lang-selectLangLabel').innerText = t.selectLang;
+        document.getElementById('lang-libTitle').innerText = t.libTitle;
         renderDropdown();
     }
 
-    // TIKLAMA OLAYI (clickBtn'e tıklandığında kesin çalışır)
-    document.getElementById('clickBtn').addEventListener('click', function() {
-        db[currentIndex].count++;
+    function updateView() {
+        const curr = db[currentIndex];
         
+        document.getElementById('displayNum').innerText = curr.count;
+        document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`;
+        document.getElementById('mainDesc').innerText = curr.desc || "...";
+        document.getElementById('streakCount').innerText = streak.count;
+
+        const percentage = Math.min((curr.count % curr.target) / curr.target * 100, 100);
+        setProgress(percentage === 0 && curr.count > 0 ? 100 : percentage);
+    }
+
+    // --- TIKLAMA OLAYI ---
+    document.getElementById('clickBtn').addEventListener('pointerdown', function() {
+        this.classList.add('click-effect');
+        setTimeout(() => this.classList.remove('click-effect'), 100);
+
+        db[currentIndex].count++;
+
         if (db[currentIndex].count % db[currentIndex].target === 0) {
-            showToast("MaşAllah!");
+            safePlay('bellSound');
+            showToast(translations[currentLang].toastDone);
         }
 
+        const snd = document.getElementById('clickSound');
+        if(snd) { snd.currentTime = 0; safePlay('clickSound'); }
         if (navigator.vibrate) navigator.vibrate(50);
-        save(); 
-        updateView();
+
+        recordActivity(); save(); updateView();
     });
 
     function addCustomZikir() {
@@ -285,67 +434,88 @@
         const target = parseInt(document.getElementById('customTarget').value);
         if (name && target > 0) {
             db.push({ name: name, count: 0, target: target, desc: "Özel Zikir" });
-            save(); 
-            renderDropdown();
+            save(); renderDropdown(); renderLibrary();
             document.getElementById('customName').value = ""; document.getElementById('customTarget').value = "";
-            showToast("Zikir eklendi.");
         }
     }
 
-    function renderDropdown() { 
-        document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); 
-    }
-
-    function switchZikir() { 
-        currentIndex = parseInt(document.getElementById('zikirDropdown').value); 
-        save(); 
-        updateView(); 
-    }
-
-    function resetCurrent() { 
-        if(confirm("Sıfırlansın mı?")) { 
-            db[currentIndex].count = 0; 
-            save(); 
-            updateView(); 
-        } 
-    }
-    
     function renderLibrary() {
         const list = document.getElementById('libList');
         list.innerHTML = db.map((item, i) => `
-            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                <span onclick="selectZikir(${i})" style="cursor:pointer;">${item.name} (${item.count}/${item.target})</span>
-                <span onclick="deleteZikir(${i})" style="cursor:pointer; color:red;">🗑️</span>
+            <div style="display:flex; justify-content:space-between; padding:12px 5px; border-bottom:1px solid rgba(125,125,125,0.05); align-items:center;">
+                <div onclick="selectZikir(${i})" style="flex:1; cursor:pointer;">
+                    <strong>${item.name}</strong> <br> <small style="opacity:0.6;">${item.count} / ${item.target}</small>
+                </div>
+                <span onclick="deleteZikir(${i}, event)" style="padding:10px; cursor:pointer;">🗑️</span>
             </div>`).join('');
     }
 
-    function selectZikir(i) { currentIndex = i; save(); updateView(); hideModal('libModal'); }
-    
-    function deleteZikir(i) {
-        if(confirm("Silinsin mi?")) {
+    function deleteZikir(i, e) {
+        e.stopPropagation();
+        if (confirm(translations[currentLang].confirmDelete)) {
             db.splice(i, 1);
-            if(db.length === 0) db = [...varsayilanZikirler];
-            currentIndex = 0;
-            save(); updateView(); renderLibrary();
+            if (currentIndex >= db.length) currentIndex = 0;
+            save(); renderDropdown(); renderLibrary(); updateView();
         }
     }
 
-    function save() { 
-        localStorage.setItem('zikirDB', JSON.stringify(db)); 
-        localStorage.setItem('currentIdx', currentIndex); 
-    }
+    function selectZikir(i) { currentIndex = i; save(); updateView(); renderDropdown(); hideModal('libModal'); }
+    function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
+    function renderDropdown() { document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); }
+    function switchZikir() { currentIndex = parseInt(document.getElementById('zikirDropdown').value); save(); updateView(); }
+    function resetCurrent() { if(confirm(translations[currentLang].confirmReset)) { db[currentIndex].count = 0; save(); updateView(); } }
     
     function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
     function hideModal(id) { document.getElementById(id).style.display = 'none'; }
-    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 2000); }
+    
+    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
+    
+    function toggleTheme() { 
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', newTheme);
+        document.getElementById('themeIcon').innerText = newTheme === 'dark' ? '🌙' : '☀️'; 
+    }
+    
+    function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
+    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
+    
+    function recordActivity() {
+        const today = new Date();
+        const todayStr = today.toLocaleDateString();
+        
+        if (streak.lastDate !== todayStr) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toLocaleDateString();
 
-    // Haftalık Devamlılık Noktaları (Görsel amaçlı)
-    const dots = document.getElementById('weeklyDots');
-    dots.innerHTML = "";
-    for(let i=0; i<7; i++) { dots.innerHTML += `<div class="dot ${i === 6 ? 'active' : ''}"></div>`; }
+            if (streak.lastDate === yesterdayStr) {
+                streak.count++; 
+            } else if (streak.lastDate === null || streak.lastDate !== todayStr) {
+                streak.count = 1; 
+            }
+            
+            streak.lastDate = todayStr;
+            if(!streak.history.includes(todayStr)) streak.history.push(todayStr);
+            localStorage.setItem('streakData', JSON.stringify(streak));
+            renderWeekly();
+        }
+    }
 
-    // Başlatıcı
-    updateView();
+    function renderWeekly() {
+        const dots = document.getElementById('weeklyDots'); dots.innerHTML = "";
+        for(let i=6; i>=0; i--) {
+            const d = new Date(); d.setDate(d.getDate() - i);
+            dots.innerHTML += `<div class="dot ${streak.history.includes(d.toLocaleDateString()) ? 'active' : ''}"></div>`;
+        }
+    }
+
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(init, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", init);
+    }
 </script>
 </body>
 </html>
