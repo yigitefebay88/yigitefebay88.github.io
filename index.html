@@ -131,9 +131,10 @@
     const translations = {
         tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
         en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
-        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف?" }
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
     };
 
+    // 🕌 BURAYA EKLEDİĞİN TÜM ZİKİRLERİ SABİTLEDİM
     const varsayilanZikirler = [
         { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı her türlü eksiklikten tenzih ederim." },
         { name: "Elhamdülillah", count: 0, target: 33, desc: "Bütün övgüler Allah'adır." },
@@ -160,7 +161,7 @@
     function init() { 
         initProgress(); document.getElementById('langSelect').value = currentLang; applyLanguage(); updateView(); renderWeekly(); renderDropdown(); 
         
-        // Eğer hafızadaki zikir sayısı eksikse kodun içindeki tam listeyi yükle
+        // Önemli: Eğer hafızada eksik zikir varsa otomatik listeyi tamamlar
         if(db.length < varsayilanZikirler.length) {
             db = [...varsayilanZikirler]; save(); renderDropdown(); updateView();
         }
@@ -193,7 +194,7 @@
         e.stopPropagation();
         if (confirm(translations[currentLang].confirmDelete)) {
             db.splice(i, 1);
-            if (db.length === 0) db = [...varsayilanZikirler]; 
+            if (db.length === 0) db = [...varsayilanZikirler]; // Tamamen sıfırlanırsa listeyi baştan yükler
             if (currentIndex >= db.length) currentIndex = 0;
             save(); renderDropdown(); renderLibrary(); updateView();
         }
@@ -209,4 +210,4 @@
     function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
     function toggleTheme() { const body = document.body; const currentTheme = body.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').innerText = newTheme === 'dark' ? '🌙' : '☀️'; }
     function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
-    function changeLanguage() { currentLang = document.getElementById('langSelect').value; local
+   
