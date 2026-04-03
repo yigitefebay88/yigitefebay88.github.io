@@ -134,7 +134,6 @@
         ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
     };
 
-    // 🕌 BURAYA EKLEDİĞİN TÜM ZİKİRLERİ SABİTLEDİM
     const varsayilanZikirler = [
         { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı her türlü eksiklikten tenzih ederim." },
         { name: "Elhamdülillah", count: 0, target: 33, desc: "Bütün övgüler Allah'adır." },
@@ -160,11 +159,7 @@
     
     function init() { 
         initProgress(); document.getElementById('langSelect').value = currentLang; applyLanguage(); updateView(); renderWeekly(); renderDropdown(); 
-        
-        // Önemli: Eğer hafızada eksik zikir varsa otomatik listeyi tamamlar
-        if(db.length < varsayilanZikirler.length) {
-            db = [...varsayilanZikirler]; save(); renderDropdown(); updateView();
-        }
+        if(db.length < varsayilanZikirler.length) { db = [...varsayilanZikirler]; save(); renderDropdown(); updateView(); }
     }
     
     function applyLanguage() { const t = translations[currentLang]; document.getElementById('lang-day').innerText = t.day; document.getElementById('lang-libBtn').innerText = t.libBtn; document.getElementById('lang-resetBtn').innerText = t.resetBtn; document.getElementById('lang-settingsTitle').innerText = t.settingsTitle; document.getElementById('lang-selectLangLabel').innerText = t.selectLang; document.getElementById('lang-libTitle').innerText = t.libTitle; renderDropdown(); }
@@ -194,7 +189,7 @@
         e.stopPropagation();
         if (confirm(translations[currentLang].confirmDelete)) {
             db.splice(i, 1);
-            if (db.length === 0) db = [...varsayilanZikirler]; // Tamamen sıfırlanırsa listeyi baştan yükler
+            if (db.length === 0) db = [...varsayilanZikirler]; 
             if (currentIndex >= db.length) currentIndex = 0;
             save(); renderDropdown(); renderLibrary(); updateView();
         }
@@ -210,4 +205,7 @@
     function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
     function toggleTheme() { const body = document.body; const currentTheme = body.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').innerText = newTheme === 'dark' ? '🌙' : '☀️'; }
     function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
-   
+    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
+    
+    function recordActivity() {
+  
