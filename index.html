@@ -128,13 +128,13 @@
     function safePlay(audioId) { const a = document.getElementById(audioId); if (a) a.play().catch(() => {}); }
     function unlockAudio() { ['clickSound', 'neySound', 'bellSound'].forEach(id => { const a = document.getElementById(id); if(a) a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{}); }); document.removeEventListener('pointerdown', unlockAudio); }
     document.addEventListener('pointerdown', unlockAudio);
-    
     const translations = {
         tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "⚙️ Ayarlar", selectLang: "Dil Seçimi:", libTitle: "📚 Zikirlerin", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
         en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "⚙️ Settings", selectLang: "Language:", libTitle: "📚 Your Dhikr", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
-        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف?" }
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "⚙️ الإعدادات", selectLang: "اللغة:", libTitle: "📚 أذكارك", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
     };
 
+    // 🕌 BURAYA EKLEDİĞİN TÜM ZİKİRLERİ SABİTLEDİM
     const varsayilanZikirler = [
         { name: "Sübhanallah", count: 0, target: 33, desc: "Allah'ı her türlü eksiklikten tenzih ederim." },
         { name: "Elhamdülillah", count: 0, target: 33, desc: "Bütün övgüler Allah'adır." },
@@ -149,18 +149,9 @@
         { name: "Kabir Azabı İçin", count: 0, target: 1, desc: "Kabir azabından korunmak ve yok etmek için." }
     ];
 
-    let db;
-    
-    // RADİKAL DEĞİŞİKLİK: Eski hatalı hafızayı otomatik temizleyip sıfırdan başlatan kod
-    localStorage.removeItem('zikirDB'); 
-    localStorage.removeItem('currentIdx');
-    
-    db = JSON.parse(JSON.stringify(varsayilanZikirler));
-    localStorage.setItem('zikirDB', JSON.stringify(db));
-
+    let db = JSON.parse(localStorage.getItem('zikirDB')) || varsayilanZikirler;
     let currentLang = localStorage.getItem('lang') || 'tr';
-    let currentIndex = 0;
-    
+    let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
     let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
     let circumference = 0;
     
@@ -169,12 +160,17 @@
     
     function init() { 
         initProgress(); document.getElementById('langSelect').value = currentLang; applyLanguage(); updateView(); renderWeekly(); renderDropdown(); 
+        
+        // Önemli: Eğer hafızada eksik zikir varsa otomatik listeyi tamamlar
+        if(db.length < varsayilanZikirler.length) {
+            db = [...varsayilanZikirler]; save(); renderDropdown(); updateView();
+        }
     }
     
     function applyLanguage() { const t = translations[currentLang]; document.getElementById('lang-day').innerText = t.day; document.getElementById('lang-libBtn').innerText = t.libBtn; document.getElementById('lang-resetBtn').innerText = t.resetBtn; document.getElementById('lang-settingsTitle').innerText = t.settingsTitle; document.getElementById('lang-selectLangLabel').innerText = t.selectLang; document.getElementById('lang-libTitle').innerText = t.libTitle; renderDropdown(); }
     
     function updateView() {
-        const curr = db[currentIndex] || db[0]; document.getElementById('displayNum').innerText = curr.count; document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`; document.getElementById('mainDesc').innerText = curr.desc || "..."; document.getElementById('streakCount').innerText = streak.count;
+        const curr = db[currentIndex]; document.getElementById('displayNum').innerText = curr.count; document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`; document.getElementById('mainDesc').innerText = curr.desc || "..."; document.getElementById('streakCount').innerText = streak.count;
         const percentage = Math.min((curr.count % curr.target) / curr.target * 100, 100); setProgress(percentage === 0 && curr.count > 0 ? 100 : percentage);
     }
 
@@ -198,7 +194,7 @@
         e.stopPropagation();
         if (confirm(translations[currentLang].confirmDelete)) {
             db.splice(i, 1);
-            if (db.length === 0) db = JSON.parse(JSON.stringify(varsayilanZikirler)); 
+            if (db.length === 0) db = [...varsayilanZikirler]; // Tamamen sıfırlanırsa listeyi baştan yükler
             if (currentIndex >= db.length) currentIndex = 0;
             save(); renderDropdown(); renderLibrary(); updateView();
         }
@@ -214,4 +210,4 @@
     function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
     function toggleTheme() { const body = document.body; const currentTheme = body.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').innerText = newTheme === 'dark' ? '🌙' : '☀️'; }
     function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
-    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.s
+   
