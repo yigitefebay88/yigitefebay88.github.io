@@ -11,35 +11,248 @@
     <title>Zikirmatik Pro | V55 Lux</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #020914; --glass: rgba(255, 255, 255, 0.04); --glass-border: rgba(255, 255, 255, 0.08); --primary: #f8fafc; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.3); --orange: #f97316; }
-        [data-theme="light"] { --bg: #f4f6fa; --glass: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.05); --primary: #1e293b; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.15); }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; user-select: none; overflow-x: hidden; touch-action: manipulation; background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, var(--bg) 70%); }
-        .daily-quote { width: 85%; max-width: 400px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 12px 20px; margin-top: 20px; text-align: center; font-size: 0.8rem; font-style: italic; color: var(--primary); opacity: 0.9; }
-        .app-container { width: 85%; max-width: 400px; background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 40px; padding: 25px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; z-index: 10; margin-top: 20px; }
-        .streak-badge { background: rgba(249, 115, 22, 0.1); border: 1px solid var(--orange); color: var(--orange); padding: 6px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .icon-btn { cursor: pointer; font-size: 1.4rem; padding: 10px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
-        .icon-btn:hover { transform: scale(1.1); }
-        .circle-wrapper { position: relative; width: 220px; height: 220px; margin: 20px auto; display: flex; justify-content: center; align-items: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-        .progress-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
-        .progress-ring__circle { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.2s; filter: drop-shadow(0px 0px 8px var(--accent-glow)); }
-        .main-circle { width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); transition: transform 0.1s; pointer-events: none; z-index: 2; }
-        .count-num { font-size: 4rem; font-weight: 800; margin: 0; height: 60px; display: flex; justify-content: center; align-items: center; }
-        .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(125,125,125,0.2); transition: 0.3s; }
-        .dot.active { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-        .btn-group { display: flex; justify-content: center; gap: 12px; }
-        .btn { padding: 14px; border: 1px solid var(--glass-border); border-radius: 20px; cursor: pointer; font-weight: 700; flex: 1; color: var(--primary); background: var(--glass); backdrop-filter: blur(10px); transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
-        .btn:active { transform: scale(0.95); }
-        .btn-primary { border-color: var(--accent); color: var(--accent); }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #0b1320; border: 1px solid var(--glass-border); padding: 25px; border-radius: 35px; width: 85%; max-width: 340px; max-height: 70vh; overflow-y: auto; color: #fff; }
-        [data-theme="light"] .modal-content { background: #fff; color: #1e293b; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: inherit; font-family: inherit; }
-        #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; }
-        #toast.show { visibility: visible; }
-        .click-effect { transform: scale(0.92); }
-        .footer { width: 100%; text-align: center; padding: 20px 0; font-size: 0.8rem; opacity: 0.6; margin-top: auto; }
+        :root {
+            --bg: #020914;
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #f8fafc;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.3);
+            --orange: #f97316;
+        }
+        [data-theme="light"] {
+            --bg: #f4f6fa;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --primary: #1e293b;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            user-select: none;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, var(--bg) 70%);
+        }
+        .daily-quote {
+            width: 85%;
+            max-width: 400px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 12px 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--primary);
+            opacity: 0.9;
+        }
+        .app-container {
+            width: 85%;
+            max-width: 400px;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 25px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            text-align: center;
+            z-index: 10;
+            margin-top: 20px;
+        }
+        .streak-badge {
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid var(--orange);
+            color: var(--orange);
+            padding: 6px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .icon-btn {
+            cursor: pointer;
+            font-size: 1.4rem;
+            padding: 10px;
+            transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .icon-btn:hover {
+            transform: scale(1.1);
+        }
+        .circle-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .progress-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            pointer-events: none;
+        }
+        .progress-ring__circle {
+            stroke: var(--accent);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.2s;
+            filter: drop-shadow(0px 0px 8px var(--accent-glow));
+        }
+        .main-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
+            transition: transform 0.1s;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .count-num {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 0;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .weekly-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(125,125,125,0.2);
+            transition: 0.3s;
+        }
+        .dot.active {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .btn {
+            padding: 14px;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            flex: 1;
+            color: var(--primary);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn-primary {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: #0b1320;
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 35px;
+            width: 85%;
+            max-width: 340px;
+            max-height: 70vh;
+            overflow-y: auto;
+            color: #fff;
+        }
+        [data-theme="light"] .modal-content {
+            background: #fff;
+            color: #1e293b;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: inherit;
+            font-family: inherit;
+        }
+        #toast {
+            visibility: hidden;
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            z-index: 3001;
+        }
+        #toast.show {
+            visibility: visible;
+        }
+        .click-effect {
+            transform: scale(0.92);
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body data-theme="dark">
@@ -102,7 +315,7 @@
     const translations = {
         tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "Ayarlar", selectLang: "Dil Seçimi:", libTitle: "Zikir Listesi", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
         en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "Settings", selectLang: "Language:", libTitle: "Dhikr List", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
-        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "الإعدادات", selectLang: "اللغة:", libTitle: "قائمة الأذكار", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
+        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "الإعدادات", selectLang: "اللغة:", libTitle: "قائمة الأذكar", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
     };
 
     const varsayilanZikirler = [
@@ -119,7 +332,6 @@
         { name: "Kabir Azabı İçin", count: 0, target: 1 }
     ];
 
-    // ÖNEMLİ: BOZUK HAFIZAYI OTOMATİK TEMİZLEYEN SİHİRLİ SATIRLAR
     localStorage.removeItem('zikirDB');
     localStorage.removeItem('currentIdx');
 
