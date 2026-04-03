@@ -150,22 +150,16 @@
     ];
 
     let db;
-    try {
-        const storedDB = JSON.parse(localStorage.getItem('zikirDB'));
-        if (Array.isArray(storedDB) && storedDB.length > 0) {
-            db = storedDB;
-        } else {
-            db = JSON.parse(JSON.stringify(varsayilanZikirler));
-            localStorage.setItem('zikirDB', JSON.stringify(db));
-        }
-    } catch(e) {
-        db = JSON.parse(JSON.stringify(varsayilanZikirler));
-        localStorage.setItem('zikirDB', JSON.stringify(db));
-    }
+    
+    // RADİKAL DEĞİŞİKLİK: Eski hatalı hafızayı otomatik temizleyip sıfırdan başlatan kod
+    localStorage.removeItem('zikirDB'); 
+    localStorage.removeItem('currentIdx');
+    
+    db = JSON.parse(JSON.stringify(varsayilanZikirler));
+    localStorage.setItem('zikirDB', JSON.stringify(db));
 
     let currentLang = localStorage.getItem('lang') || 'tr';
-    let currentIndex = parseInt(localStorage.getItem('currentIdx')) || 0;
-    if (currentIndex >= db.length) currentIndex = 0;
+    let currentIndex = 0;
     
     let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
     let circumference = 0;
@@ -218,4 +212,6 @@
     function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
     function hideModal(id) { document.getElementById(id).style.display = 'none'; }
     function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
-    function toggleTheme() { const body = document.body; const currentTheme = body.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').innerText = newThem
+    function toggleTheme() { const body = document.body; const currentTheme = body.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').innerText = newTheme === 'dark' ? '🌙' : '☀️'; }
+    function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
+    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.s
