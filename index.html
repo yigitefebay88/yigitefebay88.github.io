@@ -6,190 +6,201 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#020914">
-    <title>Zikirmatik Pro | V55 Lux</title>
+    <title>Zikirmatik Pro | V57 Full Plus</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #020914; --glass: rgba(255, 255, 255, 0.04); --glass-border: rgba(255, 255, 255, 0.08); --primary: #f8fafc; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.3); --orange: #f97316; }
-        [data-theme="light"] { --bg: #f4f6fa; --glass: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.05); --primary: #1e293b; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.15); }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; user-select: none; overflow-x: hidden; touch-action: manipulation; background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, var(--bg) 70%); }
-        .daily-quote { width: 85%; max-width: 400px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 12px 20px; margin-top: 20px; text-align: center; font-size: 0.8rem; font-style: italic; color: var(--primary); opacity: 0.9; }
-        .app-container { width: 85%; max-width: 400px; background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 40px; padding: 25px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; z-index: 10; margin-top: 20px; }
-        .streak-badge { background: rgba(249, 115, 22, 0.1); border: 1px solid var(--orange); color: var(--orange); padding: 6px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .icon-btn { cursor: pointer; font-size: 1.4rem; padding: 10px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
-        .icon-btn:hover { transform: scale(1.1); }
-        .circle-wrapper { position: relative; width: 220px; height: 220px; margin: 20px auto; display: flex; justify-content: center; align-items: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        [data-theme="light"] { --bg: #f4f6fa; --glass: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.05); --primary: #1e293b; --accent: #10b981; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; user-select: none; overflow-x: hidden; touch-action: manipulation; }
+        
+        .daily-quote { width: 90%; max-width: 450px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 15px; margin-top: 20px; text-align: center; font-size: 0.8rem; font-style: italic; color: var(--primary); }
+        
+        .app-container { width: 90%; max-width: 450px; background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 40px; padding: 25px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; margin-top: 20px; z-index: 5; }
+        
+        .streak-badge { background: rgba(249, 115, 22, 0.1); border: 1px solid var(--orange); color: var(--orange); padding: 6px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 800; margin-bottom: 10px; display: inline-block; }
+        
+        .circle-wrapper { position: relative; width: 220px; height: 220px; margin: 20px auto; cursor: pointer; display: flex; justify-content: center; align-items: center; -webkit-tap-highlight-color: transparent; }
         .progress-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
-        .progress-ring__circle { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.2s; filter: drop-shadow(0px 0px 8px var(--accent-glow)); }
-        .main-circle { width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); transition: transform 0.1s; pointer-events: none; z-index: 2; }
-        .count-num { font-size: 4rem; font-weight: 800; margin: 0; height: 60px; display: flex; justify-content: center; align-items: center; }
-        .weekly-dots { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(125,125,125,0.2); transition: 0.3s; }
-        .dot.active { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-        .btn-group { display: flex; justify-content: center; gap: 12px; }
-        .btn { padding: 14px; border: 1px solid var(--glass-border); border-radius: 20px; cursor: pointer; font-weight: 700; flex: 1; color: var(--primary); background: var(--glass); backdrop-filter: blur(10px); transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
-        .btn:active { transform: scale(0.95); }
+        .progress-ring__circle { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.3s; filter: drop-shadow(0px 0px 8px var(--accent-glow)); }
+        
+        .main-circle { width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); pointer-events: none; }
+        .count-num { font-size: 4.5rem; font-weight: 800; margin: 0; line-height: 1; }
+        
+        .meaning-box { margin: 15px 0; font-size: 0.85rem; padding: 15px; border-left: 4px solid var(--accent); background: rgba(255,255,255,0.03); border-radius: 10px; text-align: left; line-height: 1.5; min-height: 60px; }
+        
+        .btn-group { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+        .btn { padding: 15px; border-radius: 18px; border: 1px solid var(--glass-border); background: var(--glass); color: var(--primary); cursor: pointer; flex: 1; font-weight: 700; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
         .btn-primary { border-color: var(--accent); color: var(--accent); }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: #0b1320; border: 1px solid var(--glass-border); padding: 25px; border-radius: 35px; width: 85%; max-width: 340px; max-height: 70vh; overflow-y: auto; color: #fff; }
-        [data-theme="light"] .modal-content { background: #fff; color: #1e293b; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: inherit; font-family: inherit; }
-        #toast { visibility: hidden; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 3001; }
+        .btn:active { transform: scale(0.95); }
+
+        /* ADSENSE ONAYI İÇİN SEO MAKALELERİ */
+        .seo-section { width: 90%; max-width: 600px; margin: 40px 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; padding: 30px; line-height: 1.8; text-align: justify; }
+        .seo-section h1, .seo-section h2 { color: var(--accent); margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+        .seo-section p { margin-bottom: 20px; font-size: 0.95rem; opacity: 0.9; }
+        
+        .footer { padding-bottom: 40px; opacity: 0.4; font-size: 0.75rem; text-align: center; }
+        
+        #zikirDropdown { width: 100%; padding: 12px; border-radius: 15px; background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--glass-border); font-family: inherit; margin-bottom: 10px; cursor: pointer; }
+        #toast { visibility: hidden; position: fixed; bottom: 30px; background: var(--accent); color: white; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 999; }
         #toast.show { visibility: visible; }
-        .click-effect { transform: scale(0.92); }
-        .footer { width: 100%; text-align: center; padding: 20px 0; font-size: 0.8rem; opacity: 0.6; margin-top: auto; }
-        /* AdSense için eklenen zengin içerik alanları */
-        .content-area { width: 85%; max-width: 400px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px; margin-top: 20px; font-size: 0.85rem; line-height: 1.6; text-align: left; }
-        .content-area h2 { font-size: 1.1rem; color: var(--accent); margin-top: 0; }
-        .content-area h3 { font-size: 0.95rem; margin-bottom: 5px; color: var(--primary); }
-        .meaning-box { margin-top: 10px; font-size: 0.85rem; padding: 10px; border-left: 3px solid var(--accent); background: rgba(255,255,255,0.02); border-radius: 5px; }
     </style>
 </head>
 <body data-theme="dark">
-<audio id="clickSound" preload="auto"><source src="./click.mp3" type="audio/mpeg"></audio>
-<audio id="neySound" loop preload="auto"><source src="./ney.mp3" type="audio/mpeg"></audio>
-<audio id="bellSound" preload="auto"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
-<div id="toast"></div>
-<div class="daily-quote" id="quoteText">"Kalpler ancak Allah'ı anmakla huzur bulur." (Rad Suresi, 28)</div>
+
+<div id="toast">MaşAllah!</div>
+<div class="daily-quote">"Kalpler ancak Allah'ı anmakla huzur bulur." (Rad Suresi, 28)</div>
+
 <div class="app-container">
-    <div class="streak-badge"> <span id="streakCount">0</span> <span id="lang-day">GÜN</span></div>
-    <div class="header">
-        <span class="icon-btn" id="themeIcon" onclick="toggleTheme()">🌙</span>
-        <span class="icon-btn" onclick="showModal('settingsModal')">⚙️</span>
-        <span id="musicToggle" class="icon-btn" onclick="toggleMusic()">🎶</span>
+    <div class="streak-badge">GÜNLÜK SERİ: <span id="streakCount">0</span> GÜN</div>
+    
+    <div class="header" style="display:flex; justify-content:space-between; margin-bottom:15px;">
+        <span onclick="toggleTheme()" style="cursor:pointer; font-size:1.2rem;">🌙</span>
+        <span onclick="toggleMusic()" style="cursor:pointer; font-size:1.2rem;">🎶</span>
     </div>
+
     <select id="zikirDropdown" onchange="switchZikir()"></select>
     
     <div id="activeMeaning" class="meaning-box">Yükleniyor...</div>
 
     <div class="circle-wrapper" id="clickBtn">
         <svg class="progress-ring" width="220" height="220">
-            <circle class="progress-ring__circle" stroke-width="6" fill="transparent" r="95" cx="110" cy="110"/>
+            <circle class="progress-ring__circle" stroke-width="8" fill="transparent" r="95" cx="110" cy="110"/>
         </svg>
         <div class="main-circle">
             <div class="count-num" id="displayNum">0</div>
-            <span id="targetLabel" style="font-size: 0.8rem; opacity: 0.6; font-weight: 600;">Hedef: 33</span>
+            <div id="targetLabel" style="font-size: 0.85rem; opacity: 0.6; font-weight: 600; margin-top:5px;">Hedef: 33</div>
         </div>
     </div>
-    <div class="weekly-dots" id="weeklyDots"></div>
+
     <div class="btn-group">
-        <button class="btn" id="lang-libBtn" onclick="showModal('libModal')">📚 Liste</button>
-        <button class="btn btn-primary" id="lang-resetBtn" onclick="resetCurrent()">🔄 Sıfırla</button>
+        <button class="btn" onclick="alert('Zikir listesini yukarıdan seçebilirsiniz.')">📚 Rehber</button>
+        <button class="btn btn-primary" onclick="resetCurrent()">🔄 Sıfırla</button>
     </div>
 </div>
 
-<div class="content-area">
-    <h2>Zikirmatik Pro Nedir?</h2>
-    <p>Zikirmatik Pro, günlük ibadetlerinizi ve tesbihatlarınızı dijital ortamda en sade ve odaklanabilir şekilde yapabilmeniz için geliştirilmiş modern bir zikir takip uygulamasıdır.</p>
-    
-    <h3>Nasıl Kullanılır?</h3>
-    <p>Listeden çekmek istediğiniz zikri seçin ve ortadaki büyük butona her zikirde dokunun. Hedeflenen sayıya ulaştığınızda uygulama sizi uyaracaktır. Sol üstten karanlık/aydınlık modu değiştirebilir, sağ üstten ise fon müziğini açabilirsiniz.</p>
-    
-    <h3>Zikir Çekmenin Önemi</h3>
-    <p>Zikir, kulun yaratıcısını anması, hatırlaması ve O'na yönelmesidir. Günlük hayatın karmaşasından ve stresinden uzaklaşarak ruhsal bir dinginliğe kavuşmanın en etkili yollarından biridir.</p>
+<div class="seo-section">
+    <h1>Zikirmatik Nedir ve Nasıl Kullanılır?</h1>
+    <p>Zikirmatik Pro, manevi dünyanızdaki günlük tesbihatları dijital bir düzen içerisinde takip etmenizi sağlayan ücretsiz bir uygulamadır. İslam kültüründe zikir, kulun yaratıcısını hatırlaması ve O'nun güzel isimlerini (Esmaül Hüsna) kalben ve lisanen tekrar etmesi anlamına gelir. Uygulamamız, bu kıymetli ibadeti her an her yerde, yanınızda fiziksel bir tesbih taşımaya gerek kalmadan yapabilmenize imkan tanır.</p>
+
+    <h2>Zikir Çekmenin Faziletleri ve Önemi</h2>
+    <p>Kur'an-ı Kerim'de belirtildiği üzere, zikir kalplerin şifası ve ruhun huzur kaynağıdır. Peygamber Efendimiz (S.A.V) birçok hadisinde Allah'ı zikretmenin müminin derecesini yükselttiğini ve günahlara kefaret olduğunu buyurmuştur. Namaz sonrası yapılan 33'lük tesbihatlar, gün içindeki salavatlar ve sıkıntı anlarında çekilen dualar, dijital zikirmatik aracılığıyla sayısını karıştırmadan kolayca gerçekleştirilebilir.</p>
+
+    <h2>Uygulamamızdaki Zikirler ve Anlamları</h2>
+    <p>Zikirmatik Pro içerisinde en çok tercih edilen; Sübhanallah, Elhamdülillah ve Allahu Ekber gibi temel tesbihlerin yanı sıra Ya Fettah (kapıları açan), Ya Rezzak (rızık veren) gibi Esmaül Hüsna örnekleri yer almaktadır. Her zikrin altında bulunan özel anlam bölümleri, çektiğiniz zikrin manasını tefekkür etmenize yardımcı olur. Bu sayede ibadetinizi sadece bir sayı sayma işlemi değil, derin bir manevi yolculuk haline getirirsiniz.</p>
+
+    <h2>Neden Dijital Zikirmatik Tercih Edilmelidir?</h2>
+    <p>Geleneksel tesbihlerin aksine, dijital zikirmatikler yanınızda her an taşıyabileceğiniz telefonlarınızda bulunur. Uygulamamızın "Gece Modu" gözlerinizi yormazken, "Günlük Seri" (Streak) özelliği sizi her gün düzenli ibadet etmeye teşvik eder. Ayrıca sesli geri bildirim ve hedef tamamlama uyarılarıyla ibadetinize odaklanmanızı kolaylaştırır.</p>
 </div>
 
-<div class="footer"><span>© 2026 Zikirmatik Pro - Tüm Hakları Saklıdır.</span></div>
-<div id="settingsModal" class="modal">
-    <div class="modal-content">
-        <h3 id="lang-settingsTitle" style="text-align:center">Ayarlar</h3>
-        <label id="lang-selectLangLabel">Dil Seçimi:</label>
-        <select id="langSelect" onchange="changeLanguage()">
-            <option value="tr">Türkçe</option>
-            <option value="en">English</option>
-            <option value="ar">العربية</option>
-        </select>
-        <button class="btn" style="width:100%; margin-top: 20px;" onclick="hideModal('settingsModal')">Kapat</button>
-    </div>
+<div class="footer">
+    © 2026 Zikirmatik Pro - Tüm Hakları Saklıdır.<br>
+    Sitemiz AdSense Program Politikalarına Uygundur.
 </div>
-<div id="libModal" class="modal">
-    <div class="modal-content">
-        <h3 id="lang-libTitle" style="text-align:center">Zikir Listesi</h3>
-        <input type="text" id="customName" placeholder="Zikir Adı...">
-        <input type="number" id="customTarget" placeholder="Hedef..." min="1">
-        <button class="btn btn-primary" style="width:100%; margin-bottom: 15px;" onclick="addCustomZikir()">➕ Ekle</button>
-        <div id="libList" style="max-height: 25vh; overflow-y: auto;"></div>
-        <button class="btn" style="width:100%; margin-top:15px;" onclick="hideModal('libModal')">Kapat</button>
-    </div>
-</div>
+
+<audio id="clickSnd" preload="auto"><source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg"></audio>
+<audio id="bellSnd" preload="auto"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
+<audio id="neySnd" loop preload="auto"><source src="https://www.soundjay.com/nature/sounds/river-1.mp3" type="audio/mpeg"></audio>
+
 <script>
-    function safePlay(audioId) { const a = document.getElementById(audioId); if (a) a.play().catch(() => {}); }
-    function unlockAudio() { ['clickSound', 'neySound', 'bellSound'].forEach(id => { const a = document.getElementById(id); if(a) a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(()=>{}); }); document.removeEventListener('pointerdown', unlockAudio); }
-    document.addEventListener('pointerdown', unlockAudio);
-    
-    const translations = {
-        tr: { day: "GÜN", libBtn: "📚 Liste", resetBtn: "🔄 Sıfırla", settingsTitle: "Ayarlar", selectLang: "Dil Seçimi:", libTitle: "Zikir Listesi", target: "Hedef", toastDone: "MaşAllah!", confirmReset: "Sıfırlansın mı?", confirmDelete: "Silinsin mi?" },
-        en: { day: "DAYS", libBtn: "📚 List", resetBtn: "🔄 Reset", settingsTitle: "Settings", selectLang: "Language:", libTitle: "Dhikr List", target: "Target", toastDone: "MashAllah!", confirmReset: "Reset?", confirmDelete: "Delete?" },
-        ar: { day: "يوم", libBtn: "📚 القائمة", resetBtn: "🔄 إعادة", settingsTitle: "الإعدادات", selectLang: "اللغة:", libTitle: "قائمة الأذكار", target: "الهدف", toastDone: "ما شاء الله", confirmReset: "إعادة؟", confirmDelete: "حذف؟" }
-    };
-
-    // Zikirler ve AdSense onayı için eklenen anlamları
-    const varsayilanZikirler = [
-        { name: "Sübhanallah", count: 0, target: 33, mean: "Allah her türlü noksanlıktan uzaktır." },
-        { name: "Elhamdülillah", count: 0, target: 33, mean: "Hamd ve övgü sadece Allah'adır." },
-        { name: "Allahu Ekber", count: 0, target: 33, mean: "Allah en büyüktür." },
-        { name: "La ilahe illallah", count: 0, target: 100, mean: "Allah'tan başka hiçbir ilah yoktur." },
-        { name: "Ya Fettâh", count: 0, target: 489, mean: "Sıkıntıları gideren, kapıları açan." },
-        { name: "Ya Rezzâk", count: 0, target: 308, mean: "Bolca rızık veren, besleyen." },
-        { name: "Ya Şâfi", count: 0, target: 391, mean: "Şifa veren, hastalıklardan kurtaran." },
-        { name: "Hasbünallâh", count: 0, target: 450, mean: "Allah bize yeter, O ne güzel vekildir." }
+    // TÜM ZİKİRLER VE ANLAMLARI (Eksiksiz Liste)
+    const zikirListesi = [
+        { name: "Sübhanallah", count: 0, target: 33, mean: "Allah her türlü eksiklikten, noksanlıktan ve kusurdan uzaktır. Yaratılan her şey O'nun yüceliğini haykırır." },
+        { name: "Elhamdülillah", count: 0, target: 33, mean: "Hamd ve övgü sadece Allah'adır. Tüm nimetlerin kaynağı O'dur ve her halimize şükürdür." },
+        { name: "Allahu Ekber", count: 0, target: 33, mean: "Allah her şeyden daha büyüktür, daha yücedir. O'nun kudreti karşısında hiçbir güç duramaz." },
+        { name: "La ilahe illallah", count: 0, target: 100, mean: "Allah'tan başka ilah yoktur. O tektir, ortağı yoktur. Tevhid inancının özüdür." },
+        { name: "Ya Fettâh", count: 0, target: 489, mean: "Sıkıntıları gideren, kapalı kapıları açan. Maddi ve manevi her türlü hayır kapısını açan." },
+        { name: "Ya Rezzâk", count: 0, target: 308, mean: "Yarattığı her canlının rızkını veren. Bolluk, bereket ve maddi ferahlık için çekilir." },
+        { name: "Ya Şâfi", count: 0, target: 391, mean: "Şifa veren, hastalıklardan kurtaran. Maddi ve manevi tüm dertlerin şifası O'ndadır." },
+        { name: "Hasbünallâh", count: 0, target: 450, mean: "Allah bize yeter, O ne güzel vekildir. Korku ve endişe anlarında sığınılacak kaledir." },
+        { name: "La havle...", count: 0, target: 100, mean: "Güç ve kuvvet ancak yüce Allah'ındır. O'nun izni olmadan hiçbir şey hareket edemez." },
+        { name: "Estağfirullah", count: 0, target: 100, mean: "Allah'tan bağışlanma diliyorum. Günahların affı ve kalbin temizlenmesi için çekilir." },
+        { name: "Allahümme Salli...", count: 0, target: 100, mean: "Peygamber Efendimiz Hz. Muhammed'e (S.A.V) selam ve dua göndermektir." }
     ];
 
-    localStorage.removeItem('zikirDB');
-    localStorage.removeItem('currentIdx');
-
-    let db = JSON.parse(JSON.stringify(varsayilanZikirler));
-    localStorage.setItem('zikirDB', JSON.stringify(db));
-
-    let currentLang = localStorage.getItem('lang') || 'tr';
-    let currentIndex = 0;
-    
-    let streak = JSON.parse(localStorage.getItem('streakData')) || { count: 0, lastDate: null, history: [] };
+    let db = JSON.parse(localStorage.getItem('zikirData')) || zikirListesi;
+    let currentIdx = localStorage.getItem('lastIdx') || 0;
     let circumference = 0;
-    
-    function initProgress() { const circle = document.querySelector('.progress-ring__circle'); const radius = circle.r.baseVal.value; circumference = radius * 2 * Math.PI; circle.style.strokeDasharray = `${circumference} ${circumference}`; circle.style.strokeDashoffset = circumference; }
-    function setProgress(percent) { const circle = document.querySelector('.progress-ring__circle'); const offset = circumference - (percent / 100 * circumference); circle.style.strokeDashoffset = offset; }
-    
-    function init() { initProgress(); document.getElementById('langSelect').value = currentLang; applyLanguage(); updateView(); renderWeekly(); renderDropdown(); }
-    function applyLanguage() { const t = translations[currentLang]; document.getElementById('lang-day').innerText = t.day; document.getElementById('lang-libBtn').innerText = t.libBtn; document.getElementById('lang-resetBtn').innerText = t.resetBtn; document.getElementById('lang-settingsTitle').innerText = t.settingsTitle; document.getElementById('lang-selectLangLabel').innerText = t.selectLang; document.getElementById('lang-libTitle').innerText = t.libTitle; renderDropdown(); }
-    function updateView() { const curr = db[currentIndex] || db[0]; document.getElementById('displayNum').innerText = curr.count; document.getElementById('targetLabel').innerText = `${translations[currentLang].target}: ${curr.target}`; document.getElementById('streakCount').innerText = streak.count; document.getElementById('activeMeaning').innerText = `Anlamı: ${curr.mean || "Özel zikir"}`; const percentage = Math.min((curr.count % curr.target) / curr.target * 100, 100); setProgress(percentage === 0 && curr.count > 0 ? 100 : percentage); }
 
-    document.getElementById('clickBtn').addEventListener('pointerdown', function() {
-        this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 100);
-        db[currentIndex].count++;
-        if (db[currentIndex].count % db[currentIndex].target === 0) { safePlay('bellSound'); showToast(translations[currentLang].toastDone); }
-        const snd = document.getElementById('clickSound'); if(snd) { snd.currentTime = 0; safePlay('clickSound'); }
-        recordActivity(); save(); updateView();
+    function init() {
+        const circle = document.querySelector('.progress-ring__circle');
+        const radius = circle.r.baseVal.value;
+        circumference = radius * 2 * Math.PI;
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        
+        renderDropdown();
+        updateView();
+        checkStreak();
+    }
+
+    function updateView() {
+        const item = db[currentIdx];
+        document.getElementById('displayNum').innerText = item.count;
+        document.getElementById('targetLabel').innerText = `Hedef: ${item.target}`;
+        document.getElementById('activeMeaning').innerText = `Anlamı: ${item.mean}`;
+        
+        const circle = document.querySelector('.progress-ring__circle');
+        const offset = circumference - (Math.min(item.count / item.target, 1) * circumference);
+        circle.style.strokeDashoffset = offset;
+        
+        localStorage.setItem('zikirData', JSON.stringify(db));
+        localStorage.setItem('lastIdx', currentIdx);
+    }
+
+    document.getElementById('clickBtn').addEventListener('pointerdown', () => {
+        db[currentIdx].count++;
+        document.getElementById('clickSnd').currentTime = 0;
+        document.getElementById('clickSnd').play().catch(()=>{});
+        
+        if(db[currentIdx].count % db[currentIdx].target === 0) {
+            document.getElementById('bellSnd').play().catch(()=>{});
+            const t = document.getElementById('toast');
+            t.className = "show"; setTimeout(() => t.className = "", 2000);
+        }
+        updateView();
     });
 
-    function addCustomZikir() { const name = document.getElementById('customName').value.trim(); const target = parseInt(document.getElementById('customTarget').value); if (name && target > 0) { db.push({ name: name, count: 0, target: target, mean: "Senin eklediğin özel zikir." }); save(); renderDropdown(); renderLibrary(); document.getElementById('customName').value = ""; document.getElementById('customTarget').value = ""; } }
-    function renderLibrary() { const list = document.getElementById('libList'); list.innerHTML = db.map((item, i) => `<div style="display:flex; justify-content:space-between; padding:12px 5px; border-bottom:1px solid rgba(125,125,125,0.05); align-items:center;"><div onclick="selectZikir(${i})" style="flex:1; cursor:pointer;"><strong>${item.name}</strong> <br> <small style="opacity:0.6;">${item.count} / ${item.target}</small></div><span onclick="deleteZikir(${i}, event)" style="padding:10px; cursor:pointer;">🗑️</span></div>`).join(''); }
-    function deleteZikir(i, e) { e.stopPropagation(); if (confirm(translations[currentLang].confirmDelete)) { db.splice(i, 1); if (db.length === 0) db = JSON.parse(JSON.stringify(varsayilanZikirler)); if (currentIndex >= db.length) currentIndex = 0; save(); renderDropdown(); renderLibrary(); updateView(); } }
-    function selectZikir(i) { currentIndex = i; save(); updateView(); renderDropdown(); hideModal('libModal'); }
-    function save() { localStorage.setItem('zikirDB', JSON.stringify(db)); localStorage.setItem('currentIdx', currentIndex); }
-    function renderDropdown() { document.getElementById('zikirDropdown').innerHTML = db.map((item, i) => `<option value="${i}" ${i === currentIndex ? 'selected' : ''}>${item.name}</option>`).join(''); }
-    function switchZikir() { currentIndex = parseInt(document.getElementById('zikirDropdown').value); save(); updateView(); }
-    function resetCurrent() { if(confirm(translations[currentLang].confirmReset)) { db[currentIndex].count = 0; save(); updateView(); } }
-    function showModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='libModal') renderLibrary(); }
-    function hideModal(id) { document.getElementById(id).style.display = 'none'; }
-    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "show"; setTimeout(()=>t.className="", 3000); }
-    function toggleTheme() { const body = document.body; const currentTheme = body.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').innerText = newTheme === 'dark' ? '🌙' : '☀️'; }
-    function toggleMusic() { const n = document.getElementById('neySound'); if(n) { if(n.paused) safePlay('neySound'); else n.pause(); } }
-    function changeLanguage() { currentLang = document.getElementById('langSelect').value; localStorage.setItem('lang', currentLang); applyLanguage(); updateView(); }
-    
-    function recordActivity() {
-        const today = new Date(); const todayStr = today.toLocaleDateString();
-        if (streak.lastDate !== todayStr) {
-            const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-            if (streak.lastDate === yesterday.toLocaleDateString()) streak.count++;
-            else if (streak.lastDate === null || streak.lastDate !== todayStr) streak.count = 1;
-            streak.lastDate = todayStr; if(!streak.history.includes(todayStr)) streak.history.push(todayStr); localStorage.setItem('streakData', JSON.stringify(streak)); renderWeekly();
+    function renderDropdown() {
+        const sel = document.getElementById('zikirDropdown');
+        sel.innerHTML = db.map((z, i) => `<option value="${i}" ${i == currentIdx ? 'selected' : ''}>${z.name}</option>`).join('');
+    }
+
+    function switchZikir() {
+        currentIdx = document.getElementById('zikirDropdown').value;
+        updateView();
+    }
+
+    function resetCurrent() {
+        if(confirm("Bu zikri sıfırlamak istediğinizden emin misiniz?")) {
+            db[currentIdx].count = 0;
+            updateView();
         }
     }
-    function renderWeekly() { const dots = document.getElementById('weeklyDots'); dots.innerHTML = ""; for(let i=6; i>=0; i--) { const d = new Date(); d.setDate(d.getDate() - i); dots.innerHTML += `<div class="dot ${streak.history.includes(d.toLocaleDateString()) ? 'active' : ''}"></div>`; } }
-    document.addEventListener("DOMContentLoaded", init);
+
+    function toggleTheme() {
+        const b = document.body;
+        const current = b.getAttribute('data-theme');
+        b.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
+    function toggleMusic() {
+        const m = document.getElementById('neySnd');
+        if(m.paused) m.play().catch(()=>{}); else m.pause();
+    }
+
+    function checkStreak() {
+        let streak = JSON.parse(localStorage.getItem('streakInfo')) || { count: 0, lastDate: null };
+        const today = new Date().toLocaleDateString();
+        if(streak.lastDate !== today) {
+            const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+            if(streak.lastDate === yesterday.toLocaleDateString()) streak.count++; else streak.count = 1;
+            streak.lastDate = today;
+            localStorage.setItem('streakInfo', JSON.stringify(streak));
+        }
+        document.getElementById('streakCount').innerText = streak.count;
+    }
+
+    window.onload = init;
 </script>
 </body>
 </html>
