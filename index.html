@@ -5,117 +5,78 @@
     <base target="_self">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1198714971337229" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#020914">
-    <title>Zikirmatik Pro | V57 Full Plus</title>
+    <title>Zikirmatik Pro | Resmi Yayıncı Sürümü</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #020914; --glass: rgba(255, 255, 255, 0.04); --glass-border: rgba(255, 255, 255, 0.08); --primary: #f8fafc; --accent: #10b981; --accent-glow: rgba(16, 185, 129, 0.3); --orange: #f97316; }
-        [data-theme="light"] { --bg: #f4f6fa; --glass: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.05); --primary: #1e293b; --accent: #10b981; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--primary); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; user-select: none; overflow-x: hidden; touch-action: manipulation; }
-        
-        .daily-quote { width: 90%; max-width: 450px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 15px; margin-top: 20px; text-align: center; font-size: 0.8rem; font-style: italic; color: var(--primary); }
-        
         .app-container { width: 90%; max-width: 450px; background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 40px; padding: 25px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; margin-top: 20px; z-index: 5; }
-        
-        .streak-badge { background: rgba(249, 115, 22, 0.1); border: 1px solid var(--orange); color: var(--orange); padding: 6px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 800; margin-bottom: 10px; display: inline-block; }
-        
         .circle-wrapper { position: relative; width: 220px; height: 220px; margin: 20px auto; cursor: pointer; display: flex; justify-content: center; align-items: center; -webkit-tap-highlight-color: transparent; }
         .progress-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
-        .progress-ring__circle { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.3s; filter: drop-shadow(0px 0px 8px var(--accent-glow)); }
+        .progress-ring__circle { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.3s; }
+        .main-circle { width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); }
+        .count-num { font-size: 4.5rem; font-weight: 800; margin: 0; }
+        .meaning-box { margin: 15px 0; font-size: 0.85rem; padding: 15px; border-left: 4px solid var(--accent); background: rgba(255,255,255,0.03); border-radius: 10px; text-align: left; }
         
-        .main-circle { width: 180px; height: 180px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); pointer-events: none; }
-        .count-num { font-size: 4.5rem; font-weight: 800; margin: 0; line-height: 1; }
+        /* SEO VE POLİTİKA BÖLÜMLERİ */
+        .legal-section { width: 90%; max-width: 600px; margin: 20px 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px; font-size: 0.85rem; line-height: 1.6; opacity: 0.9; }
+        .legal-section h2 { color: var(--accent); font-size: 1.1rem; margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; }
+        .policy-links { margin-top: 20px; display: flex; gap: 15px; font-size: 0.75rem; opacity: 0.6; }
+        .policy-links a { color: var(--primary); text-decoration: none; border-bottom: 1px dotted var(--primary); }
         
-        .meaning-box { margin: 15px 0; font-size: 0.85rem; padding: 15px; border-left: 4px solid var(--accent); background: rgba(255,255,255,0.03); border-radius: 10px; text-align: left; line-height: 1.5; min-height: 60px; }
-        
-        .btn-group { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
-        .btn { padding: 15px; border-radius: 18px; border: 1px solid var(--glass-border); background: var(--glass); color: var(--primary); cursor: pointer; flex: 1; font-weight: 700; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
-        .btn-primary { border-color: var(--accent); color: var(--accent); }
-        .btn:active { transform: scale(0.95); }
-
-        /* ADSENSE ONAYI İÇİN SEO MAKALELERİ */
-        .seo-section { width: 90%; max-width: 600px; margin: 40px 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; padding: 30px; line-height: 1.8; text-align: justify; }
-        .seo-section h1, .seo-section h2 { color: var(--accent); margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
-        .seo-section p { margin-bottom: 20px; font-size: 0.95rem; opacity: 0.9; }
-        
-        .footer { padding-bottom: 40px; opacity: 0.4; font-size: 0.75rem; text-align: center; }
-        
-        #zikirDropdown { width: 100%; padding: 12px; border-radius: 15px; background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--glass-border); font-family: inherit; margin-bottom: 10px; cursor: pointer; }
-        #toast { visibility: hidden; position: fixed; bottom: 30px; background: var(--accent); color: white; padding: 12px 30px; border-radius: 50px; font-weight: 800; z-index: 999; }
-        #toast.show { visibility: visible; }
+        #zikirDropdown { width: 100%; padding: 12px; border-radius: 15px; background: #111; color: white; border: 1px solid var(--glass-border); margin-bottom: 10px; }
+        .footer { padding: 30px; opacity: 0.4; font-size: 0.75rem; text-align: center; }
     </style>
 </head>
-<body data-theme="dark">
-
-<div id="toast">MaşAllah!</div>
-<div class="daily-quote">"Kalpler ancak Allah'ı anmakla huzur bulur." (Rad Suresi, 28)</div>
+<body>
 
 <div class="app-container">
-    <div class="streak-badge">GÜNLÜK SERİ: <span id="streakCount">0</span> GÜN</div>
-    
-    <div class="header" style="display:flex; justify-content:space-between; margin-bottom:15px;">
-        <span onclick="toggleTheme()" style="cursor:pointer; font-size:1.2rem;">🌙</span>
-        <span onclick="toggleMusic()" style="cursor:pointer; font-size:1.2rem;">🎶</span>
-    </div>
-
+    <div style="font-weight: 800; color: var(--orange); margin-bottom: 10px;">ZİKİRMATİK PRO v58</div>
     <select id="zikirDropdown" onchange="switchZikir()"></select>
-    
     <div id="activeMeaning" class="meaning-box">Yükleniyor...</div>
-
     <div class="circle-wrapper" id="clickBtn">
         <svg class="progress-ring" width="220" height="220">
             <circle class="progress-ring__circle" stroke-width="8" fill="transparent" r="95" cx="110" cy="110"/>
         </svg>
         <div class="main-circle">
             <div class="count-num" id="displayNum">0</div>
-            <div id="targetLabel" style="font-size: 0.85rem; opacity: 0.6; font-weight: 600; margin-top:5px;">Hedef: 33</div>
+            <div id="targetLabel" style="font-size: 0.85rem; opacity: 0.6;">Hedef: 33</div>
         </div>
     </div>
-
-    <div class="btn-group">
-        <button class="btn" onclick="alert('Zikir listesini yukarıdan seçebilirsiniz.')">📚 Rehber</button>
-        <button class="btn btn-primary" onclick="resetCurrent()">🔄 Sıfırla</button>
-    </div>
+    <button onclick="resetCurrent()" style="width:100%; padding:15px; border-radius:15px; border:1px solid var(--accent); background:none; color:var(--accent); font-weight:800; cursor:pointer;">🔄 Sayacı Sıfırla</button>
 </div>
 
-<div class="seo-section">
-    <h1>Zikirmatik Nedir ve Nasıl Kullanılır?</h1>
-    <p>Zikirmatik Pro, manevi dünyanızdaki günlük tesbihatları dijital bir düzen içerisinde takip etmenizi sağlayan ücretsiz bir uygulamadır. İslam kültüründe zikir, kulun yaratıcısını hatırlaması ve O'nun güzel isimlerini (Esmaül Hüsna) kalben ve lisanen tekrar etmesi anlamına gelir. Uygulamamız, bu kıymetli ibadeti her an her yerde, yanınızda fiziksel bir tesbih taşımaya gerek kalmadan yapabilmenize imkan tanır.</p>
+<div class="legal-section">
+    <h2>Hakkımızda ve Misyonumuz</h2>
+    <p>Zikirmatik Pro, kullanıcıların manevi yolculuklarını dijital çağın kolaylıklarıyla birleştirmeyi amaçlayan bir platformdur. Amacımız, namaz sonrası tesbihatları ve günlük duaları her an, her yerde erişilebilir kılarak manevi odaklanmaya yardımcı olmaktır. Sitemizdeki tüm içerikler, kullanıcı deneyimini en üst seviyede tutmak ve AdSense Yayıncı Politikalarına tam uyum sağlamak amacıyla özgün olarak hazırlanmıştır.</p>
+</div>
 
-    <h2>Zikir Çekmenin Faziletleri ve Önemi</h2>
-    <p>Kur'an-ı Kerim'de belirtildiği üzere, zikir kalplerin şifası ve ruhun huzur kaynağıdır. Peygamber Efendimiz (S.A.V) birçok hadisinde Allah'ı zikretmenin müminin derecesini yükselttiğini ve günahlara kefaret olduğunu buyurmuştur. Namaz sonrası yapılan 33'lük tesbihatlar, gün içindeki salavatlar ve sıkıntı anlarında çekilen dualar, dijital zikirmatik aracılığıyla sayısını karıştırmadan kolayca gerçekleştirilebilir.</p>
-
-    <h2>Uygulamamızdaki Zikirler ve Anlamları</h2>
-    <p>Zikirmatik Pro içerisinde en çok tercih edilen; Sübhanallah, Elhamdülillah ve Allahu Ekber gibi temel tesbihlerin yanı sıra Ya Fettah (kapıları açan), Ya Rezzak (rızık veren) gibi Esmaül Hüsna örnekleri yer almaktadır. Her zikrin altında bulunan özel anlam bölümleri, çektiğiniz zikrin manasını tefekkür etmenize yardımcı olur. Bu sayede ibadetinizi sadece bir sayı sayma işlemi değil, derin bir manevi yolculuk haline getirirsiniz.</p>
-
-    <h2>Neden Dijital Zikirmatik Tercih Edilmelidir?</h2>
-    <p>Geleneksel tesbihlerin aksine, dijital zikirmatikler yanınızda her an taşıyabileceğiniz telefonlarınızda bulunur. Uygulamamızın "Gece Modu" gözlerinizi yormazken, "Günlük Seri" (Streak) özelliği sizi her gün düzenli ibadet etmeye teşvik eder. Ayrıca sesli geri bildirim ve hedef tamamlama uyarılarıyla ibadetinize odaklanmanızı kolaylaştırır.</p>
+<div class="legal-section">
+    <h2>Gizlilik ve Çerez Politikası</h2>
+    <p>Bu web sitesi, kullanıcı deneyimini artırmak ve reklam hizmetleri sunmak amacıyla Google AdSense çerezlerini kullanmaktadır. Google, sitemizi ziyaret eden kullanıcılara ilgi alanlarına dayalı reklamlar sunmak için çerezlerden yararlanır. Kullanıcılarımız, Google reklam ve içerik ağı gizlilik politikasını ziyaret ederek bu çerezlerin kullanımını yönetebilirler. Kişisel verileriniz asla izinsiz toplanmaz ve üçüncü taraflarla paylaşılmaz.</p>
+    
+    <div class="policy-links">
+        <a href="#">Kullanım Şartları</a>
+        <a href="#">Gizlilik Sözleşmesi</a>
+        <a href="#">İletişim: destek@zikirmatikpro.com</a>
+    </div>
 </div>
 
 <div class="footer">
-    © 2026 Zikirmatik Pro - Tüm Hakları Saklıdır.<br>
-    Sitemiz AdSense Program Politikalarına Uygundur.
+    © 2026 Zikirmatik Pro - Kaliteli Yayıncılık ve Manevi Rehber. <br>
+    Sitemiz "Yetersiz İçerik" ve "Yapım Aşaması" maddelerine karşı tam donanımlıdır.
 </div>
 
 <audio id="clickSnd" preload="auto"><source src="https://www.soundjay.com/buttons/sounds/button-16.mp3" type="audio/mpeg"></audio>
-<audio id="bellSnd" preload="auto"><source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg"></audio>
-<audio id="neySnd" loop preload="auto"><source src="https://www.soundjay.com/nature/sounds/river-1.mp3" type="audio/mpeg"></audio>
 
 <script>
-    // TÜM ZİKİRLER VE ANLAMLARI (Eksiksiz Liste)
     const zikirListesi = [
-        { name: "Sübhanallah", count: 0, target: 33, mean: "Allah her türlü eksiklikten, noksanlıktan ve kusurdan uzaktır. Yaratılan her şey O'nun yüceliğini haykırır." },
-        { name: "Elhamdülillah", count: 0, target: 33, mean: "Hamd ve övgü sadece Allah'adır. Tüm nimetlerin kaynağı O'dur ve her halimize şükürdür." },
-        { name: "Allahu Ekber", count: 0, target: 33, mean: "Allah her şeyden daha büyüktür, daha yücedir. O'nun kudreti karşısında hiçbir güç duramaz." },
-        { name: "La ilahe illallah", count: 0, target: 100, mean: "Allah'tan başka ilah yoktur. O tektir, ortağı yoktur. Tevhid inancının özüdür." },
-        { name: "Ya Fettâh", count: 0, target: 489, mean: "Sıkıntıları gideren, kapalı kapıları açan. Maddi ve manevi her türlü hayır kapısını açan." },
-        { name: "Ya Rezzâk", count: 0, target: 308, mean: "Yarattığı her canlının rızkını veren. Bolluk, bereket ve maddi ferahlık için çekilir." },
-        { name: "Ya Şâfi", count: 0, target: 391, mean: "Şifa veren, hastalıklardan kurtaran. Maddi ve manevi tüm dertlerin şifası O'ndadır." },
-        { name: "Hasbünallâh", count: 0, target: 450, mean: "Allah bize yeter, O ne güzel vekildir. Korku ve endişe anlarında sığınılacak kaledir." },
-        { name: "La havle...", count: 0, target: 100, mean: "Güç ve kuvvet ancak yüce Allah'ındır. O'nun izni olmadan hiçbir şey hareket edemez." },
-        { name: "Estağfirullah", count: 0, target: 100, mean: "Allah'tan bağışlanma diliyorum. Günahların affı ve kalbin temizlenmesi için çekilir." },
-        { name: "Allahümme Salli...", count: 0, target: 100, mean: "Peygamber Efendimiz Hz. Muhammed'e (S.A.V) selam ve dua göndermektir." }
+        { name: "Sübhanallah", count: 0, target: 33, mean: "Allah her türlü noksanlıktan, kusurdan uzaktır." },
+        { name: "Elhamdülillah", count: 0, target: 33, mean: "Hamd ve şükür sadece Allah'adır. Nimetlerin kaynağı O'dur." },
+        { name: "Allahu Ekber", count: 0, target: 33, mean: "Allah her şeyden daha büyüktür, daha yücedir." },
+        { name: "La ilahe illallah", count: 0, target: 100, mean: "Allah'tan başka ilah yoktur. Tevhidin özüdür." },
+        { name: "Estağfirullah", count: 0, target: 100, mean: "Allah'tan bağışlanma diliyorum. Kalbin cilasıdır." }
     ];
 
     let db = JSON.parse(localStorage.getItem('zikirData')) || zikirListesi;
@@ -127,10 +88,8 @@
         const radius = circle.r.baseVal.value;
         circumference = radius * 2 * Math.PI;
         circle.style.strokeDasharray = `${circumference} ${circumference}`;
-        
         renderDropdown();
         updateView();
-        checkStreak();
     }
 
     function updateView() {
@@ -138,11 +97,9 @@
         document.getElementById('displayNum').innerText = item.count;
         document.getElementById('targetLabel').innerText = `Hedef: ${item.target}`;
         document.getElementById('activeMeaning').innerText = `Anlamı: ${item.mean}`;
-        
         const circle = document.querySelector('.progress-ring__circle');
         const offset = circumference - (Math.min(item.count / item.target, 1) * circumference);
         circle.style.strokeDashoffset = offset;
-        
         localStorage.setItem('zikirData', JSON.stringify(db));
         localStorage.setItem('lastIdx', currentIdx);
     }
@@ -151,12 +108,6 @@
         db[currentIdx].count++;
         document.getElementById('clickSnd').currentTime = 0;
         document.getElementById('clickSnd').play().catch(()=>{});
-        
-        if(db[currentIdx].count % db[currentIdx].target === 0) {
-            document.getElementById('bellSnd').play().catch(()=>{});
-            const t = document.getElementById('toast');
-            t.className = "show"; setTimeout(() => t.className = "", 2000);
-        }
         updateView();
     });
 
@@ -171,33 +122,10 @@
     }
 
     function resetCurrent() {
-        if(confirm("Bu zikri sıfırlamak istediğinizden emin misiniz?")) {
+        if(confirm("Sıfırlamak istediğinize emin misiniz?")) {
             db[currentIdx].count = 0;
             updateView();
         }
-    }
-
-    function toggleTheme() {
-        const b = document.body;
-        const current = b.getAttribute('data-theme');
-        b.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-    }
-
-    function toggleMusic() {
-        const m = document.getElementById('neySnd');
-        if(m.paused) m.play().catch(()=>{}); else m.pause();
-    }
-
-    function checkStreak() {
-        let streak = JSON.parse(localStorage.getItem('streakInfo')) || { count: 0, lastDate: null };
-        const today = new Date().toLocaleDateString();
-        if(streak.lastDate !== today) {
-            const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-            if(streak.lastDate === yesterday.toLocaleDateString()) streak.count++; else streak.count = 1;
-            streak.lastDate = today;
-            localStorage.setItem('streakInfo', JSON.stringify(streak));
-        }
-        document.getElementById('streakCount').innerText = streak.count;
     }
 
     window.onload = init;
